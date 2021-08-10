@@ -1,0 +1,35 @@
+$sign-in-button-color: #8EF9F3;
+$log-in-button-color: #5EFC8D;
+
+.flexbox {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  width: 100vw;
+  height: 100vh;
+}
+
+.form-items {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 30vw;
+  gap: 10px;
+}
+
+.input-area {
+  width: 15vw;
+  height: 4vh;
+}
+
+.sign-in-button {
+  background-color: $sign-in-button-color;
+  width: 10vw;
+}
+
+.log-in-button {
+  background-color: $log-in-button-color;
+  width: 10vw;
+}
+
