@@ -9,12 +9,14 @@ import {MatInputModule} from "@angular/material/input";
 import {FormsModule} from "@angular/forms";
 import {AppRoutingModule} from "./core/services/routing-service";
 import { NewUserPageComponent } from './modules/new-user-page/new-user-page.component';
+import { ExistingUserPageComponent } from './modules/existing-user-page/existing-user-page.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     AuthPageComponent,
-    NewUserPageComponent
+    NewUserPageComponent,
+    ExistingUserPageComponent
   ],
   imports: [
     BrowserModule,
