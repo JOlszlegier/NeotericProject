@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthService} from "../../core/services/auth-service";
 
+
 @Component({
   selector: 'app-auth-page',
   templateUrl: './auth-page.component.html',
@@ -21,5 +22,6 @@ export class AuthPageComponent implements OnInit {
   onLogIn() {
     this.authService.onLogInActions();
   }
+
 
 }
