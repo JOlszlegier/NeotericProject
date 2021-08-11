@@ -1,4 +1,4 @@
-<form #authForm="ngForm" [formGroup]="defaultForm">
+<form [formGroup]="defaultForm">
   <div class="flexbox">
     <div class="form-items">
       <input matInput
@@ -31,7 +31,7 @@
       <button mat-raised-button
               class="log-in-button"
               (click)="onLogIn()"
-              [disabled]="!authForm.valid"
+              [disabled]="!defaultForm.valid"
       >Submit!
       </button>
     </div>
