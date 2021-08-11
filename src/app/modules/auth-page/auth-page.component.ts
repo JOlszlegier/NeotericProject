@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import {FormBuilder, FormControl, Validators} from "@angular/forms";
 
+import {AuthText} from "../../shared/enums";
 import {AuthService} from "../../core/services/auth-service";
 
 @Component({
@@ -9,31 +10,34 @@ import {AuthService} from "../../core/services/auth-service";
   styleUrls: ['./auth-page.component.scss']
 })
 
+
 export class AuthPageComponent {
-  isInLogInMode: boolean = true;
-  switchButtonText: string = 'sign in'
+  public AuthText = AuthText;
+  public isInLogInMode: boolean = true;
+  public switchButtonText: string = 'sign in'
+
+  public defaultForm = this.fb.group({
+    email: [''],
+    password: ['']
+  })
 
   constructor(private authService: AuthService, private fb: FormBuilder) {
 
   }
 
-  defaultForm = this.fb.group({
-    email: [''],
-    password: ['']
-  })
 
-  onSwitch() {
+  public onSwitch() {
     this.isInLogInMode = !this.isInLogInMode;
     if (this.isInLogInMode) {
-      this.switchButtonText = 'sign in '
+      this.switchButtonText = AuthText.SignIn
       this.defaultForm.removeControl('name');
     } else {
-      this.switchButtonText = 'log in';
+      this.switchButtonText = AuthText.LogIn;
       this.defaultForm.addControl('name', new FormControl(null, Validators.required));
     }
   }
 
-  onLogIn() {
+  public onLogIn() {
     this.authService.onLogInActions();
   }
 
