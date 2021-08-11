@@ -1,0 +1,40 @@
+<form [formGroup]="defaultForm">
+  <div class="flexbox">
+    <div class="form-items">
+      <input matInput
+             type="email"
+             placeholder="Enter your mail"
+             class="input-area"
+             required
+             email
+             formControlName="email"
+      >
+      <input matInput
+             type="password"
+             placeholder="Enter your password"
+             class="input-area"
+             required
+             formControlName="password"
+      >
+      <input type="text"
+             formControlName="name"
+             matInput
+             placeholder="Enter your name"
+             class="input-area"
+             *ngIf="!isInLogInMode"
+      >
+      <button mat-raised-button
+              class="sign-in-button"
+              (click)="onSwitch()"
+      >Switch to {{switchButtonText}}
+      </button>
+      <button mat-raised-button
+              class="log-in-button"
+              (click)="onLogIn()"
+              [disabled]="!defaultForm.valid"
+      >Submit!
+      </button>
+    </div>
+  </div>
+</form>
+
