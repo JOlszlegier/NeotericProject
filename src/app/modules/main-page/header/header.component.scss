@@ -1,0 +1,17 @@
+@import 'src/app/styles/variables.scss';
+
+.header-flex {
+  display: flex;
+  width: 100vw;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  background-color: $header-background-color;
+  font-size: 30px;
+}
+
+
+
