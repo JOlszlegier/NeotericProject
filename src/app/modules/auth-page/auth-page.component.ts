@@ -12,7 +12,7 @@ import {AuthService} from "../../core/services/auth-service";
 
 
 export class AuthPageComponent {
-  public AuthText = AuthText;
+  public authText = AuthText;
   public isInLogInMode: boolean = true;
   public switchButtonText: string = 'sign in'
 
@@ -22,11 +22,9 @@ export class AuthPageComponent {
   })
 
   constructor(private authService: AuthService, private fb: FormBuilder) {
-
   }
 
-
-  public onSwitch() {
+  public onSwitch(): void {
     this.isInLogInMode = !this.isInLogInMode;
     if (this.isInLogInMode) {
       this.switchButtonText = AuthText.SignIn
@@ -37,7 +35,7 @@ export class AuthPageComponent {
     }
   }
 
-  public onLogIn() {
+  public onLogIn(): void {
     this.authService.onLogInActions();
   }
 

@@ -7,7 +7,7 @@ export class AuthService {
   constructor(private router: Router) {
   }
 
-  public onLogInActions() {
+  public onLogInActions(): void {
     this.router.navigate(['/main']);
   }
 }
