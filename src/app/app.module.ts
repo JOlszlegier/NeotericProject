@@ -13,6 +13,9 @@ import {ExistingUserPageComponent} from './modules/existing-user-page/existing-u
 import {MainPageComponent} from './modules/main-page/main-page.component';
 import {HeaderComponent} from './modules/main-page/header/header.component';
 import {MatIconModule} from "@angular/material/icon";
+import { CenterBoxComponent } from './modules/main-page/center-box/center-box.component';
+import { SideBarLeftComponent } from './modules/main-page/side-bar-left/side-bar-left.component';
+import { SideBarRightComponent } from './modules/main-page/side-bar-right/side-bar-right.component';
 
 
 @NgModule({
@@ -21,7 +24,10 @@ import {MatIconModule} from "@angular/material/icon";
     AuthPageComponent,
     ExistingUserPageComponent,
     MainPageComponent,
-    HeaderComponent
+    HeaderComponent,
+    CenterBoxComponent,
+    SideBarLeftComponent,
+    SideBarRightComponent
   ],
   imports: [
     BrowserModule,
