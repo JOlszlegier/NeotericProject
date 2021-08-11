@@ -1,18 +1,15 @@
-import {Component, OnInit} from '@angular/core';
-import {AuthService} from "../../core/services/auth-service";
+import {Component} from '@angular/core';
 
+import {AuthService} from "../../core/services/auth-service";
 
 @Component({
   selector: 'app-auth-page',
   templateUrl: './auth-page.component.html',
   styleUrls: ['./auth-page.component.scss']
 })
-export class AuthPageComponent implements OnInit {
+export class AuthPageComponent {
 
   constructor(private authService: AuthService) {
-  }
-
-  ngOnInit(): void {
   }
 
   onSignIn() {
@@ -22,6 +19,5 @@ export class AuthPageComponent implements OnInit {
   onLogIn() {
     this.authService.onLogInActions();
   }
-
 
 }

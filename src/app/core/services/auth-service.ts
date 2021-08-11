@@ -7,11 +7,11 @@ export class AuthService {
   constructor(private router: Router) {
   }
 
-  onSignInActions() {
+  public onSignInActions() {
     this.router.navigate(['/new-user']);
   }
 
-  onLogInActions() {
+  public onLogInActions() {
     this.router.navigate(['/main']);
   }
 }

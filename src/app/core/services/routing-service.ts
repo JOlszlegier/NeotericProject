@@ -1,6 +1,7 @@
 import {RouterModule, Routes} from "@angular/router";
-import {AuthPageComponent} from "../../modules/auth-page/auth-page.component";
 import {NgModule} from "@angular/core";
+
+import {AuthPageComponent} from "../../modules/auth-page/auth-page.component";
 import {NewUserPageComponent} from "../../modules/new-user-page/new-user-page.component";
 import {ExistingUserPageComponent} from "../../modules/existing-user-page/existing-user-page.component";
 
