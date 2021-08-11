@@ -7,10 +7,6 @@ export class AuthService {
   constructor(private router: Router) {
   }
 
-  public onSignInActions() {
-    this.router.navigate(['/new-user']);
-  }
-
   public onLogInActions() {
     this.router.navigate(['/main']);
   }

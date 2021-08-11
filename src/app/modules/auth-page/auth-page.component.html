@@ -1,34 +1,38 @@
-<form #authForm="ngForm">
+<form #authForm="ngForm" [formGroup]="defaultForm">
   <div class="flexbox">
     <div class="form-items">
       <input matInput
              type="email"
-             ngModel
-             name="email"
              placeholder="Enter your mail"
              class="input-area"
              required
              email
+             formControlName="email"
       >
       <input matInput
              type="password"
-             ngModel
-             name="password"
              placeholder="Enter your password"
              class="input-area"
              required
+             formControlName="password"
+      >
+      <input type="text"
+             formControlName="name"
+             matInput
+             placeholder="Enter your name"
+             class="input-area"
+             *ngIf="!isInLogInMode"
       >
       <button mat-raised-button
               class="sign-in-button"
-              (click)="onSignIn()"
-              [disabled]="!authForm.valid"
-      >Sign In
+              (click)="onSwitch()"
+      >Switch to {{switchButtonText}}
       </button>
       <button mat-raised-button
               class="log-in-button"
               (click)="onLogIn()"
               [disabled]="!authForm.valid"
-      >Log In
+      >Submit!
       </button>
     </div>
   </div>

@@ -7,15 +7,13 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 
 import {AppComponent} from './app.component';
 import {AuthPageComponent} from './modules/auth-page/auth-page.component';
-import {AppRoutingModule} from "./core/services/routing-service";
-import {NewUserPageComponent} from './modules/new-user-page/new-user-page.component';
+import {AppRoutingModule} from "./routing-service";
 import {ExistingUserPageComponent} from './modules/existing-user-page/existing-user-page.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     AuthPageComponent,
-    NewUserPageComponent,
     ExistingUserPageComponent
   ],
   imports: [
