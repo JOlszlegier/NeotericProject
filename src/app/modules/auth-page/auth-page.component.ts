@@ -8,6 +8,7 @@ import {AuthService} from "../../core/services/auth-service";
   templateUrl: './auth-page.component.html',
   styleUrls: ['./auth-page.component.scss']
 })
+
 export class AuthPageComponent {
   isInLogInMode: boolean = true;
   switchButtonText: string = 'sign in'

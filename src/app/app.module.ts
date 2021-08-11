@@ -7,7 +7,7 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 
 import {AppComponent} from './app.component';
 import {AuthPageComponent} from './modules/auth-page/auth-page.component';
-import {AppRoutingModule} from "./routing-service";
+import {AppRoutingModule} from "./routing-module";
 import {ExistingUserPageComponent} from './modules/existing-user-page/existing-user-page.component';
 
 @NgModule({
