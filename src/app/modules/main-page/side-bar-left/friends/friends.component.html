@@ -1,4 +1,18 @@
-<p>Friends</p>
+<div class="text-box">
+  <p>Friends</p>
+</div>
+
 <ul>
   <li *ngFor="let friend of friendsList">{{friend}}</li>
 </ul>
+
+<div class="text-box">
+  <p>Invite friends</p>
+</div>
+
+
+<div class="friend-flex">
+  <input matInput placeholder="Add friend" type="text" class="input-styling" autocomplete="off">
+  <mat-icon class="plus-icon">add</mat-icon>
+</div>
+

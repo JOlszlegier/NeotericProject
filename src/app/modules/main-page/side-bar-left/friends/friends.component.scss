@@ -1,3 +1,22 @@
-p {
-  margin-left: 85px;
+.text-box {
+  width: 80%;
+  text-align: center;
+  background-color: #5EFC8D;
+  margin-left: 10%;
+}
+
+.friend-flex {
+  display: flex;
+}
+
+.plus-icon {
+  margin-left: 8px;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+.input-styling {
+  margin-left: 10%;
+  margin-top: 10px;
+  height: 20px;
 }
