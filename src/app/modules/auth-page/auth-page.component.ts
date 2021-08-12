@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {FormBuilder, FormControl, Validators} from "@angular/forms";
 
-import {AuthText} from "../../core/services/shared/enums";
+import {AuthText} from "./shared/enums/auth.enums";
 import {AuthService} from "../../core/services/auth-service";
 
 @Component({
