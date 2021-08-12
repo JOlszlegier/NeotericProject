@@ -15,6 +15,9 @@ import {MatIconModule} from "@angular/material/icon";
 import {CenterBoxComponent} from './modules/main-page/center-box/center-box.component';
 import {SideBarLeftComponent} from './modules/main-page/side-bar-left/side-bar-left.component';
 import {SideBarRightComponent} from './modules/main-page/side-bar-right/side-bar-right.component';
+import {ViewChoiceComponent} from './modules/main-page/side-bar-left/view-choice/view-choice.component';
+import {MatListModule} from "@angular/material/list";
+import { SearchBarComponent } from './modules/main-page/side-bar-left/search-bar/search-bar.component';
 
 
 @NgModule({
@@ -25,7 +28,9 @@ import {SideBarRightComponent} from './modules/main-page/side-bar-right/side-bar
     HeaderComponent,
     CenterBoxComponent,
     SideBarLeftComponent,
-    SideBarRightComponent
+    SideBarRightComponent,
+    ViewChoiceComponent,
+    SearchBarComponent
   ],
   imports: [
     BrowserModule,
@@ -36,7 +41,8 @@ import {SideBarRightComponent} from './modules/main-page/side-bar-right/side-bar
     AppRoutingModule,
     ReactiveFormsModule,
     MatToolbarModule,
-    MatIconModule
+    MatIconModule,
+    MatListModule
   ],
   providers: [],
   bootstrap: [AppComponent]
