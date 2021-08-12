@@ -18,6 +18,7 @@ import {SideBarRightComponent} from './modules/main-page/side-bar-right/side-bar
 import {ViewChoiceComponent} from './modules/main-page/side-bar-left/view-choice/view-choice.component';
 import {MatListModule} from "@angular/material/list";
 import { SearchBarComponent } from './modules/main-page/side-bar-left/search-bar/search-bar.component';
+import { FriendsComponent } from './modules/main-page/side-bar-left/friends/friends.component';
 
 
 @NgModule({
@@ -30,7 +31,8 @@ import { SearchBarComponent } from './modules/main-page/side-bar-left/search-bar
     SideBarLeftComponent,
     SideBarRightComponent,
     ViewChoiceComponent,
-    SearchBarComponent
+    SearchBarComponent,
+    FriendsComponent
   ],
   imports: [
     BrowserModule,
