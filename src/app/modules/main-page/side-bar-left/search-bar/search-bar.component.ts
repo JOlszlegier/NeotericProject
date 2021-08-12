@@ -7,7 +7,7 @@ import {Component} from '@angular/core';
 })
 export class SearchBarComponent {
 
-  testClick() {
+  testClick(): void {
     console.log(`working`);
   }
 

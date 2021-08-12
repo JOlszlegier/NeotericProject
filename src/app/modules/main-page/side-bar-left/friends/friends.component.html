@@ -3,16 +3,19 @@
 </div>
 
 <ul>
-  <li *ngFor="let friend of friendsList">{{friend}}</li>
+  <li *ngFor="let friend of friendsList | search: searchText">{{friend}}</li>
 </ul>
 
 <div class="text-box">
   <p>Invite friends</p>
 </div>
 
-
 <div class="friend-flex">
-  <input matInput placeholder="Add friend" type="text" class="input-styling" autocomplete="off">
-  <mat-icon class="plus-icon">add</mat-icon>
+  <input matInput placeholder="Add friend"
+         type="text"
+         class="input-styling"
+         autocomplete="off"
+         [(ngModel)]="searchText">
+  <mat-icon class="plus-icon" (click)="addFriend()">add</mat-icon>
 </div>
 
