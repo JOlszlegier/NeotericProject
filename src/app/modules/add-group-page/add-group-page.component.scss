@@ -14,7 +14,6 @@
 .right-flexbox {
   display: flex;
   justify-content: center;
-  align-content: center;
   flex-direction: column;
   height: 100%;
   width: 25%;
@@ -23,7 +22,6 @@
 .left-flexbox {
   display: flex;
   justify-content: center;
-  align-content: center;
   flex-direction: column;
   height: 100%;
   width: 30%;
@@ -32,7 +30,6 @@
 .main-flexbox {
   display: flex;
   justify-content: center;
-  align-content: center;
   height: 100%;
 }
 
@@ -43,4 +40,26 @@
 
 .input-styling {
   width: 60%;
+  margin-top: 10px;
+}
+
+.group-name-input {
+  height: 30px;
+  font-size: 20px;
+}
+
+.friends-flex {
+  display: flex;
+  height: 30px;
+}
+
+.delete-friend-button {
+  height: 20px;
+  margin-top: 10px;
+  margin-left: 5px;
+  background-color: red;
+  padding: 0;
+  line-height: 0px;
+  min-width: 0px;
+  width: 20px;
 }

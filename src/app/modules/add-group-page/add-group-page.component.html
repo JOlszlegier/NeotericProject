@@ -5,6 +5,24 @@
   <div class="right-flexbox">
     <p class="shadow-text">Start a new group</p>
     <p class="main-text">My group shall be called....</p>
-    <input matInput type="text" placeholder="Your new group..." class="input-styling" autocomplete="off">
+    <input matInput type="text" placeholder="Your new group..."
+           class="input-styling group-name-input"
+           autocomplete="off"
+           [(ngModel)]="groupName">
+
+    <div class="friends-flex" *ngIf="groupName">
+      <input class="input-styling" placeholder="Add friend to group">
+      <button mat-button class="delete-friend-button">X</button>
+    </div>
+    <div class="friends-flex" *ngIf="groupName">
+      <input class="input-styling" placeholder="Add friend to group">
+      <button mat-button class="delete-friend-button">X</button>
+    </div>
+    <div class="friends-flex" *ngIf="groupName">
+      <input class="input-styling" placeholder="Add friend to group">
+      <button mat-button class="delete-friend-button">X</button>
+    </div>
+
   </div>
 </div>
+`

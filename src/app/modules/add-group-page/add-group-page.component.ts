@@ -1,15 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import {Component} from '@angular/core';
 
 @Component({
   selector: 'app-add-group-page',
   templateUrl: './add-group-page.component.html',
   styleUrls: ['./add-group-page.component.scss']
 })
-export class AddGroupPageComponent implements OnInit {
+export class AddGroupPageComponent {
+  groupName: string = '';
 
-  constructor() { }
-
-  ngOnInit(): void {
-  }
 
 }
