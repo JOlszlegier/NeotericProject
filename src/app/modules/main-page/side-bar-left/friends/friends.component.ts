@@ -1,15 +1,19 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+
 import {searchService} from "../../../../core/services/search-service";
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-friends',
   templateUrl: './friends.component.html',
   styleUrls: ['./friends.component.scss']
 })
-export class FriendsComponent implements OnInit {
+export class FriendsComponent implements OnInit, OnDestroy {
+
   friendsList: string[] = ['Kacper', 'Ola']
-  searchText: string = '';
+  searchPhrase: string = '';
   newFriend: string = '';
+  searchPhraseSubscription!: Subscription;
 
   constructor(private searchService: searchService) {
   }
@@ -17,11 +21,15 @@ export class FriendsComponent implements OnInit {
   addFriend(friend: string): void {
     this.friendsList.push(friend);
     this.newFriend = '';
-    //  invite sent by email/ to database and then display if user accept
+    //  invite will be sent by email/ and users will be displayed when they accept the invite
   }
 
-  ngOnInit() {
-    this.searchService.currentSearch.subscribe(search => this.searchText = search)
+  ngOnInit(): void {
+    this.searchPhraseSubscription = this.searchService.currentSearch.subscribe(search => this.searchPhrase = search)
+  }
+
+  ngOnDestroy(): void {
+    this.searchPhraseSubscription.unsubscribe()
   }
 
 }

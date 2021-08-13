@@ -12,15 +12,11 @@ export class SearchBarComponent implements OnInit {
   constructor(private searchService: searchService) {
   }
 
-  testClick(): void {
-    console.log(`working`);
-  }
-
   ngOnInit(): void {
     this.searchService.currentSearch.subscribe(search => this.searchText = search);
   }
 
-  valueChange(text: string) {
+  valueChange(text: string): void {
     this.searchService.changeSearch(text);
   }
 

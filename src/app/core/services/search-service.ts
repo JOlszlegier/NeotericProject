@@ -8,7 +8,7 @@ export class searchService {
   private searchSource = new BehaviorSubject<string>('');
   currentSearch = this.searchSource.asObservable();
 
-  changeSearch(message: string) {
+  changeSearch(message: string): void {
     this.searchSource.next(message);
   }
 
