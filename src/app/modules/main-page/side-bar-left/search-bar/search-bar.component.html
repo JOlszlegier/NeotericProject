@@ -1,5 +1,7 @@
 <div class="search-flex">
-  <input matInput placeholder="Search" type="search" class="input-styling" autocomplete="off">
-
+  <input matInput placeholder="Search" type="search" class="input-styling" autocomplete="off"
+         [(ngModel)]="searchText"
+         (ngModelChange)="valueChange($event)"
+  >
   <mat-icon class="search-icon" (click)="testClick()">search</mat-icon>
 </div>

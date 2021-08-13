@@ -15,7 +15,9 @@
          type="text"
          class="input-styling"
          autocomplete="off"
-         [(ngModel)]="searchText">
-  <mat-icon class="plus-icon" (click)="addFriend()">add</mat-icon>
+         [(ngModel)]="newFriend"
+         name="friendName"
+  >
+  <button mat-button (click)="addFriend(newFriend)" class="add-button" type="submit">+</button>
 </div>
 
