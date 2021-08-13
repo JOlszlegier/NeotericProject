@@ -1,19 +1,25 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {searchService} from "../../../../core/services/search-service";
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-search-bar',
   templateUrl: './search-bar.component.html',
   styleUrls: ['./search-bar.component.scss']
 })
-export class SearchBarComponent implements OnInit {
+export class SearchBarComponent implements OnInit, OnDestroy {
   searchText: string = '';
+  searchTextSubscription!: Subscription;
 
   constructor(private searchService: searchService) {
   }
 
   ngOnInit(): void {
-    this.searchService.currentSearch.subscribe(search => this.searchText = search);
+    this.searchTextSubscription = this.searchService.currentSearch.subscribe(search => this.searchText = search);
+  }
+
+  ngOnDestroy() {
+    this.searchTextSubscription.unsubscribe();
   }
 
   valueChange(text: string): void {

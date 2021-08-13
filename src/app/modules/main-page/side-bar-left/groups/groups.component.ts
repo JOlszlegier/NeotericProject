@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {searchService} from "../../../../core/services/search-service";
 import {Subscription} from "rxjs";
 
@@ -7,7 +7,7 @@ import {Subscription} from "rxjs";
   templateUrl: './groups.component.html',
   styleUrls: ['./groups.component.scss']
 })
-export class GroupsComponent implements OnInit {
+export class GroupsComponent implements OnInit, OnDestroy {
   groupArray: string[] = ['Kaszuby', 'Mieszkanie maj 2021'];
   searchPhrase: string = '';
   searchPhraseSubscription!: Subscription;
@@ -19,5 +19,8 @@ export class GroupsComponent implements OnInit {
     this.searchPhraseSubscription = this.searchService.currentSearch.subscribe(search => this.searchPhrase = search)
   }
 
-
+  ngOnDestroy() {
+    this.searchPhraseSubscription.unsubscribe();
+  }
+  
 }
