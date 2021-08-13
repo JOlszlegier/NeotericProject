@@ -1,0 +1,13 @@
+@import 'src/app/styles/variables.scss';
+
+.text-box {
+  width: 80%;
+  text-align: center;
+  background-color: $log-in-button-color;
+  margin-left: 10%;
+}
+
+.add-button {
+  margin-left: 25%;
+  background-color: $switch-button-color;
+}

@@ -1,0 +1,9 @@
+<div class="text-box">
+  <p>Groups</p>
+</div>
+
+<ul>
+  <li *ngFor="let group of groupArray | search: searchPhrase">{{group}}</li>
+</ul>
+
+<button mat-button class="add-button">Add new group</button>
