@@ -3,10 +3,12 @@ import {NgModule} from "@angular/core";
 
 import {AuthPageComponent} from "./modules/auth-page/auth-page.component";
 import {MainPageComponent} from "./modules/main-page/main-page.component";
+import {AddGroupPageComponent} from "./modules/add-group-page/add-group-page.component";
 
 const routes: Routes = [
   {path: '', component: AuthPageComponent},
-  {path: 'main', component: MainPageComponent}
+  {path: 'main', component: MainPageComponent},
+  {path: 'new-group', component: AddGroupPageComponent}
 ]
 
 @NgModule({

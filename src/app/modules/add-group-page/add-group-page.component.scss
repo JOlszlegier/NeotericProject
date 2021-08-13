@@ -1,0 +1,46 @@
+.shadow-text {
+  color: gray;
+  font-size: 25px;
+  height: 40px;
+  margin: 0;
+}
+
+.main-text {
+  font-size: 27px;
+  height: 40px;
+  margin: 0;
+}
+
+.right-flexbox {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  flex-direction: column;
+  height: 100%;
+  width: 25%;
+}
+
+.left-flexbox {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  flex-direction: column;
+  height: 100%;
+  width: 30%;
+}
+
+.main-flexbox {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  height: 100%;
+}
+
+.logo {
+  width: 60%;
+  margin-left: 30%;
+}
+
+.input-styling {
+  width: 60%;
+}

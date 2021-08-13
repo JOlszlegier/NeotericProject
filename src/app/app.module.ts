@@ -21,6 +21,7 @@ import {SearchBarComponent} from './modules/main-page/side-bar-left/search-bar/s
 import {FriendsComponent} from './modules/main-page/side-bar-left/friends/friends.component';
 import {SearchPipe} from "./core/pipes/search.pipe";
 import { GroupsComponent } from './modules/main-page/side-bar-left/groups/groups.component';
+import { AddGroupPageComponent } from './modules/add-group-page/add-group-page.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { GroupsComponent } from './modules/main-page/side-bar-left/groups/groups
     SearchBarComponent,
     FriendsComponent,
     SearchPipe,
-    GroupsComponent
+    GroupsComponent,
+    AddGroupPageComponent
   ],
   imports: [
     BrowserModule,

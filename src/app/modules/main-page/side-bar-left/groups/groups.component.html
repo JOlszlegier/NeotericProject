@@ -6,4 +6,4 @@
   <li *ngFor="let group of groupArray | search: searchPhrase">{{group}}</li>
 </ul>
 
-<button mat-button class="add-button">Add new group</button>
+<button mat-button class="add-button" (click)="newGroupLink()">Add new group</button>

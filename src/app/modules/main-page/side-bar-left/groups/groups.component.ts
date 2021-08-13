@@ -1,6 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {searchService} from "../../../../core/services/search-service";
 import {Subscription} from "rxjs";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-groups',
@@ -12,7 +13,7 @@ export class GroupsComponent implements OnInit, OnDestroy {
   searchPhrase: string = '';
   searchPhraseSubscription!: Subscription;
 
-  constructor(private searchService: searchService) {
+  constructor(private searchService: searchService, private router: Router) {
   }
 
   ngOnInit() {
@@ -22,5 +23,8 @@ export class GroupsComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.searchPhraseSubscription.unsubscribe();
   }
-  
+
+  newGroupLink() {
+    this.router.navigate(['/new-group'])
+  }
 }
