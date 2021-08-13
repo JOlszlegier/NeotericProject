@@ -1,7 +1,10 @@
+@import 'src/app/styles/variables.scss';
+
+
 .text-box {
   width: 80%;
   text-align: center;
-  background-color: #5EFC8D;
+  background-color: $log-in-button-color;
   margin-left: 10%;
 }
 

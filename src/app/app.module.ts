@@ -20,6 +20,7 @@ import {MatListModule} from "@angular/material/list";
 import {SearchBarComponent} from './modules/main-page/side-bar-left/search-bar/search-bar.component';
 import {FriendsComponent} from './modules/main-page/side-bar-left/friends/friends.component';
 import {SearchPipe} from "./core/pipes/search.pipe";
+import { GroupsComponent } from './modules/main-page/side-bar-left/groups/groups.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import {SearchPipe} from "./core/pipes/search.pipe";
     ViewChoiceComponent,
     SearchBarComponent,
     FriendsComponent,
-    SearchPipe
+    SearchPipe,
+    GroupsComponent
   ],
   imports: [
     BrowserModule,
