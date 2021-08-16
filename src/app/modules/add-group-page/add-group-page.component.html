@@ -9,16 +9,28 @@
            class="input-styling group-name-input"
            autocomplete="off"
            [(ngModel)]="groupName">
+    <hr>
 
     <div class="friends-flex" *ngFor="let human of groupNewPeople.controls; index as i">
-      <input class="email-friend-input" placeholder="email" *ngIf="groupName">
-      <input class="name-friend-input" placeholder="name" *ngIf="groupName">
-      <button mat-button class="delete-friend-button" *ngIf="groupName" (click)="removePeople(i)">X</button>
+      <input class="email-friend-input" placeholder="email" *ngIf="groupName"
+             [(ngModel)]="newGroupUsersEmails[i]">
+      <input class="name-friend-input" placeholder="name" *ngIf="groupName"
+             [(ngModel)]="newGroupUsersNames[i]">
+      <button mat-button class="delete-friend-button"
+              *ngIf="groupName" (click)="removePeople(i)">X
+      </button>
     </div>
 
     <div class="friends-flex">
-      <button mat-button *ngIf="groupName" (click)="addNewPeople()" class="add-more-button">Add more...</button>
+      <button mat-button *ngIf="groupName" (click)="addNewPeople()"
+              class="add-more-button">Add more...
+      </button>
     </div>
-
+    <div class="friends-flex">
+      <button mat-button *ngIf="groupName" (click)="saveGroup()"
+              class="add-more-button">Save
+      </button>
+    </div>
+    <hr>
   </div>
 </div>
