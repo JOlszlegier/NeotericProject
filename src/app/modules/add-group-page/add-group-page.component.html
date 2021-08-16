@@ -10,17 +10,13 @@
            autocomplete="off"
            [(ngModel)]="groupName">
 
-    <div class="friends-flex" *ngIf="groupName">
-      <input class="input-styling" placeholder="Add friend to group">
-      <button mat-button class="delete-friend-button">X</button>
+    <div class="friends-flex" *ngFor="let human of groupNewPeople.controls; index as i">
+      <input class="input-styling" placeholder="Add friend to group" *ngIf="groupName">
+      <button mat-button class="delete-friend-button" *ngIf="groupName" (click)="removePeople(i)">X</button>
     </div>
-    <div class="friends-flex" *ngIf="groupName">
-      <input class="input-styling" placeholder="Add friend to group">
-      <button mat-button class="delete-friend-button">X</button>
-    </div>
-    <div class="friends-flex" *ngIf="groupName">
-      <input class="input-styling" placeholder="Add friend to group">
-      <button mat-button class="delete-friend-button">X</button>
+
+    <div class="friends-flex">
+      <button mat-button *ngIf="groupName" (click)="addNewPeople()">Add more...</button>
     </div>
 
   </div>
