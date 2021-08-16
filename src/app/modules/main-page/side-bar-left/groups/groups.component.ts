@@ -28,5 +28,5 @@ export class GroupsComponent implements OnInit, OnDestroy {
     this.router.navigate(['/new-group'])
   }
 
-  
+
 }

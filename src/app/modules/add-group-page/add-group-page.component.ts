@@ -18,24 +18,24 @@ export class AddGroupPageComponent implements OnInit {
   constructor(private router: Router, private groupService: GroupService) {
   }
 
-  addNewPeople(): void {
+  addNewPeople() {
     this.groupNewPeople.controls.push(new FormControl(''));
     this.newGroupUsers.push({email: '', name: ''})
   }
 
-  removePeople(index: number): void {
+  removePeople(index: number) {
     this.groupNewPeople.removeAt(index);
   }
 
-  ngOnInit(): void {
+  ngOnInit() {
     for (let i = 0; i < 3; i++) {
       this.groupNewPeople.controls.push(new FormControl(''))
       this.newGroupUsers.push({email: '', name: ''})
     }
   }
 
-  saveGroup(): void {
-    this.groupService.addGroup(this.groupName, this.newGroupUsers);
+  saveGroup() {
+    this.groupService.addNewGroup(this.groupName, this.newGroupUsers)
     this.router.navigate(['/main'])
   }
 }

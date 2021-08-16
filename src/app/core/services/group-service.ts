@@ -6,14 +6,7 @@ import {Group, User} from "../interfaces/interfaces";
 export class GroupService {
   AllGroup: Group[] = []
 
-  addGroup(groupName: string, groupUsers: User[]): void {
-    this.AllGroup.push({groupName: groupName, users: groupUsers});
-    console.log(this.AllGroup);
+  addNewGroup(groupName: string, groupUsers: User[]) {
+    this.AllGroup.push({groupName: groupName, users: groupUsers})
   }
-
-  getAllGroupData(): Group[] {
-    return this.AllGroup;
-  }
-
-
 }
