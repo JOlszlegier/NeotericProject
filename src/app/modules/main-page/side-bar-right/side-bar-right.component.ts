@@ -1,22 +1,25 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {GroupService} from "../../../core/services/group-service";
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-side-bar-right',
   templateUrl: './side-bar-right.component.html',
   styleUrls: ['./side-bar-right.component.scss']
 })
-export class SideBarRightComponent implements OnInit {
-  selectedUsers: string[] = []
+export class SideBarRightComponent implements OnInit, OnDestroy {
+  selectedUsers: string[] = [];
+  usersSubscribe!: Subscription;
 
   constructor(private groupService: GroupService) {
   }
 
   ngOnInit() {
-    this.groupService.currentUsers.subscribe(users => this.selectedUsers = users)
+    this.usersSubscribe = this.groupService.currentUsers.subscribe(users => this.selectedUsers = users)
   }
 
-  testclick() {
-    console.log(this.selectedUsers);
+  ngOnDestroy() {
+    this.usersSubscribe.unsubscribe();
   }
+
 }

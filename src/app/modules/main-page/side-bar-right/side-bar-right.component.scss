@@ -6,9 +6,12 @@
   //
   height: 95vh;
   align-items: center;
-  justify-content: center;
   flex-direction: column;
   width: 100%;
+}
+
+.list-items {
+  padding-inline-start: 0;
 }
 
 

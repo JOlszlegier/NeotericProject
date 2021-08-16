@@ -22,6 +22,7 @@ import {FriendsComponent} from './modules/main-page/side-bar-left/friends/friend
 import {SearchPipe} from "./core/pipes/search.pipe";
 import { GroupsComponent } from './modules/main-page/side-bar-left/groups/groups.component';
 import { AddGroupPageComponent } from './modules/add-group-page/add-group-page.component';
+import { CashStatusComponent } from './modules/main-page/center-box/cash-status/cash-status.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { AddGroupPageComponent } from './modules/add-group-page/add-group-page.c
     FriendsComponent,
     SearchPipe,
     GroupsComponent,
-    AddGroupPageComponent
+    AddGroupPageComponent,
+    CashStatusComponent
   ],
   imports: [
     BrowserModule,

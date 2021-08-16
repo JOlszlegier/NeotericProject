@@ -3,7 +3,8 @@
 </div>
 
 <ul>
-  <li *ngFor="let group of groupNames | search: searchPhrase" (click)="onGroupClick(group)">{{group}}</li>
+  <li *ngFor="let group of groupNames | search: searchPhrase" (click)="onGroupClick(group)"
+      class="group-list">{{group}}</li>
 </ul>
 
 <button mat-button class="add-button" (click)="newGroupLink()">Add new group</button>

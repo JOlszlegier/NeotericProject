@@ -5,4 +5,27 @@
   //
   display: flex;
   height: 95vh;
+  flex-direction: column;
 }
+
+.top-box {
+  width: 100%;
+  background-color: grey;
+  align-items: center;
+  flex-direction: row;
+  height: 50px;
+  display: flex;
+  justify-content: space-around;
+  font-size: 30px;
+}
+
+.add-button {
+  background-color: #F98948;
+  margin: 5px;
+}
+
+.settle-button {
+  background-color: #5EFC8D;
+  margin: 5px;
+}
+
