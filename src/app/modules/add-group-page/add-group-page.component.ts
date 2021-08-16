@@ -1,6 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {FormArray, FormControl} from "@angular/forms";
 
+interface newUser {
+  email: string,
+  name: string
+}
+
 @Component({
   selector: 'app-add-group-page',
   templateUrl: './add-group-page.component.html',
@@ -9,11 +14,11 @@ import {FormArray, FormControl} from "@angular/forms";
 export class AddGroupPageComponent implements OnInit {
   groupName: string = '';
   groupNewPeople: FormArray = new FormArray([])
-  newGroupUsersEmails: string [] = [];
-  newGroupUsersNames: string [] = [];
+  newGroupUsers: newUser[] = []
 
   addNewPeople() {
     this.groupNewPeople.controls.push(new FormControl(''));
+    this.newGroupUsers.push({email: '', name: ''})
   }
 
   removePeople(index: number) {
@@ -21,13 +26,13 @@ export class AddGroupPageComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.groupNewPeople.controls.push(new FormControl(''))
-    this.groupNewPeople.controls.push(new FormControl(''))
-    this.groupNewPeople.controls.push(new FormControl(''))
+    for (let i = 0; i < 3; i++) {
+      this.groupNewPeople.controls.push(new FormControl(''))
+      this.newGroupUsers.push({email: '', name: ''})
+    }
   }
 
   saveGroup() {
-    console.log(this.newGroupUsersEmails)
-    console.log(this.newGroupUsersNames)
+    console.log(this.newGroupUsers);
   }
 }

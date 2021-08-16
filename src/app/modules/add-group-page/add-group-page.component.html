@@ -13,9 +13,9 @@
 
     <div class="friends-flex" *ngFor="let human of groupNewPeople.controls; index as i">
       <input class="email-friend-input" placeholder="email" *ngIf="groupName"
-             [(ngModel)]="newGroupUsersEmails[i]">
+             [(ngModel)]="newGroupUsers[i].email">
       <input class="name-friend-input" placeholder="name" *ngIf="groupName"
-             [(ngModel)]="newGroupUsersNames[i]">
+             [(ngModel)]="newGroupUsers[i].name">
       <button mat-button class="delete-friend-button"
               *ngIf="groupName" (click)="removePeople(i)">X
       </button>
