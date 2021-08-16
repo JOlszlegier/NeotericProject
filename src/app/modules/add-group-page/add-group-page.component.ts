@@ -3,6 +3,7 @@ import {FormArray, FormControl} from "@angular/forms";
 import {Router} from "@angular/router";
 
 import {User} from "../../core/interfaces/interfaces";
+import {GroupService} from "../../core/services/group-service";
 
 @Component({
   selector: 'app-add-group-page',
@@ -14,28 +15,27 @@ export class AddGroupPageComponent implements OnInit {
   groupNewPeople: FormArray = new FormArray([])
   newGroupUsers: User[] = []
 
-  constructor(private router: Router) {
+  constructor(private router: Router, private groupService: GroupService) {
   }
 
-  addNewPeople() {
+  addNewPeople(): void {
     this.groupNewPeople.controls.push(new FormControl(''));
     this.newGroupUsers.push({email: '', name: ''})
   }
 
-  removePeople(index: number) {
+  removePeople(index: number): void {
     this.groupNewPeople.removeAt(index);
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     for (let i = 0; i < 3; i++) {
       this.groupNewPeople.controls.push(new FormControl(''))
       this.newGroupUsers.push({email: '', name: ''})
     }
   }
 
-  saveGroup() {
-    console.log(this.newGroupUsers);
-    //this will sent the data to the backend in the future
+  saveGroup(): void {
+    this.groupService.addGroup(this.groupName, this.newGroupUsers);
     this.router.navigate(['/main'])
   }
 }
