@@ -3,34 +3,38 @@
     <img src="../../../assets/splitwise%20logo.png" class="logo" alt="logo">
   </div>
   <div class="right-flexbox">
+
     <p class="shadow-text">Start a new group</p>
     <p class="main-text">My group shall be called....</p>
     <input matInput type="text" placeholder="Your new group..."
            class="input-styling group-name-input"
            autocomplete="off"
            [(ngModel)]="groupName">
-    <hr>
+    <form #newUserForm="ngForm">
+      <div class="friends-flex" *ngFor="let human of groupNewPeople.controls; index as i">
+        <input class="email-friend-input" placeholder="email" *ngIf="groupName"
+               [(ngModel)]="newGroupUsers[i].email" name="email" required email
+               autocomplete="off">
 
-    <div class="friends-flex" *ngFor="let human of groupNewPeople.controls; index as i">
-      <input class="email-friend-input" placeholder="email" *ngIf="groupName"
-             [(ngModel)]="newGroupUsers[i].email">
-      <input class="name-friend-input" placeholder="name" *ngIf="groupName"
-             [(ngModel)]="newGroupUsers[i].name">
-      <button mat-button class="delete-friend-button"
-              *ngIf="groupName" (click)="removePeople(i)">X
-      </button>
-    </div>
+        <input class="name-friend-input" placeholder="name" *ngIf="groupName"
+               [(ngModel)]="newGroupUsers[i].name" name="name" required
+               autocomplete="off">
 
+        <button mat-button class="delete-friend-button"
+                *ngIf="groupName" (click)="removePeople(i)">X
+        </button>
+      </div>
+    </form>
     <div class="friends-flex">
       <button mat-button *ngIf="groupName" (click)="addNewPeople()"
               class="add-more-button">Add more...
       </button>
     </div>
+
     <div class="friends-flex">
       <button mat-button *ngIf="groupName" (click)="saveGroup()"
-              class="add-more-button">Save
+              class="add-more-button" [disabled]="newUserForm.invalid">Save
       </button>
     </div>
-    <hr>
   </div>
 </div>

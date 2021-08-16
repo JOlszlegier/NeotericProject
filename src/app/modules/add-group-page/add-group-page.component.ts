@@ -16,6 +16,7 @@ export class AddGroupPageComponent implements OnInit {
   groupNewPeople: FormArray = new FormArray([])
   newGroupUsers: newUser[] = []
 
+
   addNewPeople() {
     this.groupNewPeople.controls.push(new FormControl(''));
     this.newGroupUsers.push({email: '', name: ''})
@@ -34,5 +35,6 @@ export class AddGroupPageComponent implements OnInit {
 
   saveGroup() {
     console.log(this.newGroupUsers);
+    //this will sent the data to the backend in the future
   }
 }
