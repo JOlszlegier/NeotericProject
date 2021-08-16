@@ -2,6 +2,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {searchService} from "../../../../core/services/search-service";
 import {Subscription} from "rxjs";
 import {Router} from "@angular/router";
+import {Group} from "../../../../core/interfaces/interfaces";
 
 @Component({
   selector: 'app-groups',
@@ -9,7 +10,10 @@ import {Router} from "@angular/router";
   styleUrls: ['./groups.component.scss']
 })
 export class GroupsComponent implements OnInit, OnDestroy {
-  groupArray: string[] = ['Default1', 'Default2'];
+  groupArrayTest: Group[] = [{groupName: "Default", users: [{email: 'test@wp.p', name: 'Kuba'}]},
+    {groupName: "Default with group interface", users: [{email: 'test@wp.p', name: 'Kuba'}]}];
+  groupNames: string[] = [];
+
   searchPhrase: string = '';
   searchPhraseSubscription!: Subscription;
 
@@ -18,6 +22,9 @@ export class GroupsComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.searchPhraseSubscription = this.searchService.currentSearch.subscribe(search => this.searchPhrase = search)
+    for (let i = 0; i < this.groupArrayTest.length; i++) {
+      this.groupNames[i] = this.groupArrayTest[i].groupName;
+    }
   }
 
   ngOnDestroy() {
