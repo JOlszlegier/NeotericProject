@@ -7,5 +7,4 @@ import {Component} from '@angular/core';
 })
 export class CashStatusComponent {
   moneyTest: number[] = [-10, 2, 25]
-
 }
