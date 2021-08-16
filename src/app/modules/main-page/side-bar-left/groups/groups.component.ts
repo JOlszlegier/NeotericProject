@@ -3,6 +3,7 @@ import {searchService} from "../../../../core/services/search-service";
 import {Subscription} from "rxjs";
 import {Router} from "@angular/router";
 import {Group} from "../../../../core/interfaces/interfaces";
+import {GroupService} from "../../../../core/services/group-service";
 
 @Component({
   selector: 'app-groups',
@@ -23,7 +24,7 @@ export class GroupsComponent implements OnInit, OnDestroy {
   searchPhrase: string = '';
   searchPhraseSubscription!: Subscription;
 
-  constructor(private searchService: searchService, private router: Router) {
+  constructor(private searchService: searchService, private router: Router, private groupService: GroupService) {
   }
 
   ngOnInit() {
@@ -31,6 +32,7 @@ export class GroupsComponent implements OnInit, OnDestroy {
     for (let i = 0; i < this.groupArrayTest.length; i++) {
       this.groupNames[i] = this.groupArrayTest[i].groupName;
     }
+    this.groupService.currentUsers.subscribe(users => this.selectedGroupUsers = users)
   }
 
   ngOnDestroy() {
@@ -46,7 +48,7 @@ export class GroupsComponent implements OnInit, OnDestroy {
     for (let i = 0; i < this.groupArrayTest[this.groupNames.indexOf(groupName)].users.length; i++) {
       this.selectedGroupUsers[i] = this.groupArrayTest[this.groupNames.indexOf(groupName)].users[i].name
     }
-    console.log(this.selectedGroupUsers);
+    this.groupService.changeSearch(this.selectedGroupUsers);
   }
 
 

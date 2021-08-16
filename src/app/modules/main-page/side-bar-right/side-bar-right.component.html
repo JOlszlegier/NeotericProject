@@ -1,4 +1,6 @@
 <div class="flexbox">
   <p>Users of current group</p>
-  <p>some more text</p>
+  <ul>
+    <li *ngFor="let user of selectedUsers">{{user}}</li>
+  </ul>
 </div>
