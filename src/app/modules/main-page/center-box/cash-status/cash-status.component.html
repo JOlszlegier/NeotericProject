@@ -1,0 +1,6 @@
+<div class="main-box">
+  <div class="cash-box" [ngClass]="moneyTest[0]>0 ? 'total-balance-plus' : 'total-balance-minus'"
+  >Total balance<br>{{moneyTest[0]}}</div>
+  <div class="cash-box">You owe <br>{{moneyTest[1]}}</div>
+  <div class="cash-box">You are owed <br>{{moneyTest[2]}}</div>
+</div>
