@@ -10,9 +10,15 @@ import {Group} from "../../../../core/interfaces/interfaces";
   styleUrls: ['./groups.component.scss']
 })
 export class GroupsComponent implements OnInit, OnDestroy {
-  groupArrayTest: Group[] = [{groupName: "Default", users: [{email: 'test@wp.p', name: 'Kuba'}]},
+  groupArrayTest: Group[] = [{
+    groupName: "Default",
+    users: [{email: 'test@wp.p', name: 'Kuba'}, {email: 'test@wp.p', name: 'Maciek'}]
+  },
     {groupName: "Default with group interface", users: [{email: 'test@wp.p', name: 'Kuba'}]}];
+
   groupNames: string[] = [];
+  selectedGroupUsers: string[] = [];
+
 
   searchPhrase: string = '';
   searchPhraseSubscription!: Subscription;
@@ -33,6 +39,14 @@ export class GroupsComponent implements OnInit, OnDestroy {
 
   newGroupLink() {
     this.router.navigate(['/new-group'])
+  }
+
+  onGroupClick(groupName: string) {
+    this.selectedGroupUsers = [];
+    for (let i = 0; i < this.groupArrayTest[this.groupNames.indexOf(groupName)].users.length; i++) {
+      this.selectedGroupUsers[i] = this.groupArrayTest[this.groupNames.indexOf(groupName)].users[i].name
+    }
+    console.log(this.selectedGroupUsers);
   }
 
 
