@@ -1,10 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {FormArray, FormControl} from "@angular/forms";
+import {Router} from "@angular/router";
 
-interface newUser {
-  email: string,
-  name: string
-}
+import {User} from "../../core/interfaces/interfaces";
 
 @Component({
   selector: 'app-add-group-page',
@@ -14,8 +12,10 @@ interface newUser {
 export class AddGroupPageComponent implements OnInit {
   groupName: string = '';
   groupNewPeople: FormArray = new FormArray([])
-  newGroupUsers: newUser[] = []
+  newGroupUsers: User[] = []
 
+  constructor(private router: Router) {
+  }
 
   addNewPeople() {
     this.groupNewPeople.controls.push(new FormControl(''));
@@ -36,5 +36,6 @@ export class AddGroupPageComponent implements OnInit {
   saveGroup() {
     console.log(this.newGroupUsers);
     //this will sent the data to the backend in the future
+    this.router.navigate(['/main'])
   }
 }

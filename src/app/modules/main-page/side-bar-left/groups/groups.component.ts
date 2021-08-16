@@ -9,7 +9,7 @@ import {Router} from "@angular/router";
   styleUrls: ['./groups.component.scss']
 })
 export class GroupsComponent implements OnInit, OnDestroy {
-  groupArray: string[] = ['Kaszuby', 'Mieszkanie maj 2021'];
+  groupArray: string[] = ['Default1', 'Default2'];
   searchPhrase: string = '';
   searchPhraseSubscription!: Subscription;
 
@@ -27,4 +27,6 @@ export class GroupsComponent implements OnInit, OnDestroy {
   newGroupLink() {
     this.router.navigate(['/new-group'])
   }
+
+  
 }
