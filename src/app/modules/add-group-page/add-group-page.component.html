@@ -11,12 +11,13 @@
            [(ngModel)]="groupName">
 
     <div class="friends-flex" *ngFor="let human of groupNewPeople.controls; index as i">
-      <input class="input-styling" placeholder="Add friend to group" *ngIf="groupName">
+      <input class="email-friend-input" placeholder="email" *ngIf="groupName">
+      <input class="name-friend-input" placeholder="name" *ngIf="groupName">
       <button mat-button class="delete-friend-button" *ngIf="groupName" (click)="removePeople(i)">X</button>
     </div>
 
     <div class="friends-flex">
-      <button mat-button *ngIf="groupName" (click)="addNewPeople()">Add more...</button>
+      <button mat-button *ngIf="groupName" (click)="addNewPeople()" class="add-more-button">Add more...</button>
     </div>
 
   </div>

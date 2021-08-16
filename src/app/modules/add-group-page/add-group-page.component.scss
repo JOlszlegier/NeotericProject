@@ -1,3 +1,5 @@
+@import 'src/app/styles/variables.scss';
+
 .shadow-text {
   color: gray;
   font-size: 25px;
@@ -43,6 +45,17 @@
   margin-top: 10px;
 }
 
+.email-friend-input {
+  width: 35%;
+  margin-top: 10px;
+  margin-right: 10px;
+}
+
+.name-friend-input {
+  width: 20%;
+  margin-top: 10px;
+}
+
 .group-name-input {
   height: 30px;
   font-size: 20px;
@@ -57,9 +70,16 @@
   height: 20px;
   margin-top: 10px;
   margin-left: 5px;
-  background-color: red;
+  background-color: #fc0334;
   padding: 0;
-  line-height: 0px;
-  min-width: 0px;
+  line-height: 0;
+  min-width: 0;
   width: 20px;
+}
+
+.add-more-button {
+  background-color: $log-in-button-color;
+  line-height: 0;
+  height: 20px;
+  margin-top: 10px;
 }
