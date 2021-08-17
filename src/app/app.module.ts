@@ -23,6 +23,7 @@ import {SearchPipe} from "./core/pipes/search.pipe";
 import { GroupsComponent } from './modules/main-page/side-bar-left/groups/groups.component';
 import { AddGroupPageComponent } from './modules/add-group-page/add-group-page.component';
 import { CashStatusComponent } from './modules/main-page/center-box/cash-status/cash-status.component';
+import { AddExpenseComponent } from './modules/main-page/center-box/add-expense/add-expense.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { CashStatusComponent } from './modules/main-page/center-box/cash-status/
     SearchPipe,
     GroupsComponent,
     AddGroupPageComponent,
-    CashStatusComponent
+    CashStatusComponent,
+    AddExpenseComponent
   ],
   imports: [
     BrowserModule,
