@@ -2,10 +2,10 @@
   <div class="top-box">
     <div>Dashboard</div>
     <div>
-      <button mat-button class="add-button">Add an Expense</button>
+      <button mat-button class="add-button" (click)="onAddExpenseClick()">Add an Expense</button>
       <button mat-button class="settle-button">Settle Up</button>
     </div>
   </div>
   <app-cash-status></app-cash-status>
-  <app-add-expense></app-add-expense>
+  <app-add-expense *ngIf="expenseDisplay"></app-add-expense>
 </div>
