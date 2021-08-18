@@ -1,10 +1,8 @@
 @import 'src/app/styles/variables.scss';
 
 .flexbox {
-  //only for test purposes
   border-right: solid #DDDDDD 1px;
   border-left: solid #DDDDDD 1px;
-  //
   display: flex;
   height: 95vh;
   flex-direction: column;
@@ -17,7 +15,7 @@
   flex-direction: row;
   height: 50px;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   font-size: 30px;
   color: #333333;
 }
