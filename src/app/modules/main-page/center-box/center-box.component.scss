@@ -2,8 +2,8 @@
 
 .flexbox {
   //only for test purposes
-  border-right: solid black 1px;
-  border-left: solid black 1px;
+  border-right: solid #DDDDDD 1px;
+  border-left: solid #DDDDDD 1px;
   //
   display: flex;
   height: 95vh;
@@ -19,6 +19,7 @@
   display: flex;
   justify-content: space-around;
   font-size: 30px;
+  color: #333333;
 }
 
 .add-button {
