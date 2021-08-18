@@ -3,7 +3,9 @@
 </div>
 
 <ul>
-  <li *ngFor="let friend of friendsList | search: searchPhrase">{{friend}}</li>
+  <li *ngFor="let friend of friendsList | search: searchPhrase" class="singleFriend">
+    <mat-icon class="icon">account_box</mat-icon>
+    <span>{{friend}}</span></li>
 </ul>
 
 <div class="text-box">

@@ -22,3 +22,18 @@
   margin-top: 10px;
   height: 20px;
 }
+
+ul {
+  list-style-type: none;
+}
+
+.singleFriend {
+  display: flex;
+  align-items: center;
+}
+
+.icon {
+  opacity: 0.5;
+  color: grey;
+  margin-right: 5px;
+}
