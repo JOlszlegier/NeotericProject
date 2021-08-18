@@ -16,3 +16,18 @@
 .group-list {
   cursor: pointer;
 }
+
+ul {
+  list-style-type: none;
+}
+
+.singleGroupFlex {
+  display: flex;
+  align-items: center;
+}
+
+.icon {
+  margin-right: 5px;
+  opacity: 0.5;
+  color: gray;
+}

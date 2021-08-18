@@ -15,7 +15,7 @@ export class GroupsComponent implements OnInit, OnDestroy {
     groupName: "Default",
     users: [{email: 'test@wp.p', name: 'Kuba'}, {email: 'test@wp.p', name: 'Maciek'}]
   },
-    {groupName: "Default with group interface", users: [{email: 'test@wp.p', name: 'Kuba'}]}];
+    {groupName: "Default group", users: [{email: 'test@wp.p', name: 'Kuba'}]}];
 
   groupNames: string[] = [];
   selectedGroupUsers: string[] = [];
