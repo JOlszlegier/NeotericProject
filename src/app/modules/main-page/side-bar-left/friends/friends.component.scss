@@ -10,17 +10,21 @@
 
 .friend-flex {
   display: flex;
+  flex-direction: column;
 }
 
 .add-button {
-  font-size: 35px;
-  margin-top: 4px;
+  margin-top: 10px;
+  margin-left: 25%;
+  background-color: $dashboard-color;
+  width: auto;
 }
 
 .input-styling {
   margin-left: 10%;
   margin-top: 10px;
-  height: 20px;
+  height: 30px;
+  width: 80%;
 }
 
 ul {
