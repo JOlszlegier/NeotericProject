@@ -1,3 +1,5 @@
+@import 'src/app/styles/variables.scss';
+
 .expense-box {
   width: 40%;
   height: 370px;
@@ -23,3 +25,19 @@
 .example-chip-list {
   width: 100%;
 }
+
+.mat-chip {
+  min-height: 20px;
+  width: auto;
+}
+
+mat-chip-list {
+  display: flex;
+}
+
+.input-with {
+  height: 15px;
+  font-size: 15px;
+  padding-bottom: 0;
+}
+

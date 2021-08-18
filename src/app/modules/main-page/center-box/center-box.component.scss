@@ -1,3 +1,5 @@
+@import 'src/app/styles/variables.scss';
+
 .flexbox {
   //only for test purposes
   border-right: solid black 1px;
@@ -10,7 +12,7 @@
 
 .top-box {
   width: 100%;
-  background-color: grey;
+  background-color: $dashboard-color;
   align-items: center;
   flex-direction: row;
   height: 50px;
@@ -20,12 +22,12 @@
 }
 
 .add-button {
-  background-color: #F98948;
+  background-color: $add-expense-color;
   margin: 5px;
 }
 
 .settle-button {
-  background-color: #5EFC8D;
+  background-color: $settle-color;
   margin: 5px;
 }
 

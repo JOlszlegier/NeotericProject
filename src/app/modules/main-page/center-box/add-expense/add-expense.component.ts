@@ -1,29 +1,33 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {CashBoxService} from "../../../../core/services/cash-box-service";
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import {MatChipInputEvent} from '@angular/material/chips';
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-add-expense',
   templateUrl: './add-expense.component.html',
   styleUrls: ['./add-expense.component.scss']
 })
-export class AddExpenseComponent implements OnInit {
+export class AddExpenseComponent implements OnInit, OnDestroy {
+  private cashSubscription!: Subscription;
   private displayState: boolean = false;
-
+  addOnBlur: boolean = true;
   selectable: boolean = true;
   removable: boolean = true;
-  addOnBlur = true;
   readonly separatorKeysCodes = [ENTER, COMMA] as const
-  users: string[] = [
-    'Maciek', 'Wojtek'
-  ]
+  users: string[] = []
 
   constructor(private cashService: CashBoxService) {
   }
 
+
   ngOnInit() {
-    this.cashService.displayState.subscribe(state => this.displayState = state)
+    this.cashSubscription = this.cashService.displayState.subscribe(state => this.displayState = state)
+  }
+
+  ngOnDestroy() {
+    this.cashSubscription.unsubscribe();
   }
 
   onClick() {
@@ -33,13 +37,9 @@ export class AddExpenseComponent implements OnInit {
 
   add(event: MatChipInputEvent): void {
     const value = (event.value || '').trim();
-
-    // Add our fruit
     if (value) {
       this.users.push(value);
     }
-
-    // Clear the input value
     event.chipInput!.clear();
   }
 
