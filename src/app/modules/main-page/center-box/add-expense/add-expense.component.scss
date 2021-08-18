@@ -1,8 +1,8 @@
 .expense-box {
-  width: 70%;
+  width: 40%;
   height: 370px;
   background-color: #8EF9F3;
-  margin-left: 15%;
+  margin-left: 30%;
   margin-top: 20px;
   border-radius: 20px;
 }
@@ -17,4 +17,9 @@
 
 .cancel-icon {
   margin-top: 10px;
+  cursor: pointer
+}
+
+.example-chip-list {
+  width: 100%;
 }

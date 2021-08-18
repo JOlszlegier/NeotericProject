@@ -20,10 +20,11 @@ import {MatListModule} from "@angular/material/list";
 import {SearchBarComponent} from './modules/main-page/side-bar-left/search-bar/search-bar.component';
 import {FriendsComponent} from './modules/main-page/side-bar-left/friends/friends.component';
 import {SearchPipe} from "./core/pipes/search.pipe";
-import { GroupsComponent } from './modules/main-page/side-bar-left/groups/groups.component';
-import { AddGroupPageComponent } from './modules/add-group-page/add-group-page.component';
-import { CashStatusComponent } from './modules/main-page/center-box/cash-status/cash-status.component';
-import { AddExpenseComponent } from './modules/main-page/center-box/add-expense/add-expense.component';
+import {GroupsComponent} from './modules/main-page/side-bar-left/groups/groups.component';
+import {AddGroupPageComponent} from './modules/add-group-page/add-group-page.component';
+import {CashStatusComponent} from './modules/main-page/center-box/cash-status/cash-status.component';
+import {AddExpenseComponent} from './modules/main-page/center-box/add-expense/add-expense.component';
+import {MatChipsModule} from "@angular/material/chips";
 
 @NgModule({
   declarations: [
@@ -53,7 +54,8 @@ import { AddExpenseComponent } from './modules/main-page/center-box/add-expense/
     ReactiveFormsModule,
     MatToolbarModule,
     MatIconModule,
-    MatListModule
+    MatListModule,
+    MatChipsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
