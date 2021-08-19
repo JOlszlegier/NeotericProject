@@ -1,4 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
+
 import {CashBoxService} from "../../../core/services/cash-box-service";
 import {Subscription} from "rxjs";
 

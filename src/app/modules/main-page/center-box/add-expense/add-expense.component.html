@@ -1,4 +1,4 @@
-<div class="expense-box">
+<div class="expense-box" [@displayState]="state">
   <mat-toolbar class="top-bar">
     <div>
       Add an expense
@@ -17,12 +17,12 @@
           {{user}}
           <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
         </mat-chip>
-        <input placeholder="New fruit..."
-               [matChipInputFor]="chipList"
-               [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-               [matChipInputAddOnBlur]="addOnBlur"
-               (matChipInputTokenEnd)="add($event)"
-               class="input-with">
+        <input
+          [matChipInputFor]="chipList"
+          [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+          [matChipInputAddOnBlur]="addOnBlur"
+          (matChipInputTokenEnd)="add($event)"
+          class="input-with">
       </mat-chip-list>
     </mat-form-field>
   </div>
