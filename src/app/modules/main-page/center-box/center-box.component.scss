@@ -4,8 +4,9 @@
   border-right: solid #DDDDDD 1px;
   border-left: solid #DDDDDD 1px;
   display: flex;
-  height: 95vh;
+  height: 96.5vh;
   flex-direction: column;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.2)
 }
 
 .top-box {
@@ -31,6 +32,7 @@
 }
 
 .text {
-  margin-left: 10px;
+  margin-left: 20px;
+  font-size: 24px;
 }
 

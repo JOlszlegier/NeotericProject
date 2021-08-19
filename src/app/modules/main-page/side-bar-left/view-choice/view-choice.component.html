@@ -1,18 +1,19 @@
 <mat-list>
   <mat-list-item>
-    <button mat-button>
-      <img src="assets/dashboard.png" class="dashboard-icon" alt="dashboard">
+    <button mat-button (click)="onClick('Dashboard')">
+      <img src="assets/dashboard.png" class="dashboard-icon"
+           alt="dashboard">
       Dashboard
     </button>
   </mat-list-item>
   <mat-list-item>
-    <button mat-button>
+    <button mat-button (click)="onClick('Recent Activities')">
       <mat-icon>flag</mat-icon>
       Recent Activities
     </button>
   </mat-list-item>
   <mat-list-item>
-    <button mat-button>
+    <button mat-button (click)="onClick('All Expenses')">
       <mat-icon> format_list_bulleted</mat-icon>
       All Expenses
     </button>

@@ -1,9 +1,11 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Router} from "@angular/router";
+
 import {searchService} from "../../../../core/services/search-service";
 import {Subscription} from "rxjs";
-import {Router} from "@angular/router";
 import {Group} from "../../../../core/interfaces/interfaces";
 import {GroupService} from "../../../../core/services/group-service";
+import {CenterBoxService} from "../../../../core/services/center-box-service";
 
 @Component({
   selector: 'app-groups',
@@ -15,16 +17,17 @@ export class GroupsComponent implements OnInit, OnDestroy {
     groupName: "Default",
     users: [{email: 'test@wp.p', name: 'Kuba'}, {email: 'test@wp.p', name: 'Maciek'}]
   },
-    {groupName: "Default group", users: [{email: 'test@wp.p', name: 'Kuba'}]}];
+    {groupName: "Default 2", users: [{email: 'test@wp.p', name: 'Kuba'}]}];
 
   groupNames: string[] = [];
   selectedGroupUsers: string[] = [];
-
-
   searchPhrase: string = '';
   searchPhraseSubscription!: Subscription;
+  selectedSubscription !: Subscription;
+  selectedGroupName: string = ''
 
-  constructor(private searchService: searchService, private router: Router, private groupService: GroupService) {
+  constructor(private searchService: searchService, private router: Router,
+              private groupService: GroupService, private centerBoxService: CenterBoxService) {
   }
 
   ngOnInit() {
@@ -33,10 +36,12 @@ export class GroupsComponent implements OnInit, OnDestroy {
       this.groupNames[i] = this.groupArrayTest[i].groupName;
     }
     this.groupService.currentUsers.subscribe(users => this.selectedGroupUsers = users)
+    this.selectedSubscription = this.centerBoxService.selected.subscribe(selected => this.selectedGroupName = selected)
   }
 
   ngOnDestroy() {
     this.searchPhraseSubscription.unsubscribe();
+    this.selectedSubscription.unsubscribe();
   }
 
   newGroupLink() {
@@ -49,6 +54,7 @@ export class GroupsComponent implements OnInit, OnDestroy {
       this.selectedGroupUsers[i] = this.groupArrayTest[this.groupNames.indexOf(groupName)].users[i].name
     }
     this.groupService.changeSearch(this.selectedGroupUsers);
+    this.centerBoxService.onChangeSelected(groupName);
   }
 
 

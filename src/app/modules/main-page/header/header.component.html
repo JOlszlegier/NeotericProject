@@ -1,15 +1,15 @@
 <div class="header-grid">
   <div class="logo">
     <div class="logo-flex">
-      <span>Splitwise</span>
+      <a>
+        <img src="assets/splitwise-logo-header.png" class="logo-img">
+      </a>
     </div>
   </div>
 
   <div class="settings">
     <div class="settings-flex">
-      <button mat-icon-button [matMenuTriggerFor]="menu">
-        <mat-icon>settings</mat-icon>
-      </button>
+      <mat-icon class="setting-icon" [matMenuTriggerFor]="menu">settings</mat-icon>
       <mat-menu #menu="matMenu" class="dropdown" xPosition="before">
         <button mat-menu-item (click)="onLogout()">Logout</button>
       </mat-menu>

@@ -2,6 +2,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 
 import {CashBoxService} from "../../../core/services/cash-box-service";
 import {Subscription} from "rxjs";
+import {CenterBoxService} from "../../../core/services/center-box-service";
 
 @Component({
   selector: 'app-center-box',
@@ -11,9 +12,13 @@ import {Subscription} from "rxjs";
 export class CenterBoxComponent implements OnInit, OnDestroy {
   expenseDisplay: boolean = false;
   private cashSubscription!: Subscription;
+  private selectedSubscription!: Subscription;
+  public displayString: string = 'Dashboard'
 
-  constructor(private cashService: CashBoxService) {
+  constructor(private cashService: CashBoxService,
+              private centerBoxService: CenterBoxService) {
   }
+
 
   onAddExpenseClick() {
     this.expenseDisplay = !this.expenseDisplay;
@@ -22,6 +27,8 @@ export class CenterBoxComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.cashSubscription = this.cashService.displayState.subscribe(state => this.expenseDisplay = state);
+    this.selectedSubscription = this.centerBoxService.selected.subscribe(
+      selected => this.displayString = selected)
   }
 
   ngOnDestroy() {

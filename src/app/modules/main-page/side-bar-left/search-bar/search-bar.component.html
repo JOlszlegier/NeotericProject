@@ -1,6 +1,10 @@
 <div class="search-flex">
-  <input matInput placeholder="Search" type="text" class="input-styling" autocomplete="off"
-         [(ngModel)]="searchText"
-         (ngModelChange)="valueChange($event)"
-  >
+  <mat-form-field class="input-styling" appearance="fill">
+    <mat-label>Legacy form field</mat-label>
+    <input matInput type="text" autocomplete="off"
+           [(ngModel)]="searchText"
+           (ngModelChange)="valueChange($event)"
+    >
+    <mat-icon matSuffix>search</mat-icon>
+  </mat-form-field>
 </div>
