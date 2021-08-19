@@ -7,9 +7,12 @@
 
   <div class="settings">
     <div class="settings-flex">
-      <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
+      <button mat-icon-button [matMenuTriggerFor]="menu">
         <mat-icon>settings</mat-icon>
       </button>
+      <mat-menu #menu="matMenu" class="dropdown" xPosition="before">
+        <button mat-menu-item (click)="onLogout()">Logout</button>
+      </mat-menu>
     </div>
   </div>
 </div>
