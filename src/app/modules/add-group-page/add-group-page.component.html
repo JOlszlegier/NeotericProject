@@ -6,10 +6,12 @@
 
     <p class="shadow-text">Start a new group</p>
     <p class="main-text">My group shall be called....</p>
+
     <input matInput type="text" placeholder="Your new group..."
-           class="input-styling group-name-input"
+           class="input-styling "
            autocomplete="off"
            [(ngModel)]="groupName">
+
     <form #newUserForm="ngForm">
       <div class="friends-flex" *ngFor="let human of groupNewPeople.controls; index as i">
         <input class="email-friend-input" placeholder="email" *ngIf="groupName"
@@ -20,11 +22,10 @@
                [(ngModel)]="newGroupUsers[i].name" name="name" required
                autocomplete="off">
 
-        <button mat-button class="delete-friend-button"
-                *ngIf="groupName" (click)="removePeople(i)">X
-        </button>
+        <mat-icon class="delete-icon" *ngIf="groupName" (click)="removePeople(i)">clear</mat-icon>
       </div>
     </form>
+
     <div class="friends-flex">
       <button mat-button *ngIf="groupName" (click)="addNewPeople()"
               class="add-more-button">Add more...
@@ -36,5 +37,6 @@
               class="add-more-button" [disabled]="newUserForm.invalid">Save
       </button>
     </div>
+
   </div>
 </div>

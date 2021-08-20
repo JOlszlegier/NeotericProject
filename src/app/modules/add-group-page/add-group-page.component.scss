@@ -43,6 +43,11 @@
 .input-styling {
   width: 60%;
   margin-top: 10px;
+  border: 1px solid #DDDDDD;
+  border-radius: 15px;
+  height: 30px;
+  font-size: 20px;
+  padding: 5px;
 }
 
 .email-friend-input {
@@ -50,34 +55,22 @@
   margin-top: 10px;
   margin-right: 10px;
   padding: 5px;
+  border: 1px solid #333333;
+  border-radius: 15px;
 }
 
 .name-friend-input {
   width: 20%;
   margin-top: 10px;
   padding: 5px;
+  border: 1px solid #333333;
+  border-radius: 15px;
 }
 
-.group-name-input {
-  height: 30px;
-  font-size: 20px;
-  padding: 5px;
-}
 
 .friends-flex {
   display: flex;
   height: 30px;
-}
-
-.delete-friend-button {
-  height: 20px;
-  margin-top: 10px;
-  margin-left: 5px;
-  background-color: #fc0334;
-  padding: 0;
-  line-height: 0;
-  min-width: 0;
-  width: 20px;
 }
 
 .add-more-button {
@@ -85,10 +78,22 @@
   line-height: 0;
   height: 20px;
   margin-top: 10px;
+  font-weight: bold;
 }
 
 
 .save-button {
   width: 50%;
   background-color: $log-in-button-color;
+  font-weight: bold;
+}
+
+
+.delete-icon {
+  width: 20px;
+  height: 20px;
+  color: #CC0000;
+  margin-top: 8px;
+  cursor: pointer;
+  margin-left: 5px;
 }
