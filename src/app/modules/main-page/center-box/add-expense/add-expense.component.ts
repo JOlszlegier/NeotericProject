@@ -1,10 +1,10 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
+import {animate, state, style, transition, trigger} from "@angular/animations";
+import {MatChipInputEvent} from '@angular/material/chips';
 
 import {CashBoxService} from "../../../../core/services/cash-box-service";
-import {MatChipInputEvent} from '@angular/material/chips';
 import {Subscription} from "rxjs";
-import {animate, state, style, transition, trigger} from "@angular/animations";
 
 @Component({
   selector: 'app-add-expense',
@@ -25,31 +25,29 @@ import {animate, state, style, transition, trigger} from "@angular/animations";
 export class AddExpenseComponent implements OnInit, OnDestroy {
   private cashSubscription!: Subscription;
   private displayState: boolean = false;
-  addOnBlur: boolean = true;
-  selectable: boolean = true;
-  removable: boolean = true;
+  public addOnBlur: boolean = true;
+  public selectable: boolean = true;
+  public removable: boolean = true;
   readonly separatorKeysCodes = [ENTER, COMMA] as const
-  users: string[] = []
-
-  state: string = 'hidden';
+  public users: string[] = []
+  public state: string = 'hidden';
 
   constructor(private cashService: CashBoxService) {
   }
 
-
-  ngOnInit() {
+  ngOnInit(): void {
     this.cashSubscription = this.cashService.displayState.subscribe(state => this.displayState = state)
     setTimeout(() => {
       this.state = 'normal'
     }, 0)
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.cashSubscription.unsubscribe();
     this.state = 'hidden'
   }
 
-  onClick() {
+  onClick(): void {
     this.displayState = !this.displayState
     this.cashService.onChangeDisplay(this.displayState)
   }

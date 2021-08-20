@@ -53,7 +53,7 @@ export class AuthPageComponent implements OnInit {
     this.authService.onLogInActions();
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     setTimeout(() => {
       this.state = 'normal'
     }, 300)

@@ -19,19 +19,18 @@ export class CenterBoxComponent implements OnInit, OnDestroy {
               private centerBoxService: CenterBoxService) {
   }
 
-
-  onAddExpenseClick() {
+  onAddExpenseClick(): void {
     this.expenseDisplay = !this.expenseDisplay;
     this.cashService.onChangeDisplay(this.expenseDisplay);
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.cashSubscription = this.cashService.displayState.subscribe(state => this.expenseDisplay = state);
     this.selectedSubscription = this.centerBoxService.selected.subscribe(
       selected => this.displayString = selected)
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.cashSubscription.unsubscribe();
   }
 
