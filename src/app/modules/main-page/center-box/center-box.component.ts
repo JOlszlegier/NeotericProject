@@ -1,5 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
+
 import {CashBoxService} from "../../../core/services/cash-box-service";
 import {Subscription} from "rxjs";
 import {CenterBoxService} from "../../../core/services/center-box-service";
@@ -23,7 +24,9 @@ export class CenterBoxComponent implements OnInit, OnDestroy {
 
   onAddExpenseClick(): void {
     this.matDialog.open(AddExpenseComponent);
+    this.cashService.onChangeDisplay(true);
   }
+
 
   ngOnInit(): void {
     this.cashSubscription = this.cashService.displayState.subscribe(state => this.expenseDisplay = state);

@@ -24,4 +24,6 @@
   </mat-form-field>
 </div>
 
-<button mat-button (click)="addFriend(newFriend)" class="add-button" type="submit">Add new friend</button>
+<button mat-button (click)="addFriend(newFriend)" class="add-button" type="submit" [disabled]="!newFriend">Add new
+  friend
+</button>

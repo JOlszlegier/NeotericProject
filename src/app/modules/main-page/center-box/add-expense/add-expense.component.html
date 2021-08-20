@@ -1,10 +1,10 @@
-<div class="expense-box" [@displayState]="state">
+<div class="expense-box">
   <mat-toolbar class="top-bar">
     <div>
       Add an expense
     </div>
     <div>
-      <mat-icon class="cancel-icon">cancel</mat-icon>
+      <mat-icon class="cancel-icon" (click)="onClick()">cancel</mat-icon>
     </div>
   </mat-toolbar>
   <!--example-->

@@ -1,6 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
-import {animate, state, style, transition, trigger} from "@angular/animations";
 import {MatChipInputEvent} from '@angular/material/chips';
 
 import {CashBoxService} from "../../../../core/services/cash-box-service";
@@ -10,17 +9,6 @@ import {Subscription} from "rxjs";
   selector: 'app-add-expense',
   templateUrl: './add-expense.component.html',
   styleUrls: ['./add-expense.component.scss'],
-  animations: [
-    trigger('displayState', [
-      state('hidden', style({
-        'opacity': 0.2
-      })),
-      state('normal', style({
-        'opacity': 1
-      })),
-      transition('hidden => normal', animate(600)),
-    ])
-  ]
 })
 export class AddExpenseComponent implements OnInit, OnDestroy {
   private cashSubscription!: Subscription;
@@ -30,23 +18,22 @@ export class AddExpenseComponent implements OnInit, OnDestroy {
   public removable: boolean = true;
   readonly separatorKeysCodes = [ENTER, COMMA] as const
   public users: string[] = []
-  public state: string = 'hidden';
+
 
   constructor(private cashService: CashBoxService) {
   }
 
   ngOnInit(): void {
     this.cashSubscription = this.cashService.displayState.subscribe(state => this.displayState = state)
-    setTimeout(() => {
-      this.state = 'normal'
-    }, 0)
   }
 
   ngOnDestroy(): void {
     this.cashSubscription.unsubscribe();
-    this.state = 'hidden'
   }
 
+  onClick() {
+    this.cashService.onChangeDisplay(false);
+  }
 
   add(event: MatChipInputEvent): void {
     const value = (event.value || '').trim();
