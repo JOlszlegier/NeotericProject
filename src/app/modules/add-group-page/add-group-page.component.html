@@ -12,6 +12,8 @@
            autocomplete="off"
            [(ngModel)]="groupName">
 
+    <!--TODO border radius on click not working-->
+
     <form #newUserForm="ngForm">
       <div class="friends-flex" *ngFor="let human of groupNewPeople.controls; index as i">
         <input class="email-friend-input" placeholder="email" *ngIf="groupName"
@@ -37,6 +39,6 @@
               class="add-more-button" [disabled]="newUserForm.invalid">Save
       </button>
     </div>
-
+    <!--TODO button looks like not disabled + form is valid whenever we remove formControl-->
   </div>
 </div>

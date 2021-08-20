@@ -11,30 +11,30 @@ import {GroupService} from "../../core/services/group-service";
   styleUrls: ['./add-group-page.component.scss']
 })
 export class AddGroupPageComponent implements OnInit {
-  groupName: string = '';
-  groupNewPeople: FormArray = new FormArray([])
-  newGroupUsers: User[] = []
+  public groupName: string = '';
+  public groupNewPeople: FormArray = new FormArray([])
+  public newGroupUsers: User[] = []
 
   constructor(private router: Router, private groupService: GroupService) {
   }
 
-  addNewPeople() {
+  addNewPeople(): void {
     this.groupNewPeople.controls.push(new FormControl(''));
     this.newGroupUsers.push({email: '', name: ''})
   }
 
-  removePeople(index: number) {
+  removePeople(index: number): void {
     this.groupNewPeople.removeAt(index);
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     for (let i = 0; i < 3; i++) {
       this.groupNewPeople.controls.push(new FormControl(''))
       this.newGroupUsers.push({email: '', name: ''})
     }
   }
 
-  saveGroup() {
+  saveGroup(): void {
     this.groupService.addNewGroup(this.groupName, this.newGroupUsers)
     this.router.navigate(['/main'])
   }
