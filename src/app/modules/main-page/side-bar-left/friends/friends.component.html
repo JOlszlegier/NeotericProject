@@ -13,13 +13,15 @@
 </div>
 
 <div class="friend-flex">
-  <input matInput placeholder="Add friend"
-         type="text"
-         class="input-styling"
-         autocomplete="off"
-         [(ngModel)]="newFriend"
-         name="friendName"
-  >
-
+  <mat-form-field appearance="fill" class="input-styling">
+    <mat-label>Type email</mat-label>
+    <input matInput
+           type="text"
+           autocomplete="off"
+           [(ngModel)]="newFriend"
+           name="friendName">
+    <mat-icon matSuffix>add</mat-icon>
+  </mat-form-field>
 </div>
+
 <button mat-button (click)="addFriend(newFriend)" class="add-button" type="submit">Add new friend</button>
