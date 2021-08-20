@@ -7,10 +7,11 @@ import {Router} from "@angular/router";
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent {
+
   constructor(private router: Router) {
   }
 
-  onLogout() {
+  onLogout(): void {
     this.router.navigate([''])
   }
 }

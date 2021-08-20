@@ -8,6 +8,8 @@ import {MatToolbarModule} from "@angular/material/toolbar";
 import {MatChipsModule} from "@angular/material/chips";
 import {MatIconModule} from "@angular/material/icon";
 import {MatListModule} from "@angular/material/list";
+import {MatMenuModule} from "@angular/material/menu";
+import {MatDialogModule} from '@angular/material/dialog';
 
 
 import {AppComponent} from './app.component';
@@ -26,7 +28,6 @@ import {GroupsComponent} from './modules/main-page/side-bar-left/groups/groups.c
 import {AddGroupPageComponent} from './modules/add-group-page/add-group-page.component';
 import {CashStatusComponent} from './modules/main-page/center-box/cash-status/cash-status.component';
 import {AddExpenseComponent} from './modules/main-page/center-box/add-expense/add-expense.component';
-import {MatMenuModule} from "@angular/material/menu";
 
 
 @NgModule({
@@ -59,7 +60,8 @@ import {MatMenuModule} from "@angular/material/menu";
     MatIconModule,
     MatListModule,
     MatChipsModule,
-    MatMenuModule
+    MatMenuModule,
+    MatDialogModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -8,12 +8,13 @@ import {Subscription} from "rxjs";
   templateUrl: './friends.component.html',
   styleUrls: ['./friends.component.scss']
 })
+
 export class FriendsComponent implements OnInit, OnDestroy {
 
-  friendsList: string[] = ['Kacper', 'Ola']
-  searchPhrase: string = '';
-  newFriend: string = '';
-  searchPhraseSubscription!: Subscription;
+  public friendsList: string[] = ['Kacper', 'Ola']
+  public searchPhrase: string = '';
+  public newFriend: string = '';
+  public searchPhraseSubscription!: Subscription;
 
   constructor(private searchService: searchService) {
   }

@@ -47,10 +47,6 @@ export class AddExpenseComponent implements OnInit, OnDestroy {
     this.state = 'hidden'
   }
 
-  onClick(): void {
-    this.displayState = !this.displayState
-    this.cashService.onChangeDisplay(this.displayState)
-  }
 
   add(event: MatChipInputEvent): void {
     const value = (event.value || '').trim();

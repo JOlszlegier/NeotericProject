@@ -1,4 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
+
 import {searchService} from "../../../../core/services/search-service";
 import {Subscription} from "rxjs";
 
@@ -7,18 +8,20 @@ import {Subscription} from "rxjs";
   templateUrl: './search-bar.component.html',
   styleUrls: ['./search-bar.component.scss']
 })
+
 export class SearchBarComponent implements OnInit, OnDestroy {
-  searchText: string = '';
-  searchTextSubscription!: Subscription;
+  public searchText: string = '';
+  public searchTextSubscription!: Subscription;
 
   constructor(private searchService: searchService) {
   }
 
   ngOnInit(): void {
-    this.searchTextSubscription = this.searchService.currentSearch.subscribe(search => this.searchText = search);
+    this.searchTextSubscription = this.searchService.currentSearch.subscribe(
+      search => this.searchText = search);
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.searchTextSubscription.unsubscribe();
   }
 

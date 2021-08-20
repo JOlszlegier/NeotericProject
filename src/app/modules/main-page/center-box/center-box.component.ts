@@ -1,8 +1,9 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-
+import {MatDialog} from '@angular/material/dialog';
 import {CashBoxService} from "../../../core/services/cash-box-service";
 import {Subscription} from "rxjs";
 import {CenterBoxService} from "../../../core/services/center-box-service";
+import {AddExpenseComponent} from "./add-expense/add-expense.component";
 
 @Component({
   selector: 'app-center-box',
@@ -16,12 +17,12 @@ export class CenterBoxComponent implements OnInit, OnDestroy {
   public displayString: string = 'Dashboard'
 
   constructor(private cashService: CashBoxService,
-              private centerBoxService: CenterBoxService) {
+              private centerBoxService: CenterBoxService,
+              private matDialog: MatDialog) {
   }
 
   onAddExpenseClick(): void {
-    this.expenseDisplay = !this.expenseDisplay;
-    this.cashService.onChangeDisplay(this.expenseDisplay);
+    this.matDialog.open(AddExpenseComponent);
   }
 
   ngOnInit(): void {

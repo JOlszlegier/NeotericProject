@@ -1,4 +1,5 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+
 import {Subscription} from "rxjs";
 import {CenterBoxService} from "../../../../core/services/center-box-service";
 
@@ -7,19 +8,23 @@ import {CenterBoxService} from "../../../../core/services/center-box-service";
   templateUrl: './view-choice.component.html',
   styleUrls: ['./view-choice.component.scss']
 })
-export class ViewChoiceComponent implements OnInit {
+export class ViewChoiceComponent implements OnInit, OnDestroy {
   constructor(private centerBoxService: CenterBoxService) {
   }
 
-  selectedCenterBoxView: string = '';
-  selectedSubscription!: Subscription;
+  public selectedCenterBoxView: string = '';
+  public selectedSubscription!: Subscription;
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.selectedSubscription = this.centerBoxService.selected.subscribe(
       selected => this.selectedCenterBoxView = selected)
   }
 
-  onClick(selected: string) {
+  ngOnDestroy(): void {
+    this.selectedSubscription.unsubscribe();
+  }
+
+  onClick(selected: string): void {
     this.centerBoxService.onChangeSelected(selected);
   }
 }
