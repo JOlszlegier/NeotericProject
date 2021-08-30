@@ -11,14 +11,15 @@ import {Subscription} from "rxjs";
   styleUrls: ['./add-expense.component.scss'],
 })
 export class AddExpenseComponent implements OnInit, OnDestroy {
-  private cashSubscription!: Subscription;
-  private displayState: boolean = false;
   public addOnBlur: boolean = true;
   public selectable: boolean = true;
   public removable: boolean = true;
-  readonly separatorKeysCodes = [ENTER, COMMA] as const
   public users: string[] = []
 
+  private cashSubscription!: Subscription;
+  private displayState: boolean = false;
+
+  readonly separatorKeysCodes = [ENTER, COMMA] as const
 
   constructor(private cashService: CashBoxService) {
   }
@@ -31,7 +32,7 @@ export class AddExpenseComponent implements OnInit, OnDestroy {
     this.cashSubscription.unsubscribe();
   }
 
-  onClick() {
+  onClick(): void {
     this.cashService.onChangeDisplay(false);
   }
 

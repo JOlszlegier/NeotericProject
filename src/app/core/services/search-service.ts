@@ -6,9 +6,9 @@ import {Injectable} from "@angular/core";
 
 export class searchService {
   private searchSource = new BehaviorSubject<string>('');
-  currentSearch = this.searchSource.asObservable();
+  public currentSearch = this.searchSource.asObservable();
 
-  changeSearch(message: string): void {
+  public changeSearch(message: string): void {
     this.searchSource.next(message);
   }
 

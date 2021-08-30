@@ -11,7 +11,7 @@ export class HeaderComponent {
   constructor(private router: Router) {
   }
 
-  onLogout(): void {
+  public onLogout(): void {
     this.router.navigate([''])
   }
 }

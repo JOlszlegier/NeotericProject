@@ -12,9 +12,9 @@ import {AddExpenseComponent} from "./add-expense/add-expense.component";
   styleUrls: ['./center-box.component.scss']
 })
 export class CenterBoxComponent implements OnInit, OnDestroy {
+
   expenseDisplay: boolean = false;
-  private cashSubscription!: Subscription;
-  private selectedSubscription!: Subscription;
+  private subscriptions!: Subscription;
   public displayString: string = 'Dashboard'
 
   constructor(private cashService: CashBoxService,
@@ -29,13 +29,13 @@ export class CenterBoxComponent implements OnInit, OnDestroy {
 
 
   ngOnInit(): void {
-    this.cashSubscription = this.cashService.displayState.subscribe(state => this.expenseDisplay = state);
-    this.selectedSubscription = this.centerBoxService.selected.subscribe(
+    this.subscriptions = this.cashService.displayState.subscribe(state => this.expenseDisplay = state);
+    this.subscriptions = this.centerBoxService.selected.subscribe(
       selected => this.displayString = selected)
   }
 
   ngOnDestroy(): void {
-    this.cashSubscription.unsubscribe();
+    this.subscriptions.unsubscribe();
   }
 
 }

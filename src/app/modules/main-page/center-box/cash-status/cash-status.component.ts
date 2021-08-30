@@ -6,5 +6,5 @@ import {Component} from '@angular/core';
   styleUrls: ['./cash-status.component.scss']
 })
 export class CashStatusComponent {
-  moneyTest: number[] = [-10, 2, 25]
+  public moneyTest: number[] = [-10, 2, 25]
 }

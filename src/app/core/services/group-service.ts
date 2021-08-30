@@ -11,11 +11,11 @@ export class GroupService {
   currentUsers = this.userSource.asObservable();
 
 
-  addNewGroup(groupName: string, groupUsers: User[]) {
+  public addNewGroup(groupName: string, groupUsers: User[]): void {
     this.AllGroup.push({groupName: groupName, users: groupUsers})
   }
 
-  changeSearch(users: string[]): void {
+  public changeSearch(users: string[]): void {
     this.userSource.next(users);
   }
 

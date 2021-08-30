@@ -7,11 +7,11 @@ export class CashBoxService {
   private displaySource = new BehaviorSubject<boolean>(false)
   displayState = this.displaySource.asObservable();
 
-  onChangeDisplay(state: boolean) {
+  public onChangeDisplay(state: boolean): void {
     this.displaySource.next(state);
   }
 
-  dialogClose(dialog: MatDialog) {
+  public dialogClose(dialog: MatDialog): void {
     dialog.closeAll();
   }
 }

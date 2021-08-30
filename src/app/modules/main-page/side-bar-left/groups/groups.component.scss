@@ -5,12 +5,14 @@
   text-align: center;
   background-color: $bars-color;
   margin-left: 10%;
+  border-radius: 5px;
 }
 
 .add-button {
   margin-left: 25%;
   background-color: $left-side-color;
   border: 1px solid #DDDDDD;
+  font-weight: bold;
 }
 
 .group-list {

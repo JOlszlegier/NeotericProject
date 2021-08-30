@@ -7,7 +7,7 @@ export class CenterBoxService {
   private selectedSource = new BehaviorSubject<string>('Dashboard')
   selected = this.selectedSource.asObservable();
 
-  onChangeSelected(selected: string) {
+  public onChangeSelected(selected: string): void {
     this.selectedSource.next(selected);
   }
 
