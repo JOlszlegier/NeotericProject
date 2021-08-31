@@ -13,7 +13,7 @@
 
       <div *ngFor="let users of users.controls; let i=index" formArrayName="users">
         <div class="single-user">
-          <input [formControlName]="i" class="email-friend-input">
+          <input [formControlName]="i" class="email-friend-input" email>
           <mat-icon (click)="removePeople(i)" class="delete-icon">delete</mat-icon>
         </div>
       </div>

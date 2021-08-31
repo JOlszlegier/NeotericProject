@@ -1,9 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import {FormArray, FormBuilder, Validators} from "@angular/forms";
-
-
-import {User} from "../../core/interfaces/interfaces";
 import {GroupService} from "../../core/services/group-service";
 
 @Component({
@@ -12,8 +9,7 @@ import {GroupService} from "../../core/services/group-service";
   styleUrls: ['./add-group-page.component.scss']
 })
 export class AddGroupPageComponent implements OnInit {
-  public groupName: string = '';
-  public newGroupUsers: User[] = [];
+
 
   formTemplate = this.fb.group({
     groupName: [''],
@@ -46,8 +42,7 @@ export class AddGroupPageComponent implements OnInit {
 
   saveGroup(): void {
     console.log(this.formTemplate.getRawValue())
-    this.groupName = this.formTemplate.getRawValue().groupName;
-    this.groupService.addNewGroup(this.groupName, this.newGroupUsers)
+    //this.groupService.addNewGroup(this.groupName, this.newGroupUsers)
     this.router.navigate(['/main'])
   }
 }

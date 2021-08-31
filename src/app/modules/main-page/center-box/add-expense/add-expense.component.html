@@ -38,7 +38,7 @@
           </select>
         </div>
         <p>Paid by
-          <button mat-button (click)="onClick()">you</button>
+          <button mat-button (click)="payerSelect()">{{whoPays}}</button>
           and split
           <button mat-button>equally</button>
           .
@@ -47,6 +47,8 @@
     </div>
   </div>
   <div class="user-box" *ngIf="this.isUserBoxVisible">
-    <p>: ( </p>
+    <ul>
+      <li *ngFor="let user of users" (click)="userSelect(user)">{{user}}</li>
+    </ul>
   </div>
 </div>

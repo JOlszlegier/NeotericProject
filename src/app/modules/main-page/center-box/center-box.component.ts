@@ -23,7 +23,7 @@ export class CenterBoxComponent implements OnInit, OnDestroy {
   }
 
   onAddExpenseClick(): void {
-    this.matDialog.open(AddExpenseComponent);
+    this.matDialog.open(AddExpenseComponent, {panelClass: 'custom-dialog-class'})
     this.cashService.onChangeDisplay(true);
   }
 

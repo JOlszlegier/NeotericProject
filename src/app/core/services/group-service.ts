@@ -12,7 +12,7 @@ export class GroupService {
 
 
   public addNewGroup(groupName: string, groupUsers: User[]): void {
-    this.AllGroup.push({groupName: groupName, users: groupUsers})
+    this.AllGroup.push({groupName, users: groupUsers})
   }
 
   public changeSearch(users: string[]): void {
