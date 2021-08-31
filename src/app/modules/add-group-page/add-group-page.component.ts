@@ -16,6 +16,7 @@ export class AddGroupPageComponent implements OnInit {
   public newGroupUsers: User[] = [];
 
   formTemplate = this.fb.group({
+    groupName: [''],
     users: this.fb.array([
       this.fb.control('', Validators.required)
     ])
@@ -41,9 +42,9 @@ export class AddGroupPageComponent implements OnInit {
   }
 
   saveGroup(): void {
-    this.groupService.addNewGroup(this.groupName, this.newGroupUsers)
-    console.log(this.newGroupUsers);
+    console.log(this.formTemplate.getRawValue())
 
-    // this.router.navigate(['/main'])
+    this.groupService.addNewGroup(this.groupName, this.newGroupUsers)
+    this.router.navigate(['/main'])
   }
 }

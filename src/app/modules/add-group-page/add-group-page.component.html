@@ -7,23 +7,22 @@
     <p class="shadow-text">Start a new group</p>
     <p class="main-text">My group shall be called....</p>
 
-    <input matInput type="text" placeholder="Your new group..."
-           class="input-styling "
-           autocomplete="off"
-           [(ngModel)]="groupName">
+    <form [formGroup]="formTemplate">
+      <input type="text" formControlName="groupName" placeholder="groupname" class="input-styling">
 
-    <div *ngFor="let users of users.controls; let i=index">
-      <input matInput placeholder={{i}} *ngIf="groupName">
-    </div>
+      <div *ngFor="let users of users.controls; let i=index" formArrayName="users">
+        <input [formControlName]="i" class="email-friend-input" email>
+      </div>
+    </form>
 
     <div class="friends-flex">
-      <button mat-button *ngIf="groupName" (click)="addNewPeople()"
+      <button mat-button (click)="addNewPeople()"
               class="add-more-button">Add more...
       </button>
     </div>
 
     <div class="friends-flex">
-      <button mat-button *ngIf="groupName" (click)="saveGroup()"
+      <button mat-button (click)="saveGroup()" [disabled]="formTemplate.invalid"
               class="add-more-button">Save
       </button>
     </div>
