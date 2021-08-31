@@ -1,8 +1,7 @@
 @import 'src/app/styles/variables.scss';
 
 .flexbox {
-  border-right: solid #DDDDDD 1px;
-  border-left: solid #DDDDDD 1px;
+
   display: flex;
   height: 96.5vh;
   flex-direction: column;
@@ -10,7 +9,6 @@
 }
 
 .top-box {
-  width: 100%;
   background-color: $dashboard-color;
   align-items: center;
   flex-direction: row;
@@ -19,6 +17,8 @@
   justify-content: space-between;
   font-size: 30px;
   color: #333333;
+  border-right: solid #DDDDDD 1px;
+  border-left: solid #DDDDDD 1px;
 }
 
 .add-button {
