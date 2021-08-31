@@ -8,12 +8,18 @@
     <p class="main-text">My group shall be called....</p>
 
     <form [formGroup]="formTemplate">
-      <input type="text" formControlName="groupName" placeholder="groupname" class="input-styling">
+      <input type="text" formControlName="groupName" class="input-styling">
+
 
       <div *ngFor="let users of users.controls; let i=index" formArrayName="users">
-        <input [formControlName]="i" class="email-friend-input" email>
+        <div class="single-user">
+          <input [formControlName]="i" class="email-friend-input">
+          <mat-icon (click)="removePeople(i)" class="delete-icon">delete</mat-icon>
+        </div>
       </div>
+
     </form>
+
 
     <div class="friends-flex">
       <button mat-button (click)="addNewPeople()"
@@ -23,7 +29,7 @@
 
     <div class="friends-flex">
       <button mat-button (click)="saveGroup()" [disabled]="formTemplate.invalid"
-              class="add-more-button">Save
+              class="save-button">Save
       </button>
     </div>
 

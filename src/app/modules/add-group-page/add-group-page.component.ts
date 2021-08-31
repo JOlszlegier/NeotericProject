@@ -34,6 +34,9 @@ export class AddGroupPageComponent implements OnInit {
     this.users.push(this.fb.control(''));
   }
 
+  removePeople(index: number) {
+    this.users.removeAt(index);
+  }
 
   ngOnInit(): void {
     for (let i = 0; i < 2; i++) {
