@@ -2,7 +2,6 @@
 
 .expense-box {
   width: 100%;
-  height: 370px;
   border-radius: 20px;
   background-color: #F5F5F5;
 }
@@ -37,5 +36,65 @@ mat-chip-list {
   height: 15px;
   font-size: 15px;
   padding-bottom: 0;
+}
+
+.description-input {
+  border: #DDDDDD 1px solid;
+  margin-top: 10px;
+  border-radius: 5px;
+  padding: 2px;
+  width: 65%
+}
+
+.amount-input {
+  border: #DDDDDD 1px solid;
+  margin-top: 10px;
+  border-radius: 5px;
+  padding: 10px;
+  height: 40px;
+  font-size: 30px;
+  width: 40%
+}
+
+.expense-info {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+select {
+  width: 15%;
+  font-size: 20px;
+  border: #DDDDDD 1px solid;
+  border-radius: 2px;
+  padding: 0;
+  margin-top: 25px;
+  margin-left: 5px;
+}
+
+.amount-field {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+button {
+  border: #333333 1px solid;
+  padding: 2px;
+  min-width: 0;
+}
+
+
+.user-box {
+  width: 200px;
+  height: 100%;
+}
+
+.main-expense-box {
+  display: flex;
+  width: 100%;
 }
 

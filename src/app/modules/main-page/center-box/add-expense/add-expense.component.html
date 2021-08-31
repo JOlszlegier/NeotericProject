@@ -1,32 +1,52 @@
-<div class="expense-box">
-  <mat-toolbar class="top-bar">
-    <div>
-      Add an expense
+<div class="main-expense-box">
+  <div class="expense-box">
+    <mat-toolbar class="top-bar">
+      <div>
+        Add an expense
+      </div>
+      <div>
+        <mat-icon class="cancel-icon" mat-dialog-close>cancel</mat-icon>
+      </div>
+    </mat-toolbar>
+
+    <div class="with-box">
+      <mat-form-field class="example-chip-list" appearance="fill">
+        <mat-label>Share with:</mat-label>
+        <mat-chip-list #chipList aria-label="Users selection">
+          <mat-chip *ngFor="let user of users" [selectable]="selectable"
+                    [removable]="removable" (removed)="remove(user)" class="chip">
+            {{user}}
+            <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+          </mat-chip>
+          <input
+            [matChipInputFor]="chipList"
+            [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+            [matChipInputAddOnBlur]="addOnBlur"
+            (matChipInputTokenEnd)="add($event)"
+            class="input-with">
+        </mat-chip-list>
+      </mat-form-field>
+
+      <div class="expense-info">
+        <input matInput class="description-input" placeholder="Description" autocomplete="off">
+        <div class="amount-field">
+          <input matInput class="amount-input" placeholder="0.00" autocomplete="off" type="number" step="0.1">
+          <select matNativeControl required matSuffix>
+            <option value="PLN">PLN</option>
+            <option value="USD">USD</option>
+            <option value="EUR">EUR</option>
+          </select>
+        </div>
+        <p>Paid by
+          <button mat-button (click)="onClick()">you</button>
+          and split
+          <button mat-button>equally</button>
+          .
+        </p>
+      </div>
     </div>
-    <div>
-      <mat-icon class="cancel-icon" mat-dialog-close (click)="onClick()">cancel</mat-icon>
-    </div>
-  </mat-toolbar>
-  <!--example-->
-  <div class="with-box">
-    <mat-form-field class="example-chip-list" appearance="fill">
-      <mat-label>Share with:</mat-label>
-      <mat-chip-list #chipList aria-label="Users selection">
-        <mat-chip *ngFor="let user of users" [selectable]="selectable"
-                  [removable]="removable" (removed)="remove(user)" class="chip">
-          {{user}}
-          <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
-        </mat-chip>
-        <input
-          [matChipInputFor]="chipList"
-          [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-          [matChipInputAddOnBlur]="addOnBlur"
-          (matChipInputTokenEnd)="add($event)"
-          class="input-with">
-      </mat-chip-list>
-    </mat-form-field>
   </div>
-  <!--example end-->
-
-
+  <div class="user-box" *ngIf="this.isUserBoxVisible">
+    <p>: ( </p>
+  </div>
 </div>

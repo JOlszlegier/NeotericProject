@@ -46,7 +46,7 @@ export class AddGroupPageComponent implements OnInit {
 
   saveGroup(): void {
     console.log(this.formTemplate.getRawValue())
-
+    this.groupName = this.formTemplate.getRawValue().groupName;
     this.groupService.addNewGroup(this.groupName, this.newGroupUsers)
     this.router.navigate(['/main'])
   }

@@ -1,40 +1,24 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import {MatChipInputEvent} from '@angular/material/chips';
-
-import {CashBoxService} from "../../../../core/services/cash-box-service";
-import {Subscription} from "rxjs";
+import {MatDialogRef} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-add-expense',
   templateUrl: './add-expense.component.html',
   styleUrls: ['./add-expense.component.scss'],
 })
-export class AddExpenseComponent implements OnInit, OnDestroy {
+export class AddExpenseComponent {
   public addOnBlur: boolean = true;
   public selectable: boolean = true;
   public removable: boolean = true;
   public users: string[] = []
-
-  private cashSubscription!: Subscription;
-  private displayState: boolean = false;
-
+  public isUserBoxVisible: boolean = false;
   readonly separatorKeysCodes = [ENTER, COMMA] as const
 
-  constructor(private cashService: CashBoxService) {
+  constructor(public dialogRef: MatDialogRef<AddExpenseComponent>) {
   }
 
-  ngOnInit(): void {
-    this.cashSubscription = this.cashService.displayState.subscribe(state => this.displayState = state)
-  }
-
-  ngOnDestroy(): void {
-    this.cashSubscription.unsubscribe();
-  }
-
-  onClick(): void {
-    this.cashService.onChangeDisplay(false);
-  }
 
   add(event: MatChipInputEvent): void {
     const value = (event.value || '').trim();
@@ -52,4 +36,8 @@ export class AddExpenseComponent implements OnInit, OnDestroy {
     }
   }
 
+  onClick() {
+    this.dialogRef.updateSize('600px', '');
+    this.isUserBoxVisible = true;
+  }
 }

@@ -28,6 +28,7 @@ import {GroupsComponent} from './modules/main-page/side-bar-left/groups/groups.c
 import {AddGroupPageComponent} from './modules/add-group-page/add-group-page.component';
 import {CashStatusComponent} from './modules/main-page/center-box/cash-status/cash-status.component';
 import {AddExpenseComponent} from './modules/main-page/center-box/add-expense/add-expense.component';
+import {MatDatepickerModule} from "@angular/material/datepicker";
 
 
 @NgModule({
@@ -61,7 +62,8 @@ import {AddExpenseComponent} from './modules/main-page/center-box/add-expense/ad
     MatListModule,
     MatChipsModule,
     MatMenuModule,
-    MatDialogModule
+    MatDialogModule,
+    MatDatepickerModule
   ],
   providers: [],
   bootstrap: [AppComponent]
