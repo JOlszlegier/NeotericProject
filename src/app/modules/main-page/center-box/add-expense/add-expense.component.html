@@ -38,9 +38,9 @@
           </select>
         </div>
         <p>Paid by
-          <button mat-button (click)="payerSelect()">{{whoPays}}</button>
+          <button mat-button (click)="payerSelect()" [disabled]="!canExtend(users)">{{whoPays}}</button>
           and split
-          <button mat-button>equally</button>
+          <button mat-button (click)="divideSelect()" [disabled]="!canExtend(users)">{{howToDivide}}</button>
           .
         </p>
       </div>
@@ -48,7 +48,22 @@
   </div>
   <div class="user-box" *ngIf="this.isUserBoxVisible">
     <ul>
-      <li *ngFor="let user of users" (click)="userSelect(user)">{{user}}</li>
+      <li *ngFor="let user of users" (click)="userSelect(user)" class="payer-select-li">{{user}}</li>
     </ul>
+  </div>
+  <div class="divide-box" *ngIf="this.isDivideBoxVisible">
+    <button mat-button class="split-button">Split the expense</button>
+    <button mat-button class="split-button">They owe the full amount</button>
+    <button mat-button class="split-button">You owe the full amount</button>
+    <div class="split-selection-box">
+      <button mat-button class="select-button">=</button>
+      <button mat-button class="select-button">%</button>
+      <button mat-button class="select-button">1.23</button>
+    </div>
+    <div class="users-list">
+      <ul>
+        <li *ngFor="let user of users">{{user}}</li>
+      </ul>
+    </div>
   </div>
 </div>

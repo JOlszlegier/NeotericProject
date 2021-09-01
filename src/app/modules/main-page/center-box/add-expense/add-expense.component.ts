@@ -14,7 +14,10 @@ export class AddExpenseComponent implements OnInit {
   public removable: boolean = true;
   public users: string[] = []
   public isUserBoxVisible: boolean = false;
+  public isDivideBoxVisible: boolean = false;
   public whoPays: string = 'you';
+  public howToDivide: string = 'even';
+
   readonly separatorKeysCodes = [ENTER, COMMA] as const
 
   constructor(public dialogRef: MatDialogRef<AddExpenseComponent>) {
@@ -42,7 +45,18 @@ export class AddExpenseComponent implements OnInit {
 
   payerSelect() {
     this.isUserBoxVisible = !this.isUserBoxVisible;
+    if (this.isDivideBoxVisible) this.isDivideBoxVisible = false;
     if (this.isUserBoxVisible) {
+      this.dialogRef.updateSize('600px', '');
+    } else {
+      this.dialogRef.updateSize('300px', '');
+    }
+  }
+
+  divideSelect() {
+    this.isDivideBoxVisible = !this.isDivideBoxVisible;
+    if (this.isUserBoxVisible) this.isUserBoxVisible = false;
+    if (this.isDivideBoxVisible) {
       this.dialogRef.updateSize('600px', '');
     } else {
       this.dialogRef.updateSize('300px', '');
@@ -54,4 +68,10 @@ export class AddExpenseComponent implements OnInit {
     this.dialogRef.updateSize('300px', '');
     this.isUserBoxVisible = false;
   }
+
+  canExtend(users: string[]) {
+    return users.length > 0;
+  }
+
+
 }
