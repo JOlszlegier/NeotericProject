@@ -11,9 +11,10 @@
       <input type="text" formControlName="groupName" class="input-styling">
 
 
-      <div *ngFor="let users of users.controls; let i=index" formArrayName="users">
-        <div class="single-user">
-          <input [formControlName]="i" class="email-friend-input" email>
+      <div *ngFor="let user of formTemplate.controls['users'].controls; let i=index" formArrayName="users">
+        <div class="single-user" [formGroupName]="i">
+          <input formControlName='name' class="email-friend-input" email>
+          <input formControlName='email' class="email-friend-input" email>
           <mat-icon (click)="removePeople(i)" class="delete-icon">delete</mat-icon>
         </div>
       </div>

@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
-import {FormArray, FormBuilder, Validators} from "@angular/forms";
+import {FormArray, FormBuilder} from "@angular/forms";
 import {GroupService} from "../../core/services/group-service";
 
 @Component({
@@ -10,12 +10,29 @@ import {GroupService} from "../../core/services/group-service";
 })
 export class AddGroupPageComponent implements OnInit {
 
+  // formTemplate = this.fb.group({
+  //   groupName: [''],
+  //   users: this.fb.array([
+  //     this.fb.control('', Validators.required)
+  //   ])
+  // });
+
   formTemplate = this.fb.group({
     groupName: [''],
     users: this.fb.array([
-      this.fb.control('', Validators.required)
+      this.fb.group({
+        name: '',
+        email: ''
+      })
     ])
   });
+
+  createUser() {
+    return this.fb.group({
+      name: [''],
+      email: ['']
+    })
+  }
 
   constructor(private router: Router, private groupService: GroupService, private fb: FormBuilder) {
   }
@@ -34,7 +51,7 @@ export class AddGroupPageComponent implements OnInit {
 
   ngOnInit(): void {
     for (let i = 0; i < 2; i++) {
-      this.users.push(this.fb.control(''));
+      (this.formTemplate.controls['users'] as FormArray).push(this.createUser())
     }
   }
 
