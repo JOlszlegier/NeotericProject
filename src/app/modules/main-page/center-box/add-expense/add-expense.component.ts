@@ -17,6 +17,7 @@ export class AddExpenseComponent implements OnInit {
   public isDivideBoxVisible: boolean = false;
   public whoPays: string = 'you';
   public howToDivide: string = 'even';
+  public expenseValue: number = 0;
 
   readonly separatorKeysCodes = [ENTER, COMMA] as const
 

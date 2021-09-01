@@ -30,7 +30,8 @@
       <div class="expense-info">
         <input matInput class="description-input" placeholder="Description" autocomplete="off">
         <div class="amount-field">
-          <input matInput class="amount-input" placeholder="0.00" autocomplete="off" type="number" step="0.1">
+          <input matInput class="amount-input" placeholder="0.00"
+                 autocomplete="off" type="number" step="0.1" [(ngModel)]="expenseValue">
           <select matNativeControl required matSuffix>
             <option value="PLN">PLN</option>
             <option value="USD">USD</option>
