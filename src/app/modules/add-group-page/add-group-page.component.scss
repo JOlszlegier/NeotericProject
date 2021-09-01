@@ -110,4 +110,14 @@ button:focus {
   outline: none;
 }
 
+.cancel-button {
+  background-color: #FF5216;
+  line-height: 0;
+  height: 20px;
+  margin-top: 10px;
+  font-weight: bold;
+}
 
+.save-button:disabled {
+  opacity: 0.5;
+}

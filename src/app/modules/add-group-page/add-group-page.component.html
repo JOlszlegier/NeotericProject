@@ -9,16 +9,13 @@
 
     <form [formGroup]="formTemplate">
       <input type="text" formControlName="groupName" class="input-styling">
-
-
-      <div *ngFor="let user of formTemplate.controls['users'].controls; let i=index" formArrayName="users">
+      <div *ngFor="let user of users.controls; let i=index" formArrayName="users">
         <div class="single-user" [formGroupName]="i">
-          <input formControlName='name' class="email-friend-input" email>
-          <input formControlName='email' class="email-friend-input" email>
+          <input formControlName='email' class="email-friend-input" email placeholder="email" autocomplete="off">
+          <input formControlName='name' class="email-friend-input" placeholder="name" autocomplete="off">
           <mat-icon (click)="removePeople(i)" class="delete-icon">delete</mat-icon>
         </div>
       </div>
-
     </form>
 
 
@@ -31,6 +28,11 @@
     <div class="friends-flex">
       <button mat-button (click)="saveGroup()" [disabled]="formTemplate.invalid"
               class="save-button">Save
+      </button>
+    </div>
+    <div class="friends-flex">
+      <button mat-button (click)="cancel()"
+              class="cancel-button">Cancel
       </button>
     </div>
 

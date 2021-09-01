@@ -1,6 +1,6 @@
-import {Component, OnInit} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
-import {FormArray, FormBuilder} from "@angular/forms";
+import {FormArray, FormBuilder, FormControl, Validators} from "@angular/forms";
 import {GroupService} from "../../core/services/group-service";
 
 @Component({
@@ -8,41 +8,39 @@ import {GroupService} from "../../core/services/group-service";
   templateUrl: './add-group-page.component.html',
   styleUrls: ['./add-group-page.component.scss']
 })
-export class AddGroupPageComponent implements OnInit {
-
-  // formTemplate = this.fb.group({
-  //   groupName: [''],
-  //   users: this.fb.array([
-  //     this.fb.control('', Validators.required)
-  //   ])
-  // });
+export class AddGroupPageComponent implements OnInit, AfterViewInit {
 
   formTemplate = this.fb.group({
-    groupName: [''],
+    groupName: new FormControl([''], Validators.required),
     users: this.fb.array([
       this.fb.group({
-        name: '',
-        email: ''
+        name: new FormControl([''], Validators.required),
+        email: new FormControl([''], [Validators.email, Validators.required])
       })
     ])
   });
 
   createUser() {
     return this.fb.group({
-      name: [''],
-      email: ['']
+      name: new FormControl([''], Validators.required),
+      email: new FormControl([''], [Validators.email, Validators.required])
     })
   }
 
-  constructor(private router: Router, private groupService: GroupService, private fb: FormBuilder) {
+  constructor(private router: Router, private groupService: GroupService,
+              private fb: FormBuilder, private cdr: ChangeDetectorRef) {
   }
 
   get users(): FormArray {
     return this.formTemplate.get('users') as FormArray
   }
 
+  ngAfterViewInit() {
+    this.cdr.detectChanges();
+  }
+
   addNewPeople(): void {
-    this.users.push(this.fb.control(''));
+    (this.formTemplate.controls['users'] as FormArray).push(this.createUser())
   }
 
   removePeople(index: number) {
@@ -51,13 +49,19 @@ export class AddGroupPageComponent implements OnInit {
 
   ngOnInit(): void {
     for (let i = 0; i < 2; i++) {
-      (this.formTemplate.controls['users'] as FormArray).push(this.createUser())
+      (this.formTemplate.controls['users'] as FormArray).push(this.createUser());
     }
+
   }
 
   saveGroup(): void {
-    console.log(this.formTemplate.value)
-    //this.groupService.addNewGroup(this.groupName, this.newGroupUsers)
-    this.router.navigate(['/main'])
+    console.log(this.formTemplate.value);
+    //add group to backend
+    console.log(this.formTemplate.valid);
+    this.router.navigate(['/main']);
+  }
+
+  cancel(): void {
+    this.router.navigate(['/main']);
   }
 }
