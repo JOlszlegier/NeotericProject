@@ -29,6 +29,7 @@ import {AddGroupPageComponent} from './modules/add-group-page/add-group-page.com
 import {CashStatusComponent} from './modules/main-page/center-box/cash-status/cash-status.component';
 import {AddExpenseComponent} from './modules/main-page/center-box/add-expense/add-expense.component';
 import {MatDatepickerModule} from "@angular/material/datepicker";
+import {MatCardModule} from "@angular/material/card";
 
 
 @NgModule({
@@ -63,7 +64,8 @@ import {MatDatepickerModule} from "@angular/material/datepicker";
     MatChipsModule,
     MatMenuModule,
     MatDialogModule,
-    MatDatepickerModule
+    MatDatepickerModule,
+    MatCardModule
   ],
   providers: [],
   bootstrap: [AppComponent]

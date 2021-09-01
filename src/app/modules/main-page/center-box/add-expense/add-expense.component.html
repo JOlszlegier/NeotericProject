@@ -62,9 +62,15 @@
       <button mat-button class="select-button">1.23</button>
     </div>
     <div class="users-list">
-      <ul>
-        <li *ngFor="let user of users">{{user}}</li>
-      </ul>
+      <mat-list>
+        <mat-list-item *ngFor="let user of users">
+          <div class="single-user-expense-display">
+            <div>{{user}}</div>
+            <div>{{expenseValue}}</div>
+          </div>
+
+        </mat-list-item>
+      </mat-list>
     </div>
   </div>
 </div>
