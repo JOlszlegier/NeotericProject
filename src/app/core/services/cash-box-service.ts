@@ -1,6 +1,5 @@
 import {Injectable} from "@angular/core";
 import {BehaviorSubject} from "rxjs";
-import {MatDialog} from "@angular/material/dialog";
 
 @Injectable({providedIn: "root"})
 export class CashBoxService {
@@ -11,7 +10,4 @@ export class CashBoxService {
     this.displaySource.next(state);
   }
 
-  public dialogClose(dialog: MatDialog): void {
-    dialog.closeAll();
-  }
 }

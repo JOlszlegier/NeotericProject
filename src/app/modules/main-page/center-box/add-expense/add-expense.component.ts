@@ -3,6 +3,8 @@ import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import {MatChipInputEvent} from '@angular/material/chips';
 import {MatDialogRef} from "@angular/material/dialog";
 import {ExpenseDivideService} from "../../../../core/services/expense-divide-service";
+import {HttpClient} from "@angular/common/http";
+
 
 @Component({
   selector: 'app-add-expense',
@@ -21,10 +23,14 @@ export class AddExpenseComponent implements OnInit {
   public expenseValue: number = 0;
   public eachUserAmount: number[] = [];
   public splitSelected: boolean = false;
+  public currencyChoice: string = 'PLN';
+
 
   readonly separatorKeysCodes = [ENTER, COMMA] as const
 
-  constructor(public dialogRef: MatDialogRef<AddExpenseComponent>, private expenseDivisionService: ExpenseDivideService) {
+  constructor(public dialogRef: MatDialogRef<AddExpenseComponent>,
+              private expenseDivisionService: ExpenseDivideService,
+              private http: HttpClient) {
   }
 
   ngOnInit() {
@@ -82,7 +88,17 @@ export class AddExpenseComponent implements OnInit {
     this.splitSelected = true;
   }
 
-  //this section will need changes after backend delivers xd
+  //api check
+
+  apiDisplay() {
+    this.http.get('http://api.exchangeratesapi.io/v1/latest?access_key=6ad942ce3abac5d14a21235d48f68e2a&symbols=USD,PLN&format=1')
+      .subscribe(responseData => {
+        console.log(`Kurs Euro ` + Object.values(responseData)[4].PLN);
+        console.log(`Kurs Dolara ` + Object.values(responseData)[4].PLN / Object.values(responseData)[4].USD);
+      })
+  }
+
+  //this section will need changes after backend delivers
   divideEven() {
     for (let i = 0; i < this.users.length; i++) {
       this.eachUserAmount[i] = this.expenseDivisionService.splitEvenly(this.users.length, this.expenseValue)
@@ -93,6 +109,7 @@ export class AddExpenseComponent implements OnInit {
     this.eachUserAmount[0] = this.expenseValue;
     this.eachUserAmount[1] = 0;
     this.splitSelected = false;
+    console.log(this.currencyChoice);
   }
 
   youOweThemSelected() {
@@ -101,6 +118,6 @@ export class AddExpenseComponent implements OnInit {
     this.splitSelected = false;
   }
 
-  //
+  ///////
 
 }
