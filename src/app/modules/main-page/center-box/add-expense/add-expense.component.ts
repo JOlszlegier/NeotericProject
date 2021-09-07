@@ -7,6 +7,7 @@ import {HttpClient} from "@angular/common/http";
 import {euroCurrencyService} from "../../../../core/services/euro-currency-service";
 import {Subscription} from "rxjs";
 import {dollarCurrencyService} from "../../../../core/services/dollar-currency-service";
+import {FormControl} from "@angular/forms";
 
 
 @Component({
@@ -30,6 +31,11 @@ export class AddExpenseComponent implements OnInit {
   private subscriptions!: Subscription;
   private plnToEur: number = 0;
   private plnToUSD: number = 0;
+  public showDelay = new FormControl(100);
+  public hideDelay = new FormControl(50);
+  public theyOweSelected: boolean = false;
+  public youOweSelected: boolean = false;
+
   readonly separatorKeysCodes = [ENTER, COMMA] as const
 
   constructor(public dialogRef: MatDialogRef<AddExpenseComponent>,
@@ -98,6 +104,8 @@ export class AddExpenseComponent implements OnInit {
 
   splitExpenseSelected() {
     this.splitSelected = true;
+    this.theyOweSelected = false;
+    this.youOweSelected = false;
   }
 
   //api check
@@ -118,6 +126,8 @@ export class AddExpenseComponent implements OnInit {
     this.eachUserAmount[0] = this.expenseValue;
     this.eachUserAmount[1] = 0;
     this.splitSelected = false;
+    this.theyOweSelected = true;
+    this.youOweSelected = false;
     console.log(this.currencyChoice);
   }
 
@@ -125,6 +135,8 @@ export class AddExpenseComponent implements OnInit {
     this.eachUserAmount[1] = this.expenseValue;
     this.eachUserAmount[0] = 0;
     this.splitSelected = false;
+    this.theyOweSelected = false;
+    this.youOweSelected = true;
   }
 
   ///////

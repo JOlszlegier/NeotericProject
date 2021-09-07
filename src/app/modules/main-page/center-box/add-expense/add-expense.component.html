@@ -53,19 +53,34 @@
     </ul>
   </div>
   <div class="divide-box" *ngIf="this.isDivideBoxVisible">
-    <button mat-button class="split-button" *ngIf="users.length<3" (click)="splitExpenseSelected()">Split the expense
+    <button mat-button [ngClass]="{'split-button-selected': splitSelected}" class="split-button"
+            *ngIf="users.length<3"
+            (click)="splitExpenseSelected()">Split the expense
     </button>
     <!-- length below will be changed after backend (your will be one of the users)-->
-    <button mat-button class="split-button" *ngIf="users.length<3"
+    <button mat-button [ngClass]="{'split-button-selected': theyOweSelected}" class="split-button"
+            *ngIf="users.length<3"
             (click)="theyOweYouSelected()">They owe the full amount
     </button>
-    <button mat-button class="split-button" *ngIf="users.length<3"
+    <button mat-button [ngClass]="{'split-button-selected': youOweSelected}" class="split-button" *ngIf="users.length<3"
             (click)="youOweThemSelected()">You owe the full amount
     </button>
     <div class="split-selection-box" *ngIf="splitSelected">
-      <button mat-button class="select-button" (click)="divideEven()">=</button>
-      <button mat-button class="select-button">%</button>
-      <button mat-button class="select-button">1.23</button>
+      <button mat-button class="select-button" (click)="divideEven()"
+              matTooltip="Split evenly"
+              [matTooltipShowDelay]="showDelay.value"
+              [matTooltipHideDelay]="hideDelay.value">=
+      </button>
+      <button mat-button class="select-button"
+              matTooltip="Split by %"
+              [matTooltipShowDelay]="showDelay.value"
+              [matTooltipHideDelay]="hideDelay.value">%
+      </button>
+      <button mat-button class="select-button"
+              matTooltip="Split by exact value"
+              [matTooltipShowDelay]="showDelay.value"
+              [matTooltipHideDelay]="hideDelay.value">1.23
+      </button>
     </div>
     <div class="users-list">
       <mat-list>

@@ -31,6 +31,7 @@ import {CashStatusComponent} from './modules/main-page/center-box/cash-status/ca
 import {AddExpenseComponent} from './modules/main-page/center-box/add-expense/add-expense.component';
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatCardModule} from "@angular/material/card";
+import {MatTooltipModule} from "@angular/material/tooltip";
 
 
 @NgModule({
@@ -67,7 +68,8 @@ import {MatCardModule} from "@angular/material/card";
     MatDialogModule,
     MatDatepickerModule,
     MatCardModule,
-    HttpClientModule
+    HttpClientModule,
+    MatTooltipModule
   ],
   providers: [],
   bootstrap: [AppComponent]
