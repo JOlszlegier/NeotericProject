@@ -4,6 +4,9 @@ import {MatChipInputEvent} from '@angular/material/chips';
 import {MatDialogRef} from "@angular/material/dialog";
 import {ExpenseDivideService} from "../../../../core/services/expense-divide-service";
 import {HttpClient} from "@angular/common/http";
+import {euroCurrencyService} from "../../../../core/services/euro-currency-service";
+import {Subscription} from "rxjs";
+import {dollarCurrencyService} from "../../../../core/services/dollar-currency-service";
 
 
 @Component({
@@ -24,17 +27,26 @@ export class AddExpenseComponent implements OnInit {
   public eachUserAmount: number[] = [];
   public splitSelected: boolean = false;
   public currencyChoice: string = 'PLN';
-
-
+  private subscriptions!: Subscription;
+  private plnToEur: number = 0;
+  private plnToUSD: number = 0;
   readonly separatorKeysCodes = [ENTER, COMMA] as const
 
   constructor(public dialogRef: MatDialogRef<AddExpenseComponent>,
               private expenseDivisionService: ExpenseDivideService,
-              private http: HttpClient) {
+              private http: HttpClient, private euroService: euroCurrencyService,
+              private dollarService: dollarCurrencyService) {
   }
 
   ngOnInit() {
     this.dialogRef.updateSize('300px', '');
+    this.subscriptions = this.euroService.euroState.subscribe(state => this.plnToEur = state);
+    this.subscriptions = this.dollarService.dollarState.subscribe(state => this.plnToUSD = state);
+    this.http.get('http://api.exchangeratesapi.io/v1/latest?access_key=6ad942ce3abac5d14a21235d48f68e2a&symbols=USD,PLN&format=1')
+      .subscribe(responseData => {
+        this.euroService.euroOnChange(Object.values(responseData)[4].PLN);
+        this.dollarService.dollarOnChange(Object.values(responseData)[4].PLN / Object.values(responseData)[4].USD);
+      })
   }
 
   add(event: MatChipInputEvent): void {
@@ -91,11 +103,8 @@ export class AddExpenseComponent implements OnInit {
   //api check
 
   apiDisplay() {
-    this.http.get('http://api.exchangeratesapi.io/v1/latest?access_key=6ad942ce3abac5d14a21235d48f68e2a&symbols=USD,PLN&format=1')
-      .subscribe(responseData => {
-        console.log(`Kurs Euro ` + Object.values(responseData)[4].PLN);
-        console.log(`Kurs Dolara ` + Object.values(responseData)[4].PLN / Object.values(responseData)[4].USD);
-      })
+    console.log('Euro exchange rate passed by service ' + this.plnToEur);
+    console.log('Dollar exchange rate passed by service ' + this.plnToUSD);
   }
 
   //this section will need changes after backend delivers
