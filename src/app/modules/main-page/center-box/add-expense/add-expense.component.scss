@@ -158,4 +158,19 @@ button {
   display: flex;
   justify-content: center;
   align-items: center;
+
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
 }
+
+
+.extra-info {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+

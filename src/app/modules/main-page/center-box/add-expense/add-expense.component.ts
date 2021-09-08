@@ -37,6 +37,7 @@ export class AddExpenseComponent implements OnInit {
   public youOweSelected: boolean = false;
   public inputPercentVisible: boolean = false;
   public percentToDivide: number[] = [];
+  public percentagesLeft: number = 0;
 
   readonly separatorKeysCodes = [ENTER, COMMA] as const
 
@@ -125,6 +126,7 @@ export class AddExpenseComponent implements OnInit {
       if (this.percentToDivide[i])
         this.eachUserAmount[i] = this.expenseDivisionService.splitByPercent(this.percentToDivide[i], this.expenseValue)
     }
+    this.percentagesLeftCalculation();
   }
 
   splitExpenseSelected() {
@@ -150,6 +152,12 @@ export class AddExpenseComponent implements OnInit {
     this.splitSelected = false;
     this.theyOweSelected = false;
     this.youOweSelected = true;
+  }
+
+  percentagesLeftCalculation() {
+    this.percentagesLeft = 100 - this.percentToDivide.reduce((acc, cur) => acc + cur, 0)
+    console.log(typeof this.percentToDivide[0]);
+    console.log(this.percentagesLeft);
   }
 
   ///////

@@ -90,11 +90,15 @@
             <div class="values-input">
               <input matInput class="percent-input" *ngIf="inputPercentVisible"
                      autocomplete="off" [(ngModel)]="percentToDivide[i]"
-                     (change)="divideByPercent()">
+                     (change)="divideByPercent()"
+                     type="number">
               <div>{{eachUserAmount[i]}}</div>
             </div>
           </div>
         </mat-list-item>
+        <div class="extra-info" *ngIf="inputPercentVisible">
+          <p *ngIf="percentagesLeft !==0">{{percentagesLeft}}% left, please change the values!
+        </div>
       </mat-list>
     </div>
   </div>

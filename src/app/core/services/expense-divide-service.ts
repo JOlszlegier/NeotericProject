@@ -15,4 +15,5 @@ export class ExpenseDivideService {
     return this.amount;
   }
 
+
 }
