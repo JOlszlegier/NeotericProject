@@ -114,7 +114,7 @@ button {
 }
 
 .split-button {
-  margin: 5px;
+  margin: 10px;
   border-radius: 5px;
 }
 
@@ -130,6 +130,7 @@ button {
 
 .select-button {
   min-width: 40px;
+  margin-top: 20px;
 }
 
 .users-list {
@@ -143,4 +144,18 @@ button {
   justify-content: space-between;
   width: 100%;
   font-weight: bold;
+}
+
+.percent-input {
+  border: #B8B8B8 1px solid;
+  width: 20px;
+  margin-right: 5px;
+  padding: 2px;
+  max-height: 24px;
+}
+
+.values-input {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

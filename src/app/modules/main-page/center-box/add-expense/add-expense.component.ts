@@ -35,6 +35,8 @@ export class AddExpenseComponent implements OnInit {
   public hideDelay = new FormControl(50);
   public theyOweSelected: boolean = false;
   public youOweSelected: boolean = false;
+  public inputPercentVisible: boolean = false;
+  public percentToDivide: number[] = [];
 
   readonly separatorKeysCodes = [ENTER, COMMA] as const
 
@@ -102,13 +104,7 @@ export class AddExpenseComponent implements OnInit {
     return users.length > 0;
   }
 
-  splitExpenseSelected() {
-    this.splitSelected = true;
-    this.theyOweSelected = false;
-    this.youOweSelected = false;
-  }
-
-  //api check
+  //FOR TEST PURPOSES
 
   apiDisplay() {
     console.log('Euro exchange rate passed by service ' + this.plnToEur);
@@ -117,12 +113,28 @@ export class AddExpenseComponent implements OnInit {
 
   //this section will need changes after backend delivers
   divideEven() {
+    this.inputPercentVisible = false;
     for (let i = 0; i < this.users.length; i++) {
       this.eachUserAmount[i] = this.expenseDivisionService.splitEvenly(this.users.length, this.expenseValue)
     }
   }
 
+  divideByPercent() {
+    this.inputPercentVisible = true;
+    for (let i = 0; i < this.users.length; i++) {
+      if (this.percentToDivide[i])
+        this.eachUserAmount[i] = this.expenseDivisionService.splitByPercent(this.percentToDivide[i], this.expenseValue)
+    }
+  }
+
+  splitExpenseSelected() {
+    this.splitSelected = true;
+    this.theyOweSelected = false;
+    this.youOweSelected = false;
+  }
+
   theyOweYouSelected() {
+    this.inputPercentVisible = false;
     this.eachUserAmount[0] = this.expenseValue;
     this.eachUserAmount[1] = 0;
     this.splitSelected = false;
@@ -132,6 +144,7 @@ export class AddExpenseComponent implements OnInit {
   }
 
   youOweThemSelected() {
+    this.inputPercentVisible = false;
     this.eachUserAmount[1] = this.expenseValue;
     this.eachUserAmount[0] = 0;
     this.splitSelected = false;
