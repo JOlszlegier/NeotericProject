@@ -28,7 +28,8 @@
       </mat-form-field>
 
       <div class="expense-info">
-        <input matInput class="description-input" placeholder="Description" autocomplete="off">
+        <input matInput class="description-input" placeholder="Description" autocomplete="off"
+               [(ngModel)]="description">
         <div class="amount-field">
           <input matInput class="amount-input" placeholder="0.00"
                  autocomplete="off" type="number" step="0.1" [(ngModel)]="expenseValue">
@@ -79,7 +80,7 @@
       <button mat-button class="select-button"
               matTooltip="Split by exact value"
               [matTooltipShowDelay]="showDelay.value"
-              [matTooltipHideDelay]="hideDelay.value">1.23
+              [matTooltipHideDelay]="hideDelay.value" (click)="divideByValuesView()">1.23
       </button>
     </div>
     <div class="users-list">
@@ -92,12 +93,18 @@
                      autocomplete="off" [(ngModel)]="percentToDivide[i]"
                      (change)="divideByPercent()"
                      type="number">
+              <input matInput class="percent-input" *ngIf="inputValueVisible"
+                     autocomplete="off" [(ngModel)]="valueToDivide[i]"
+                     type="number" (change)="divideByValues(i)">
               <div>{{eachUserAmount[i]}}</div>
             </div>
           </div>
         </mat-list-item>
-        <div class="extra-info" *ngIf="inputPercentVisible">
+        <div class="extra-info-percentages" *ngIf="inputPercentVisible">
           <p *ngIf="percentagesLeft !==0">{{percentagesLeft}}% left, please change the values!
+        </div>
+        <div class="extra-info-values" *ngIf="inputValueVisible">
+          <p *ngIf="valueLeft !==0">{{valueLeft}} left, please change the values!
         </div>
       </mat-list>
     </div>

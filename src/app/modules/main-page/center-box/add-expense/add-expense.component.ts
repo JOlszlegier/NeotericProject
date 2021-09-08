@@ -36,8 +36,12 @@ export class AddExpenseComponent implements OnInit {
   public theyOweSelected: boolean = false;
   public youOweSelected: boolean = false;
   public inputPercentVisible: boolean = false;
+  public inputValueVisible: boolean = false;
   public percentToDivide: number[] = [];
   public percentagesLeft: number = 0;
+  public valueLeft: number = 0;
+  public valueToDivide: number[] = [];
+  public description: string = '';
 
   readonly separatorKeysCodes = [ENTER, COMMA] as const
 
@@ -110,10 +114,13 @@ export class AddExpenseComponent implements OnInit {
   apiDisplay() {
     console.log('Euro exchange rate passed by service ' + this.plnToEur);
     console.log('Dollar exchange rate passed by service ' + this.plnToUSD);
+    this.exportInfoTest();
   }
 
   //this section will need changes after backend delivers
   divideEven() {
+    this.inputValueVisible = false;
+
     this.inputPercentVisible = false;
     for (let i = 0; i < this.users.length; i++) {
       this.eachUserAmount[i] = this.expenseDivisionService.splitEvenly(this.users.length, this.expenseValue)
@@ -121,12 +128,23 @@ export class AddExpenseComponent implements OnInit {
   }
 
   divideByPercent() {
+    this.inputValueVisible = false;
     this.inputPercentVisible = true;
     for (let i = 0; i < this.users.length; i++) {
       if (this.percentToDivide[i])
         this.eachUserAmount[i] = this.expenseDivisionService.splitByPercent(this.percentToDivide[i], this.expenseValue)
     }
     this.percentagesLeftCalculation();
+  }
+
+  divideByValues(index: number) {
+    this.eachUserAmount[index] = this.valueToDivide[index];
+    this.AmountLeftCalculation();
+  }
+
+  divideByValuesView() {
+    this.inputValueVisible = true;
+    this.inputPercentVisible = false;
   }
 
   splitExpenseSelected() {
@@ -156,10 +174,22 @@ export class AddExpenseComponent implements OnInit {
 
   percentagesLeftCalculation() {
     this.percentagesLeft = 100 - this.percentToDivide.reduce((acc, cur) => acc + cur, 0)
-    console.log(typeof this.percentToDivide[0]);
-    console.log(this.percentagesLeft);
+  }
+
+  AmountLeftCalculation() {
+    this.valueLeft = this.expenseValue - this.valueToDivide.reduce((acc, cur) => acc + cur, 0)
   }
 
   ///////
+
+
+  exportInfoTest() {
+    console.log(`Users ` + this.users);
+    console.log(`Value ` + this.expenseValue);
+    console.log('Description ' + this.description);
+    console.log('Currency ' + this.currencyChoice);
+    console.log('How to divide ' + this.eachUserAmount);
+
+  }
 
 }

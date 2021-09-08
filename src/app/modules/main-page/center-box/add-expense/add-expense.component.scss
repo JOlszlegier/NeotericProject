@@ -167,7 +167,13 @@ button {
 }
 
 
-.extra-info {
+.extra-info-percentages {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.extra-info-values {
   display: flex;
   justify-content: center;
   width: 100%;
