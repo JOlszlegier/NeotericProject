@@ -1,0 +1,13 @@
+<div class="text-box">
+  <p>Groups</p>
+</div>
+
+<ul>
+  <li *ngFor="let group of groupNames | search: searchPhrase" (click)="onGroupClick(group)"
+      class="group-list singleGroupFlex">
+    <mat-icon class="icon">group</mat-icon>
+    {{group}}</li>
+</ul>
+
+<button mat-button class="add-button" (click)="newGroupLink()" type="button">Add new group</button>
+

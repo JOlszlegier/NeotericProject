@@ -1,0 +1,123 @@
+@import 'src/app/styles/variables.scss';
+
+.shadow-text {
+  color: gray;
+  font-size: 25px;
+  height: 40px;
+  margin: 0;
+  opacity: 0.7;
+}
+
+.main-text {
+  font-size: 27px;
+  height: 40px;
+  margin: 0;
+}
+
+.right-flexbox {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  height: 100%;
+  width: 25%;
+}
+
+.left-flexbox {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  height: 100%;
+  width: 30%;
+}
+
+.main-flexbox {
+  display: flex;
+  justify-content: center;
+  height: 100%;
+}
+
+.logo {
+  width: 60%;
+  margin-left: 30%;
+}
+
+.input-styling {
+  width: 60%;
+  border: 1px solid #DDDDDD;
+  border-radius: 10px;
+  height: 30px;
+  font-size: 20px;
+  padding: 5px;
+  margin-top: 0;
+}
+
+.email-friend-input {
+  width: 35%;
+  margin-top: 10px;
+  margin-right: 10px;
+  padding: 5px;
+  border: 1px solid #333333;
+  border-radius: 10px;
+}
+
+.name-friend-input {
+  width: 20%;
+  margin-top: 10px;
+  padding: 5px;
+  border: 1px solid #333333;
+  border-radius: 10px;
+}
+
+
+.friends-flex {
+  display: flex;
+  height: 30px;
+}
+
+.add-more-button {
+  background-color: $log-in-button-color;
+  line-height: 0;
+  height: 20px;
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+
+.save-button {
+  background-color: $bars-color;
+  line-height: 0;
+  height: 20px;
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+.delete-icon {
+  cursor: pointer;
+  width: 25px;
+  height: 25px;
+  margin-top: 10px;
+}
+
+.single-user {
+  display: flex;
+  align-items: center;
+}
+
+input:focus,
+select:focus,
+textarea:focus,
+button:focus {
+  outline: none;
+}
+
+.cancel-button {
+  background-color: #FF5216;
+  line-height: 0;
+  height: 20px;
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+.save-button:disabled {
+  opacity: 0.5;
+}

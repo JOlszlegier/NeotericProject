@@ -1,0 +1,29 @@
+<div class="text-box">
+  <p>Friends</p>
+</div>
+
+<ul>
+  <li *ngFor="let friend of friendsList | search: searchPhrase" class="singleFriend">
+    <mat-icon class="icon">account_box</mat-icon>
+    <span>{{friend}}</span></li>
+</ul>
+
+<div class="text-box">
+  <p>Invite friends</p>
+</div>
+
+<div class="friend-flex">
+  <mat-form-field appearance="fill" class="input-styling">
+    <mat-label>Type email</mat-label>
+    <input matInput
+           type="text"
+           autocomplete="off"
+           [(ngModel)]="newFriend"
+           name="friendName">
+    <mat-icon matSuffix>add</mat-icon>
+  </mat-form-field>
+</div>
+
+<button mat-button (click)="addFriend(newFriend)" class="add-button" type="button" [disabled]="!newFriend">Add new
+  friend
+</button>

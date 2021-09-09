@@ -1,0 +1,51 @@
+@import 'src/app/styles/variables.scss';
+
+
+.text-box {
+  width: 85%;
+  text-align: center;
+  background-color: $bars-color;
+  margin-left: 10%;
+  border-radius: 5px;
+}
+
+.friend-flex {
+  display: flex;
+  margin-bottom: 40px;
+  font-size: 14px;
+}
+
+.add-button {
+  margin-top: 10px;
+  margin-left: 25%;
+  background-color: $left-side-color;
+  width: auto;
+  border: 1px solid #DDDDDD;
+  font-weight: bold;
+}
+
+.input-styling {
+  margin-left: 10%;
+  margin-top: 10px;
+  height: 30px;
+  width: 85%;
+}
+
+ul {
+  list-style-type: none;
+}
+
+.singleFriend {
+  display: flex;
+  align-items: center;
+}
+
+.icon {
+  opacity: 0.5;
+  color: grey;
+  margin-right: 5px;
+}
+
+p {
+  padding: 5px;
+}

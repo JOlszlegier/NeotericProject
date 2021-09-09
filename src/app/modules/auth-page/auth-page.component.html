@@ -8,6 +8,8 @@
              required
              email
              formControlName="email"
+             autocomplete="off"
+             [@buttonState]="state"
       >
       <input matInput
              type="password"
@@ -15,23 +17,30 @@
              class="input-area"
              required
              formControlName="password"
+             [@buttonState]="state"
       >
       <input type="text"
              formControlName="name"
              matInput
              placeholder="Enter your name"
              class="input-area"
+             autocomplete="off"
              *ngIf="!isInLogInMode"
+             [@buttonState]="state"
       >
       <button mat-raised-button
               class="sign-in-button"
               (click)="onSwitch()"
+              [@buttonState]="state"
+              type="button"
       >Switch to {{switchButtonText}}
       </button>
       <button mat-raised-button
               class="log-in-button"
               (click)="onLogIn()"
               [disabled]="!defaultForm.valid"
+              [@buttonState]="state"
+              type="button"
       >Submit!
       </button>
     </div>

@@ -1,0 +1,11 @@
+<div class="search-flex">
+  <mat-form-field class="input-styling" appearance="fill">
+    <mat-label>Search in groups and friends</mat-label>
+    <input matInput type="text" autocomplete="off"
+           [(ngModel)]="searchText"
+           (ngModelChange)="valueChange($event)"
+    >
+    <mat-icon matSuffix>search</mat-icon>
+
+  </mat-form-field>
+</div>

@@ -1,0 +1,40 @@
+@import 'src/app/styles/variables.scss';
+
+.flexbox {
+
+  display: flex;
+  height: 96.5vh;
+  flex-direction: column;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.2)
+}
+
+.top-box {
+  background-color: $dashboard-color;
+  align-items: center;
+  flex-direction: row;
+  height: 50px;
+  display: flex;
+  justify-content: space-between;
+  font-size: 30px;
+  color: #333333;
+  border-right: solid #DDDDDD 1px;
+  border-left: solid #DDDDDD 1px;
+}
+
+.add-button {
+  background-color: $add-expense-color;
+  margin: 10px;
+  font-weight: bold;
+}
+
+.settle-button {
+  background-color: $settle-color;
+  margin: 10px;
+  font-weight: bold;
+}
+
+.text {
+  font-size: 24px;
+  font-weight: bold;
+}
+

@@ -1,0 +1,182 @@
+@import 'src/app/styles/variables.scss';
+
+.expense-box {
+  width: 100%;
+  border-radius: 20px;
+  background-color: #F5F5F5;
+}
+
+.top-bar {
+  height: 30px;
+  display: flex;
+  justify-content: space-between;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+}
+
+.cancel-icon {
+  margin-top: 10px;
+  cursor: pointer
+}
+
+.example-chip-list {
+  width: 100%;
+}
+
+.mat-chip {
+  min-height: 20px;
+  width: auto;
+}
+
+mat-chip-list {
+  display: flex;
+}
+
+.input-with {
+  height: 15px;
+  font-size: 15px;
+  padding-bottom: 0;
+}
+
+.description-input {
+  border: #DDDDDD 1px solid;
+  margin-top: 10px;
+  border-radius: 5px;
+  padding: 2px;
+  width: 65%
+}
+
+.amount-input {
+  border: #DDDDDD 1px solid;
+  margin-top: 10px;
+  border-radius: 5px;
+  padding: 10px;
+  height: 40px;
+  font-size: 30px;
+  width: 40%
+}
+
+.expense-info {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+select {
+  width: 15%;
+  font-size: 20px;
+  border: #DDDDDD 1px solid;
+  border-radius: 2px;
+  padding: 0;
+  margin-top: 25px;
+  margin-left: 5px;
+}
+
+.amount-field {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+button {
+  border: #DDDDDD 1px solid;
+  padding: 2px;
+  min-width: 0;
+  min-height: 0;
+}
+
+
+.user-box {
+  width: 200px;
+  height: 100%;
+
+}
+
+.main-expense-box {
+  display: flex;
+  width: 100%;
+  background-color: #F5F5F5;
+}
+
+
+.payer-select-li {
+  cursor: pointer;
+}
+
+.divide-box {
+  width: 400px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.split-button {
+  margin: 10px;
+  border-radius: 5px;
+}
+
+.split-button-selected {
+  background-color: $header-color;
+}
+
+.split-selection-box {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.select-button {
+  min-width: 40px;
+  margin-top: 20px;
+}
+
+.users-list {
+  ul {
+    list-style-type: none;
+  }
+}
+
+.single-user-expense-display {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  font-weight: bold;
+}
+
+.percent-input {
+  border: #B8B8B8 1px solid;
+  width: 20px;
+  margin-right: 5px;
+  padding: 2px;
+  max-height: 24px;
+}
+
+.values-input {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+}
+
+
+.extra-info-percentages {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.extra-info-values {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+

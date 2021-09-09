@@ -1,0 +1,40 @@
+<div class="main-flexbox">
+  <div class="left-flexbox">
+    <img src="../../../assets/splitwise%20logo.png" class="logo" alt="logo">
+  </div>
+  <div class="right-flexbox">
+
+    <p class="shadow-text">Start a new group</p>
+    <p class="main-text">My group shall be called....</p>
+
+    <form [formGroup]="formTemplate">
+      <input type="text" formControlName="groupName" class="input-styling" #groupName>
+      <div *ngFor="let user of users.controls; let i=index" formArrayName="users">
+        <div class="single-user" [formGroupName]="i" *ngIf="groupName.value">
+          <input formControlName='email' class="email-friend-input" email placeholder="email" autocomplete="off">
+          <input formControlName='name' class="email-friend-input" placeholder="name" autocomplete="off">
+          <mat-icon (click)="removePeople(i)" class="delete-icon">delete</mat-icon>
+        </div>
+      </div>
+    </form>
+
+
+    <div class="friends-flex">
+      <button mat-button (click)="addNewPeople()" type="button"
+              class="add-more-button">Add more...
+      </button>
+    </div>
+
+    <div class="friends-flex">
+      <button mat-button [disabled]="formTemplate.invalid" type="button" (click)="saveGroup()"
+              class="save-button">Save
+      </button>
+    </div>
+    <div class="friends-flex">
+      <button mat-button (click)="cancel()" type="button"
+              class="cancel-button">Cancel
+      </button>
+    </div>
+
+  </div>
+</div>

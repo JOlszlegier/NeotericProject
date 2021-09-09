@@ -1,0 +1,11 @@
+<div class="flexbox">
+  <div class="top-box">
+    <button mat-button class="add-button" (click)="onAddExpenseClick()" type="button">Add an Expense</button>
+    <div class="text">{{displayString}}</div>
+
+
+    <button mat-button class="settle-button" type="button">Settle Up</button>
+
+  </div>
+  <app-cash-status></app-cash-status>
+</div>

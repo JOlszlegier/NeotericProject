@@ -20,10 +20,14 @@
 .input-area {
   width: 15vw;
   height: 4vh;
+  font-size: 16px;
+  padding-left: 5px;
+  border-radius: 5px;
+  border: 1px solid #EEEEEE;
 }
 
 .sign-in-button {
-  background-color: $sign-in-button-color;
+  background-color: $switch-button-color;
   width: 10vw;
 }
 
@@ -31,4 +35,5 @@
   background-color: $log-in-button-color;
   width: 10vw;
 }
+
 

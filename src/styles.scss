@@ -1,4 +1,25 @@
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  //font-family: 'Open Sans', sans-serif;
+  font-family: 'Noto Sans JP', sans-serif;
+  color: #333333;
+}
+
+span {
+  //font-family: 'Open Sans', sans-serif;
+  font-family: 'Noto Sans JP', sans-serif;
+
+  color: #333333;
+}
+
+.custom-dialog-class .mat-dialog-container {
+  padding: 0;
+  border-radius: 20px;
+  border: 1px solid #DDDDDD;
+}
