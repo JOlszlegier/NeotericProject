@@ -1,6 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 
-import {searchService} from "../../../../core/services/search-service";
+import {SearchService} from "../../../../core/services/search-service";
 import {Subscription} from "rxjs";
 
 @Component({
@@ -16,7 +16,7 @@ export class FriendsComponent implements OnInit, OnDestroy {
   public newFriend: string = '';
   public searchPhraseSubscription!: Subscription;
 
-  constructor(private searchService: searchService) {
+  constructor(private searchService: SearchService) {
   }
 
   addFriend(friend: string): void {

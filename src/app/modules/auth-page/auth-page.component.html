@@ -32,6 +32,7 @@
               class="sign-in-button"
               (click)="onSwitch()"
               [@buttonState]="state"
+              type="button"
       >Switch to {{switchButtonText}}
       </button>
       <button mat-raised-button
@@ -39,6 +40,7 @@
               (click)="onLogIn()"
               [disabled]="!defaultForm.valid"
               [@buttonState]="state"
+              type="button"
       >Submit!
       </button>
     </div>

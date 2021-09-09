@@ -3,10 +3,11 @@ import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import {MatChipInputEvent} from '@angular/material/chips';
 import {MatDialogRef} from "@angular/material/dialog";
 import {HttpClient} from "@angular/common/http";
-import {euroCurrencyService} from "../../../../core/services/euro-currency-service";
+
 import {Subscription} from "rxjs";
-import {dollarCurrencyService} from "../../../../core/services/dollar-currency-service";
 import {splitByPercent, splitEvenly} from "./shared/expense-divide-helper";
+import {CurrencyInfoService} from "../../../../core/services/currency-info-service";
+import {CurrencyInfoApiService} from "../../../../core/services/currency-info-api-service";
 
 @Component({
   selector: 'app-add-expense',
@@ -17,7 +18,7 @@ export class AddExpenseComponent implements OnInit {
   public addOnBlur: boolean = true;
   public selectable: boolean = true;
   public removable: boolean = true;
-  public users: string[] = []
+  public users: string[] = [];
   public isUserBoxVisible: boolean = false;
   public isDivideBoxVisible: boolean = false;
   public whoPays: string = 'you';
@@ -44,19 +45,14 @@ export class AddExpenseComponent implements OnInit {
   readonly separatorKeysCodes = [ENTER, COMMA] as const
 
   constructor(public dialogRef: MatDialogRef<AddExpenseComponent>,
-              private http: HttpClient, private euroService: euroCurrencyService,
-              private dollarService: dollarCurrencyService) {
+              private http: HttpClient, private currencyInfo: CurrencyInfoService, private currencyApiService: CurrencyInfoApiService) {
   }
 
   ngOnInit() {
     this.dialogRef.updateSize('300px', '');
-    this.subscriptions = this.euroService.euroState.subscribe(state => this.plnToEur = state);
-    this.subscriptions = this.dollarService.dollarState.subscribe(state => this.plnToUSD = state);
-    this.http.get('http://api.exchangeratesapi.io/v1/latest?access_key=6ad942ce3abac5d14a21235d48f68e2a&symbols=USD,PLN&format=1')
-      .subscribe(responseData => {
-        this.euroService.euroOnChange(Object.values(responseData)[4].PLN);
-        this.dollarService.dollarOnChange(Object.values(responseData)[4].PLN / Object.values(responseData)[4].USD);
-      })
+    this.subscriptions = this.currencyInfo.euroState.subscribe(state => this.plnToEur = state);
+    this.subscriptions = this.currencyInfo.dollarState.subscribe(state => this.plnToUSD = state);
+    this.currencyApiService.getCurrencyInfoFromApi();
   }
 
   add(event: MatChipInputEvent): void {

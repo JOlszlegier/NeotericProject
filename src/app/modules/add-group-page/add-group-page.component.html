@@ -8,9 +8,9 @@
     <p class="main-text">My group shall be called....</p>
 
     <form [formGroup]="formTemplate">
-      <input type="text" formControlName="groupName" class="input-styling">
+      <input type="text" formControlName="groupName" class="input-styling" #groupName>
       <div *ngFor="let user of users.controls; let i=index" formArrayName="users">
-        <div class="single-user" [formGroupName]="i">
+        <div class="single-user" [formGroupName]="i" *ngIf="groupName.value">
           <input formControlName='email' class="email-friend-input" email placeholder="email" autocomplete="off">
           <input formControlName='name' class="email-friend-input" placeholder="name" autocomplete="off">
           <mat-icon (click)="removePeople(i)" class="delete-icon">delete</mat-icon>
@@ -20,18 +20,18 @@
 
 
     <div class="friends-flex">
-      <button mat-button (click)="addNewPeople()"
+      <button mat-button (click)="addNewPeople()" type="button"
               class="add-more-button">Add more...
       </button>
     </div>
 
     <div class="friends-flex">
-      <button mat-button (click)="saveGroup()" [disabled]="formTemplate.invalid"
+      <button mat-button [disabled]="formTemplate.invalid" type="button" (click)="saveGroup()"
               class="save-button">Save
       </button>
     </div>
     <div class="friends-flex">
-      <button mat-button (click)="cancel()"
+      <button mat-button (click)="cancel()" type="button"
               class="cancel-button">Cancel
       </button>
     </div>

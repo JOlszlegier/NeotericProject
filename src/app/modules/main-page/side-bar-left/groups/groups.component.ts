@@ -1,7 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 
-import {searchService} from "../../../../core/services/search-service";
+import {SearchService} from "../../../../core/services/search-service";
 import {Subscription} from "rxjs";
 import {Group} from "../../../../core/interfaces/interfaces";
 import {GroupService} from "../../../../core/services/group-service";
@@ -27,7 +27,7 @@ export class GroupsComponent implements OnInit, OnDestroy {
   public selectedSubscription !: Subscription;
   public selectedGroupName: string = ''
 
-  constructor(private searchService: searchService, private router: Router,
+  constructor(private searchService: SearchService, private router: Router,
               private groupService: GroupService, private centerBoxService: CenterBoxService) {
   }
 
