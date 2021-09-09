@@ -1,4 +1,4 @@
-import {AfterViewInit, ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import {FormArray, FormBuilder, FormControl, Validators} from "@angular/forms";
 import {GroupService} from "../../core/services/group-service";
@@ -8,36 +8,30 @@ import {GroupService} from "../../core/services/group-service";
   templateUrl: './add-group-page.component.html',
   styleUrls: ['./add-group-page.component.scss']
 })
-export class AddGroupPageComponent implements OnInit, AfterViewInit {
+export class AddGroupPageComponent implements OnInit {
 
   formTemplate = this.fb.group({
-    groupName: new FormControl([''], Validators.required),
+    groupName: new FormControl('', Validators.required),
     users: this.fb.array([
-      this.fb.group({
-        name: new FormControl([''], Validators.required),
-        email: new FormControl([''], [Validators.email, Validators.required])
-      })
+      this.createUser()
     ])
   });
 
   createUser() {
     return this.fb.group({
-      name: new FormControl([''], Validators.required),
-      email: new FormControl([''], [Validators.email, Validators.required])
+      name: new FormControl('', Validators.required),
+      email: new FormControl('', [Validators.email, Validators.required])
     })
   }
 
   constructor(private router: Router, private groupService: GroupService,
-              private fb: FormBuilder, private cdr: ChangeDetectorRef) {
+              private fb: FormBuilder) {
   }
 
   get users(): FormArray {
     return this.formTemplate.get('users') as FormArray
   }
 
-  ngAfterViewInit() {
-    this.cdr.detectChanges();
-  }
 
   addNewPeople(): void {
     (this.formTemplate.controls['users'] as FormArray).push(this.createUser())

@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, Validators} from "@angular/forms";
 import {animate, state, style, transition, trigger} from "@angular/animations";
 
-import {AuthText} from "./shared/enums/auth.enums";
+import {authText} from "./shared/enums/auth.enums";
 import {AuthService} from "../../core/services/auth-service";
 
 @Component({
@@ -25,7 +25,6 @@ import {AuthService} from "../../core/services/auth-service";
 
 export class AuthPageComponent implements OnInit {
 
-  public authText = AuthText;
   public isInLogInMode: boolean = true;
   public switchButtonText: string = 'sign in'
   public state: string = 'hidden'
@@ -41,10 +40,10 @@ export class AuthPageComponent implements OnInit {
   public onSwitch(): void {
     this.isInLogInMode = !this.isInLogInMode;
     if (this.isInLogInMode) {
-      this.switchButtonText = AuthText.SignIn
+      this.switchButtonText = authText.SignIn
       this.defaultForm.removeControl('name');
     } else {
-      this.switchButtonText = AuthText.LogIn;
+      this.switchButtonText = authText.LogIn;
       this.defaultForm.addControl('name', new FormControl(null, Validators.required));
     }
   }

@@ -5,14 +5,13 @@ import {BehaviorSubject} from "rxjs";
 @Injectable({providedIn: 'root'})
 
 export class GroupService {
-  AllGroup: Group[] = []
+  allGroup: Group[] = []
 
   private userSource = new BehaviorSubject<string[]>([])
   currentUsers = this.userSource.asObservable();
 
-
   public addNewGroup(groupName: string, groupUsers: User[]): void {
-    this.AllGroup.push({groupName, users: groupUsers})
+    this.allGroup.push({groupName, users: groupUsers})
   }
 
   public changeSearch(users: string[]): void {

@@ -2,13 +2,11 @@ import {Component, OnInit} from '@angular/core';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import {MatChipInputEvent} from '@angular/material/chips';
 import {MatDialogRef} from "@angular/material/dialog";
-import {ExpenseDivideService} from "../../../../core/services/expense-divide-service";
 import {HttpClient} from "@angular/common/http";
 import {euroCurrencyService} from "../../../../core/services/euro-currency-service";
 import {Subscription} from "rxjs";
 import {dollarCurrencyService} from "../../../../core/services/dollar-currency-service";
-import {FormControl} from "@angular/forms";
-
+import {splitByPercent, splitEvenly} from "./shared/expense-divide-helper";
 
 @Component({
   selector: 'app-add-expense',
@@ -31,8 +29,8 @@ export class AddExpenseComponent implements OnInit {
   private subscriptions!: Subscription;
   private plnToEur: number = 0;
   private plnToUSD: number = 0;
-  public showDelay = new FormControl(100);
-  public hideDelay = new FormControl(50);
+  public showDelay = 100;
+  public hideDelay = 50;
   public theyOweSelected: boolean = false;
   public youOweSelected: boolean = false;
   public inputPercentVisible: boolean = false;
@@ -46,7 +44,6 @@ export class AddExpenseComponent implements OnInit {
   readonly separatorKeysCodes = [ENTER, COMMA] as const
 
   constructor(public dialogRef: MatDialogRef<AddExpenseComponent>,
-              private expenseDivisionService: ExpenseDivideService,
               private http: HttpClient, private euroService: euroCurrencyService,
               private dollarService: dollarCurrencyService) {
   }
@@ -123,7 +120,7 @@ export class AddExpenseComponent implements OnInit {
 
     this.inputPercentVisible = false;
     for (let i = 0; i < this.users.length; i++) {
-      this.eachUserAmount[i] = this.expenseDivisionService.splitEvenly(this.users.length, this.expenseValue)
+      this.eachUserAmount[i] = splitEvenly(this.users.length, this.expenseValue)
     }
   }
 
@@ -132,7 +129,7 @@ export class AddExpenseComponent implements OnInit {
     this.inputPercentVisible = true;
     for (let i = 0; i < this.users.length; i++) {
       if (this.percentToDivide[i])
-        this.eachUserAmount[i] = this.expenseDivisionService.splitByPercent(this.percentToDivide[i], this.expenseValue)
+        this.eachUserAmount[i] = splitByPercent(this.percentToDivide[i], this.expenseValue)
     }
     this.percentagesLeftCalculation();
   }

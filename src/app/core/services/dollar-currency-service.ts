@@ -4,8 +4,6 @@ import {BehaviorSubject} from "rxjs";
 @Injectable({providedIn: 'root'})
 
 export class dollarCurrencyService {
-
-
   private dollarSource = new BehaviorSubject<number>(0)
   dollarState = this.dollarSource.asObservable();
 
