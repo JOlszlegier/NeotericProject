@@ -49,9 +49,7 @@ export class AddGroupPageComponent implements OnInit {
   }
 
   saveGroup(): void {
-    console.log(this.formTemplate.value);
     //add group to backend
-    console.log(this.formTemplate.valid);
     this.router.navigate(['/main']);
   }
 

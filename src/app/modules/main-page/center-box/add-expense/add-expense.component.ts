@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import {MatChipInputEvent} from '@angular/material/chips';
 import {MatDialogRef} from "@angular/material/dialog";
@@ -14,7 +14,7 @@ import {CurrencyInfoApiService} from "../../../../core/services/currency-info-ap
   templateUrl: './add-expense.component.html',
   styleUrls: ['./add-expense.component.scss'],
 })
-export class AddExpenseComponent implements OnInit {
+export class AddExpenseComponent implements OnInit, OnDestroy {
   public addOnBlur: boolean = true;
   public selectable: boolean = true;
   public removable: boolean = true;
@@ -52,7 +52,14 @@ export class AddExpenseComponent implements OnInit {
     this.dialogRef.updateSize('300px', '');
     this.subscriptions = this.currencyInfo.euroState.subscribe(state => this.plnToEur = state);
     this.subscriptions = this.currencyInfo.dollarState.subscribe(state => this.plnToUSD = state);
-    this.currencyApiService.getCurrencyInfoFromApi();
+    this.subscriptions = this.currencyApiService.getCurrencyInfoFromApi().subscribe(responseData => {
+      this.currencyInfo.euroOnChange(Object.values(responseData)[4].PLN);
+      this.currencyInfo.dollarOnChange(Object.values(responseData)[4].PLN / Object.values(responseData)[4].USD);
+    });
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.unsubscribe();
   }
 
   add(event: MatChipInputEvent): void {
@@ -102,13 +109,6 @@ export class AddExpenseComponent implements OnInit {
     return users.length > 0;
   }
 
-  //FOR TEST PURPOSES
-
-  apiDisplay() {
-    console.log('Euro exchange rate passed by service ' + this.plnToEur);
-    console.log('Dollar exchange rate passed by service ' + this.plnToUSD);
-    this.exportInfoTest();
-  }
 
   //this section will need changes after backend delivers
   divideEven() {
@@ -153,7 +153,6 @@ export class AddExpenseComponent implements OnInit {
     this.splitSelected = false;
     this.theyOweSelected = true;
     this.youOweSelected = false;
-    console.log(this.currencyChoice);
   }
 
   youOweThemSelected() {
@@ -173,16 +172,5 @@ export class AddExpenseComponent implements OnInit {
     this.valueLeft = this.expenseValue - this.valueToDivide.reduce((acc, cur) => acc + cur, 0)
   }
 
-  ///////
-
-
-  exportInfoTest() {
-    console.log(`Users ` + this.users);
-    console.log(`Value ` + this.expenseValue);
-    console.log('Description ' + this.description);
-    console.log('Currency ' + this.currencyChoice);
-    console.log('How to divide ' + this.eachUserAmount);
-
-  }
 
 }
