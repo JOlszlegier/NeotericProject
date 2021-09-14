@@ -53,12 +53,27 @@ export class AuthPageComponent implements OnInit {
     }
   }
 
-  public onLogIn(): void {
+  public signIn(): void {
     this.email = this.defaultForm.value.email;
     this.name = this.defaultForm.value.name;
     this.password = this.defaultForm.value.password;
     this.authApi.createTest(this.email, this.name, this.password);
     this.authService.onLogInActions();
+  }
+
+  public logIn(): void {
+    this.email = this.defaultForm.value.email;
+    this.password = this.defaultForm.value.password;
+    this.authApi.login(this.email, this.password);
+    this.authService.onLogInActions();
+  }
+
+  public formSubmit(): void {
+    if (this.isInLogInMode) {
+      this.logIn();
+    } else {
+      this.signIn()
+    }
   }
 
 

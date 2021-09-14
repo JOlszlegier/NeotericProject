@@ -7,11 +7,19 @@ export class AuthApiService {
   constructor(private http: HttpClient) {
   }
 
-  public URL: string = 'http://localhost:3000/create_user';
+  public createUserURL: string = 'http://localhost:3000/create_user';
+  public logInUserURL: string = 'http://localhost:3000/login';
 
   createTest(email: string, name: string, password: string) {
-    this.http.post(this.URL, {
+    this.http.post(this.createUserURL, {
       "name": name,
+      "email": email,
+      "password": password
+    }).subscribe();
+  }
+
+  login(email: string, password: string) {
+    this.http.post(this.logInUserURL, {
       "email": email,
       "password": password
     }).subscribe();
