@@ -1,5 +1,10 @@
 import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
+import {BehaviorSubject} from "rxjs";
+
+interface loginResponse {
+  loginStatus: boolean
+}
 
 @Injectable({providedIn: 'root'})
 
@@ -10,7 +15,16 @@ export class AuthApiService {
   public createUserURL: string = 'http://localhost:3000/create_user';
   public logInUserURL: string = 'http://localhost:3000/login';
 
-  createTest(email: string, name: string, password: string) {
+
+  private loginStatusSource = new BehaviorSubject<boolean>(false);
+  public loginStatus = this.loginStatusSource.asObservable();
+
+
+  public onLoginStatusChange(state: boolean): void {
+    this.loginStatusSource.next(state);
+  }
+
+  public createTest(email: string, name: string, password: string): void {
     this.http.post(this.createUserURL, {
       "name": name,
       "email": email,
@@ -18,11 +32,17 @@ export class AuthApiService {
     }).subscribe();
   }
 
-  login(email: string, password: string) {
-    this.http.post(this.logInUserURL, {
+  login(email: string, password: string): void {
+    //tu działa
+    this.http.post<loginResponse>(this.logInUserURL, {
       "email": email,
       "password": password
-    }).subscribe();
+    }).subscribe(data => {
+      if (data.loginStatus) {
+        //tu nie
+        this.onLoginStatusChange(true);
+      }
+    });
   }
 
 }

@@ -5,6 +5,7 @@ import {animate, state, style, transition, trigger} from "@angular/animations";
 import {authText} from "./shared/enums/auth.enums";
 import {AuthService} from "../../core/services/auth-service";
 import {AuthApiService} from "../../core/services/auth-api-service";
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-auth-page',
@@ -25,13 +26,14 @@ import {AuthApiService} from "../../core/services/auth-api-service";
 
 
 export class AuthPageComponent implements OnInit {
-
+  private subscriptions!: Subscription;
   public isInLogInMode: boolean = true;
   public switchButtonText: string = 'sign in';
   public state: string = 'hidden';
   public email: string = '';
   public password: string = '';
   public name: string = '';
+  public loginSuccess: boolean = false;
 
   public defaultForm = this.fb.group({
     email: [''],
@@ -41,6 +43,12 @@ export class AuthPageComponent implements OnInit {
   constructor(private authService: AuthService, private fb: FormBuilder, private authApi: AuthApiService) {
   }
 
+  ngOnInit(): void {
+    setTimeout(() => {
+      this.state = 'normal'
+    }, 300)
+    this.subscriptions = this.authApi.loginStatus.subscribe(state => this.loginSuccess = state);
+  }
 
   public onSwitch(): void {
     this.isInLogInMode = !this.isInLogInMode;
@@ -74,13 +82,6 @@ export class AuthPageComponent implements OnInit {
     } else {
       this.signIn()
     }
-  }
-
-
-  ngOnInit(): void {
-    setTimeout(() => {
-      this.state = 'normal'
-    }, 300)
   }
 
 
