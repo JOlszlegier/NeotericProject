@@ -34,13 +34,15 @@ export class AuthApiService {
 
   login(email: string, password: string): void {
     //tu działa
+    //
     this.http.post<loginResponse>(this.logInUserURL, {
       "email": email,
       "password": password
     }).subscribe(data => {
       if (data.loginStatus) {
-        //tu nie
+        //tu nie, mimo że ogólnie do data.loginStatus wchodzi to component dostaje false zawsze
         this.onLoginStatusChange(true);
+        //
       }
     });
   }
