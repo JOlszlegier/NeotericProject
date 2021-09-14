@@ -4,6 +4,7 @@ import {animate, state, style, transition, trigger} from "@angular/animations";
 
 import {authText} from "./shared/enums/auth.enums";
 import {AuthService} from "../../core/services/auth-service";
+import {AuthApiService} from "../../core/services/auth-api-service";
 
 @Component({
   selector: 'app-auth-page',
@@ -26,16 +27,20 @@ import {AuthService} from "../../core/services/auth-service";
 export class AuthPageComponent implements OnInit {
 
   public isInLogInMode: boolean = true;
-  public switchButtonText: string = 'sign in'
-  public state: string = 'hidden'
+  public switchButtonText: string = 'sign in';
+  public state: string = 'hidden';
+  public email: string = '';
+  public password: string = '';
+  public name: string = '';
 
   public defaultForm = this.fb.group({
     email: [''],
-    password: ['']
+    password: [''],
   })
 
-  constructor(private authService: AuthService, private fb: FormBuilder) {
+  constructor(private authService: AuthService, private fb: FormBuilder, private authApi: AuthApiService) {
   }
+
 
   public onSwitch(): void {
     this.isInLogInMode = !this.isInLogInMode;
@@ -49,13 +54,19 @@ export class AuthPageComponent implements OnInit {
   }
 
   public onLogIn(): void {
+    this.email = this.defaultForm.value.email;
+    this.name = this.defaultForm.value.name;
+    this.password = this.defaultForm.value.password;
+    this.authApi.createTest(this.email, this.name, this.password);
     this.authService.onLogInActions();
   }
+
 
   ngOnInit(): void {
     setTimeout(() => {
       this.state = 'normal'
     }, 300)
   }
+
 
 }
