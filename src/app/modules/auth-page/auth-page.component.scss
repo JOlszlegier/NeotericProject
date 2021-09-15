@@ -36,4 +36,11 @@
   width: 10vw;
 }
 
-
+.failure-box {
+  background-color: $add-expense-color;
+  border-radius: 5px;
+  padding: 5px;
+  font-size: 14px;
+  width: 10vw;
+  text-align: center;
+}

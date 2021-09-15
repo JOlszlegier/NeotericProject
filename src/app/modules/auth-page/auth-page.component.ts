@@ -33,6 +33,7 @@ export class AuthPageComponent implements OnInit {
   public email: string = '';
   public password: string = '';
   public name: string = '';
+  public loginFailure: boolean = false;
   public defaultForm = this.fb.group({
     email: [''],
     password: [''],
@@ -76,7 +77,7 @@ export class AuthPageComponent implements OnInit {
       if (data.loginStatus) {
         this.authService.onLogInActions();
       } else {
-        alert(`Wrong password`);
+        this.loginFailure = true
       }
     })
     this.subscriptions.add(loginSub)

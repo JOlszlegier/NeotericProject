@@ -43,6 +43,9 @@
               type="button"
       >Submit!
       </button>
+      <div *ngIf="loginFailure" class="failure-box">
+        Wrong email or password !
+      </div>
     </div>
   </div>
 </form>
