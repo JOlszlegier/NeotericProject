@@ -34,6 +34,7 @@ export class AuthPageComponent implements OnInit {
   public password: string = '';
   public name: string = '';
   public loginFailure: boolean = false;
+  public registerFailure: boolean = false;
   public defaultForm = this.fb.group({
     email: [''],
     password: [''],
@@ -49,6 +50,8 @@ export class AuthPageComponent implements OnInit {
   }
 
   public onSwitch(): void {
+    this.loginFailure = false;
+    this.registerFailure = false;
     this.isInLogInMode = !this.isInLogInMode;
     if (this.isInLogInMode) {
       this.switchButtonText = authText.SignIn
@@ -60,12 +63,13 @@ export class AuthPageComponent implements OnInit {
   }
 
   public signIn(): void {
+    this.loginFailure = false;
     const {email, password, name} = this.defaultForm.value;
     const registerSub = this.authApi.register(email, password, name).subscribe(data => {
       if (data.registerStatus) {
         this.authService.onLogInActions();
       } else {
-        alert(`Email already taken!`)
+        this.registerFailure = true;
       }
     })
     this.subscriptions.add(registerSub);
@@ -81,6 +85,13 @@ export class AuthPageComponent implements OnInit {
       }
     })
     this.subscriptions.add(loginSub)
+  }
+
+  errorMessageHider() {
+    if (this.loginFailure || this.registerFailure) {
+      this.loginFailure = false;
+      this.registerFailure = false;
+    }
   }
 
 

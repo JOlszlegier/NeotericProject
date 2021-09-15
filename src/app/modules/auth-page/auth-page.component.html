@@ -10,6 +10,7 @@
              formControlName="email"
              autocomplete="off"
              [@buttonState]="state"
+             (change)="errorMessageHider()"
       >
       <input matInput
              type="password"
@@ -18,6 +19,7 @@
              required
              formControlName="password"
              [@buttonState]="state"
+             (change)="errorMessageHider()"
       >
       <input type="text"
              formControlName="name"
@@ -27,6 +29,7 @@
              autocomplete="off"
              *ngIf="!isInLogInMode"
              [@buttonState]="state"
+             (change)="errorMessageHider()"
       >
       <button mat-raised-button
               class="sign-in-button"
@@ -45,6 +48,9 @@
       </button>
       <div *ngIf="loginFailure" class="failure-box">
         Wrong email or password !
+      </div>
+      <div *ngIf="registerFailure" class="failure-box">
+        Email is already taken !
       </div>
     </div>
   </div>
