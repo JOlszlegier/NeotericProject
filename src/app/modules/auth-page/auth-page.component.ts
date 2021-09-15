@@ -33,8 +33,6 @@ export class AuthPageComponent implements OnInit {
   public email: string = '';
   public password: string = '';
   public name: string = '';
-  public loginSuccess: boolean = false;
-  public time: Date = new Date();
   public defaultForm = this.fb.group({
     email: [''],
     password: [''],
@@ -47,7 +45,6 @@ export class AuthPageComponent implements OnInit {
     setTimeout(() => {
       this.state = 'normal'
     }, 300)
-    this.subscriptions = this.authApi.loginStatus.subscribe(state => this.loginSuccess = state);
   }
 
   public onSwitch(): void {
@@ -62,28 +59,35 @@ export class AuthPageComponent implements OnInit {
   }
 
   public signIn(): void {
-    this.email = this.defaultForm.value.email;
-    this.name = this.defaultForm.value.name;
-    this.password = this.defaultForm.value.password;
-    this.authApi.createTest(this.email, this.name, this.password).subscribe();
-    this.authService.onLogInActions();
+    const {email, password, name} = this.defaultForm.value;
+    const registerSub = this.authApi.register(email, password, name).subscribe(data => {
+      if (data.registerStatus) {
+        this.authService.onLogInActions();
+      } else {
+        alert(`Email already taken!`)
+      }
+    })
+    this.subscriptions.add(registerSub);
   }
 
-  public async logIn(): Promise<void> {
-    this.email = this.defaultForm.value.email;
-    this.password = this.defaultForm.value.password;
-    this.authApi.login(this.email, this.password).subscribe(data => {
-      this.authApi.onLoginStatusChange(true);
-      console.log(`Test ${this.loginSuccess}`);
-    });
-    this.authService.onLogInActions();
+  public logIn(): void {
+    const {email, password} = this.defaultForm.value;
+    const loginSub = this.authApi.login(email, password).subscribe(data => {
+      if (data.loginStatus) {
+        this.authService.onLogInActions();
+      } else {
+        alert(`Wrong password`);
+      }
+    })
+    this.subscriptions.add(loginSub)
   }
 
-  public async formSubmit(): Promise<void> {
+
+  public formSubmit(): void {
     if (this.isInLogInMode) {
-      this.logIn().then(r => console.log(this.loginSuccess));
+      this.logIn();
     } else {
-      this.signIn()
+      this.signIn();
     }
   }
 
