@@ -34,7 +34,7 @@ export class AuthPageComponent implements OnInit {
   public password: string = '';
   public name: string = '';
   public loginSuccess: boolean = false;
-
+  public time: Date = new Date();
   public defaultForm = this.fb.group({
     email: [''],
     password: [''],
@@ -65,24 +65,26 @@ export class AuthPageComponent implements OnInit {
     this.email = this.defaultForm.value.email;
     this.name = this.defaultForm.value.name;
     this.password = this.defaultForm.value.password;
-    this.authApi.createTest(this.email, this.name, this.password);
+    this.authApi.createTest(this.email, this.name, this.password).subscribe();
     this.authService.onLogInActions();
   }
 
-  public logIn(): void {
+  public async logIn(): Promise<void> {
     this.email = this.defaultForm.value.email;
     this.password = this.defaultForm.value.password;
-    this.authApi.login(this.email, this.password);
+    this.authApi.login(this.email, this.password).subscribe(data => {
+      this.authApi.onLoginStatusChange(true);
+      console.log(`Test ${this.loginSuccess}`);
+    });
     this.authService.onLogInActions();
   }
 
-  public formSubmit(): void {
+  public async formSubmit(): Promise<void> {
     if (this.isInLogInMode) {
-      this.logIn();
+      this.logIn().then(r => console.log(this.loginSuccess));
     } else {
       this.signIn()
     }
   }
-
 
 }
