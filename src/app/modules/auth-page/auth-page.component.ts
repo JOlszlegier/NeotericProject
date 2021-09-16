@@ -5,6 +5,7 @@ import {authText} from "./shared/enums/auth.enums";
 import {AuthService} from "../../core/services/auth-service";
 import {AuthApiService} from "../../core/services/auth-api-service";
 import {Subscription} from "rxjs";
+import {CookieService} from "ngx-cookie-service";
 
 @Component({
   selector: 'app-auth-page',
@@ -39,7 +40,7 @@ export class AuthPageComponent implements OnInit {
     password: [''],
   })
 
-  constructor(private authService: AuthService, private fb: FormBuilder, private authApi: AuthApiService) {
+  constructor(private authService: AuthService, private fb: FormBuilder, private authApi: AuthApiService, private cookieService: CookieService) {
   }
 
   ngOnInit(): void {
@@ -65,11 +66,8 @@ export class AuthPageComponent implements OnInit {
     this.loginFailure = false;
     const {email, password, name} = this.defaultForm.value;
     const registerSub = this.authApi.register(email, password, name).subscribe(data => {
-      if (data.registerStatus) {
-        this.authService.onLogInActions();
-      } else {
-        this.registerFailure = true;
-      }
+      this.cookieService.set('token', data.token);
+      this.authService.onLogInActions();
     })
     this.subscriptions.add(registerSub);
   }
@@ -77,11 +75,8 @@ export class AuthPageComponent implements OnInit {
   public logIn(): void {
     const {email, password} = this.defaultForm.value;
     const loginSub = this.authApi.login(email, password).subscribe(data => {
-      if (data.loginStatus) {
-        this.authService.onLogInActions();
-      } else {
-        this.loginFailure = true
-      }
+      this.cookieService.set('token', data.token);
+      this.authService.onLogInActions();
     })
     this.subscriptions.add(loginSub)
   }

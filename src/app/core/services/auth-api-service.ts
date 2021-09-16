@@ -4,11 +4,11 @@ import {Observable} from "rxjs";
 
 
 interface loginResponse {
-  loginStatus: boolean
+  token: string;
 }
 
 interface registerResponse {
-  registerStatus: boolean;
+  token: string
 }
 
 @Injectable({providedIn: 'root'})
