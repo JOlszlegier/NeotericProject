@@ -6,6 +6,8 @@ import {Subscription} from "rxjs";
 import {Group} from "../../../../core/interfaces/interfaces";
 import {GroupService} from "../../../../core/services/group-service";
 import {CenterBoxService} from "../../../../core/services/center-box-service";
+import {AuthApiService} from "../../../../core/services/auth-api-service";
+import {HttpErrorResponse} from "@angular/common/http";
 
 @Component({
   selector: 'app-groups',
@@ -28,7 +30,7 @@ export class GroupsComponent implements OnInit, OnDestroy {
   public selectedGroupName: string = ''
 
   constructor(private searchService: SearchService, private router: Router,
-              private groupService: GroupService, private centerBoxService: CenterBoxService) {
+              private groupService: GroupService, private centerBoxService: CenterBoxService, private authApiService: AuthApiService) {
   }
 
   ngOnInit(): void {
@@ -46,7 +48,15 @@ export class GroupsComponent implements OnInit, OnDestroy {
   }
 
   newGroupLink(): void {
-    this.router.navigate(['/new-group'])
+    this.authApiService.addGroupPage().subscribe(res => {
+        this.router.navigate(['/new-group']);
+      },
+      err => {
+        if (err instanceof HttpErrorResponse) {
+          this.router.navigate([''])
+        }
+
+      });
   }
 
   onGroupClick(groupName: string): void {
