@@ -35,6 +35,7 @@ export class AuthPageComponent implements OnInit {
   public name: string = '';
   public loginFailure: boolean = false;
   public registerFailure: boolean = false;
+  public registerSuccess: boolean = false;
   public defaultForm = this.fb.group({
     email: [''],
     password: [''],
@@ -66,8 +67,13 @@ export class AuthPageComponent implements OnInit {
     this.loginFailure = false;
     const {email, password, name} = this.defaultForm.value;
     const registerSub = this.authApi.register(email, password, name).subscribe(data => {
-      this.cookieService.set('token', data.token);
-      this.authService.onLogInActions();
+      if (data.registerSuccess) {
+        this.registerSuccess = true;
+        this.cookieService.set('token', data.token);
+        this.isInLogInMode = true;
+      } else {
+        this.registerSuccess = false;
+      }
     })
     this.subscriptions.add(registerSub);
   }
@@ -75,8 +81,12 @@ export class AuthPageComponent implements OnInit {
   public logIn(): void {
     const {email, password} = this.defaultForm.value;
     const loginSub = this.authApi.login(email, password).subscribe(data => {
-      this.cookieService.set('token', data.token);
-      this.authService.onLogInActions();
+      if (data.passwordCorrect) {
+        this.cookieService.set('token', data.token);
+        this.authService.onLogInActions();
+      } else {
+        this.loginFailure = true;
+      }
     })
     this.subscriptions.add(loginSub)
   }

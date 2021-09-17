@@ -5,10 +5,12 @@ import {Observable} from "rxjs";
 
 interface loginResponse {
   token: string;
+  passwordCorrect: boolean
 }
 
 interface registerResponse {
-  token: string
+  token: string,
+  registerSuccess: boolean;
 }
 
 @Injectable({providedIn: 'root'})
