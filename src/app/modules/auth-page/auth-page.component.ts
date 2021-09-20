@@ -79,15 +79,12 @@ export class AuthPageComponent implements OnInit {
   }
 
   public logIn(): void {
-    let expirationDate = new Date();
-    expirationDate.setDate(expirationDate.getMinutes() + 2);
     const {email, password} = this.defaultForm.value;
     const loginSub = this.authApi.login(email, password).subscribe(data => {
       if (data.passwordCorrect) {
         this.cookieService.set('token', data.token);
-        this.cookieService.set('expiration-date', expirationDate.getTime().toString());
+        this.cookieService.set('expiration-date', data.expirationDate.toString())
         this.authService.onLogInActions();
-        this.authService.autoLogout(1);
       } else {
         this.loginFailure = true;
       }
