@@ -1,9 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, Validators} from "@angular/forms";
 import {animate, state, style, transition, trigger} from "@angular/animations";
-
 import {authText} from "./shared/enums/auth.enums";
 import {AuthService} from "../../core/services/auth-service";
+import {AuthApiService} from "../../core/services/auth-api-service";
+import {Subscription} from "rxjs";
+import {CookieService} from "ngx-cookie-service";
 
 @Component({
   selector: 'app-auth-page',
@@ -24,20 +26,33 @@ import {AuthService} from "../../core/services/auth-service";
 
 
 export class AuthPageComponent implements OnInit {
-
+  private subscriptions!: Subscription;
   public isInLogInMode: boolean = true;
-  public switchButtonText: string = 'sign in'
-  public state: string = 'hidden'
-
+  public switchButtonText: string = 'sign in';
+  public state: string = 'hidden';
+  public email: string = '';
+  public password: string = '';
+  public name: string = '';
+  public loginFailure: boolean = false;
+  public registerFailure: boolean = false;
+  public registerSuccess: boolean = false;
   public defaultForm = this.fb.group({
     email: [''],
-    password: ['']
+    password: [''],
   })
 
-  constructor(private authService: AuthService, private fb: FormBuilder) {
+  constructor(private authService: AuthService, private fb: FormBuilder, private authApi: AuthApiService, private cookieService: CookieService) {
+  }
+
+  ngOnInit(): void {
+    setTimeout(() => {
+      this.state = 'normal'
+    }, 300)
   }
 
   public onSwitch(): void {
+    this.loginFailure = false;
+    this.registerFailure = false;
     this.isInLogInMode = !this.isInLogInMode;
     if (this.isInLogInMode) {
       this.switchButtonText = authText.SignIn
@@ -48,14 +63,50 @@ export class AuthPageComponent implements OnInit {
     }
   }
 
-  public onLogIn(): void {
-    this.authService.onLogInActions();
+  public signIn(): void {
+    this.loginFailure = false;
+    const {email, password, name} = this.defaultForm.value;
+    const registerSub = this.authApi.register(email, password, name).subscribe(data => {
+      if (data.registerSuccess) {
+        this.registerSuccess = true;
+        this.cookieService.set('token', data.token);
+        this.isInLogInMode = true;
+      } else {
+        this.registerSuccess = false;
+      }
+    })
+    this.subscriptions.add(registerSub);
   }
 
-  ngOnInit(): void {
-    setTimeout(() => {
-      this.state = 'normal'
-    }, 300)
+  public logIn(): void {
+    const {email, password} = this.defaultForm.value;
+    const loginSub = this.authApi.login(email, password).subscribe(data => {
+      if (data.passwordCorrect) {
+        this.cookieService.set('token', data.token);
+        this.cookieService.set('expiration-date', data.expirationDate.toString())
+        this.authService.onLogInActions();
+      } else {
+        this.loginFailure = true;
+      }
+    })
+    this.subscriptions.add(loginSub)
   }
+
+  errorMessageHider() {
+    if (this.loginFailure || this.registerFailure) {
+      this.loginFailure = false;
+      this.registerFailure = false;
+    }
+  }
+
+
+  public formSubmit(): void {
+    if (this.isInLogInMode) {
+      this.logIn();
+    } else {
+      this.signIn();
+    }
+  }
+
 
 }

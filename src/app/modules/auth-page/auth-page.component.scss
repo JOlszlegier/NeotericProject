@@ -10,7 +10,7 @@
 
 .form-items {
   display: flex;
-  justify-content: center;
+
   align-items: center;
   flex-direction: column;
   width: 30vw;
@@ -18,22 +18,45 @@
 }
 
 .input-area {
-  width: 15vw;
-  height: 4vh;
+  width: 200px;
+  min-height: 4vh;
   font-size: 16px;
   padding-left: 5px;
   border-radius: 5px;
-  border: 1px solid #EEEEEE;
+  border: 1px solid #333333;
 }
 
 .sign-in-button {
   background-color: $switch-button-color;
-  width: 10vw;
+  width: 150px;
 }
 
 .log-in-button {
   background-color: $log-in-button-color;
-  width: 10vw;
+  width: 150px;
 }
 
+.failure-box {
+  background-color: $add-expense-color;
+  border-radius: 5px;
+  padding: 5px;
+  font-size: 14px;
+  width: 200px;
+  text-align: center;
+}
 
+.success-box {
+  background-color: #22bb33;
+  border-radius: 5px;
+  padding: 5px;
+  font-size: 14px;
+  width: 200px;
+  text-align: center;
+}
+
+.logo {
+  width: 300px;
+  height: 300px;
+  margin-bottom: 30px;
+  margin-top: 50px;
+}

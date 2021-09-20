@@ -10,7 +10,7 @@ import {MatIconModule} from "@angular/material/icon";
 import {MatListModule} from "@angular/material/list";
 import {MatMenuModule} from "@angular/material/menu";
 import {MatDialogModule} from '@angular/material/dialog';
-import {HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 
 
 import {AppComponent} from './app.component';
@@ -32,6 +32,7 @@ import {AddExpenseComponent} from './modules/main-page/center-box/add-expense/ad
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatCardModule} from "@angular/material/card";
 import {MatTooltipModule} from "@angular/material/tooltip";
+import {TokenInterceptorService} from "./core/services/token-interceptor.service";
 
 
 @NgModule({
@@ -71,7 +72,11 @@ import {MatTooltipModule} from "@angular/material/tooltip";
     HttpClientModule,
     MatTooltipModule
   ],
-  providers: [],
+  providers: [{
+    provide: HTTP_INTERCEPTORS,
+    useClass: TokenInterceptorService,
+    multi: true
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule {

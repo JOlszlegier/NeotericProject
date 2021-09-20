@@ -9,7 +9,7 @@
 }
 
 .main-text {
-  font-size: 27px;
+  font-size: 25px;
   height: 40px;
   margin: 0;
 }
@@ -19,7 +19,7 @@
   justify-content: center;
   flex-direction: column;
   height: 100%;
-  width: 25%;
+  width: 50vw;
 }
 
 .left-flexbox {
@@ -27,7 +27,7 @@
   justify-content: center;
   flex-direction: column;
   height: 100%;
-  width: 30%;
+  width: 50vw;
 }
 
 .main-flexbox {
@@ -42,7 +42,7 @@
 }
 
 .input-styling {
-  width: 60%;
+  width: 40%;
   border: 1px solid #DDDDDD;
   border-radius: 10px;
   height: 30px;
@@ -121,3 +121,15 @@ button:focus {
 .save-button:disabled {
   opacity: 0.5;
 }
+
+
+//Mobile design
+
+//@media (max-width: 700px) {
+//  .shadow-text, .main-text {
+//    font-size: 20px;
+//  }
+//  .right-flexbox {
+//    gap: 10px
+//  }
+//}
