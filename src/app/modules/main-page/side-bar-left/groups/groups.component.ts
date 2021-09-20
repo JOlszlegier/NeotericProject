@@ -3,11 +3,11 @@ import {Router} from "@angular/router";
 
 import {SearchService} from "../../../../core/services/search-service";
 import {Subscription} from "rxjs";
-import {Group} from "../../../../core/interfaces/interfaces";
 import {GroupService} from "../../../../core/services/group-service";
 import {CenterBoxService} from "../../../../core/services/center-box-service";
 import {AuthApiService} from "../../../../core/services/auth-api-service";
 import {HttpErrorResponse} from "@angular/common/http";
+import {NewGroup} from "../../../../core/interfaces/interfaces";
 
 @Component({
   selector: 'app-groups',
@@ -16,7 +16,7 @@ import {HttpErrorResponse} from "@angular/common/http";
 })
 
 export class GroupsComponent implements OnInit, OnDestroy {
-  public groupArrayTest: Group[] = [{
+  public groupArrayTest: NewGroup[] = [{
     groupName: "Default",
     users: [{email: 'test@wp.p', name: 'Kuba'}, {email: 'test@wp.p', name: 'Maciek'}]
   },

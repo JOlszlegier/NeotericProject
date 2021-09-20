@@ -1,11 +1,11 @@
 import {Injectable} from "@angular/core";
-import {Group, User} from "../interfaces/interfaces";
+import {NewGroup, User} from "../interfaces/interfaces";
 import {BehaviorSubject} from "rxjs";
 
 @Injectable({providedIn: 'root'})
 
 export class GroupService {
-  allGroup: Group[] = []
+  allGroup: NewGroup[] = []
 
   private userSource = new BehaviorSubject<string[]>([])
   currentUsers = this.userSource.asObservable();
