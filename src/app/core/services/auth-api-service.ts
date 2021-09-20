@@ -25,10 +25,6 @@ export class AuthApiService {
       email, password
     });
   }
-
-  public addGroupPage(): Observable<any> {
-    return this.http.get(this.addGroupURL,);
-  }
-
+  
 
 }
