@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, Validators} from "@angular/forms";
 import {animate, state, style, transition, trigger} from "@angular/animations";
 import {authText} from "./shared/enums/auth.enums";
@@ -25,7 +25,7 @@ import {CookieService} from "ngx-cookie-service";
 })
 
 
-export class AuthPageComponent implements OnInit, OnDestroy {
+export class AuthPageComponent implements OnInit {
   private subscriptions!: Subscription;
   public isInLogInMode: boolean = true;
   public switchButtonText: string = 'sign in';
@@ -107,8 +107,5 @@ export class AuthPageComponent implements OnInit, OnDestroy {
     }
   }
 
-  public ngOnDestroy() {
-    this.subscriptions.unsubscribe();
-  }
 
 }
