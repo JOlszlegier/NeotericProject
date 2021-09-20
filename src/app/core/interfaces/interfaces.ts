@@ -35,7 +35,7 @@ export interface Expense {
 
 export interface LoginResponse {
   token: string;
-  passwordCorrect: boolean
+  passwordCorrect: boolean,
 }
 
 export interface RegisterResponse {

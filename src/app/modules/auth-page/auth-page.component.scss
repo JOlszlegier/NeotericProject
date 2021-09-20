@@ -10,7 +10,7 @@
 
 .form-items {
   display: flex;
-  justify-content: center;
+
   align-items: center;
   flex-direction: column;
   width: 30vw;
@@ -52,4 +52,11 @@
   font-size: 14px;
   width: 200px;
   text-align: center;
+}
+
+.logo {
+  width: 300px;
+  height: 300px;
+  margin-bottom: 30px;
+  margin-top: 50px;
 }
