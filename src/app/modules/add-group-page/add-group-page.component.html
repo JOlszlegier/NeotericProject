@@ -7,7 +7,7 @@
     <p class="shadow-text">Start a new group</p>
     <p class="main-text">My group shall be called....</p>
 
-    <form [formGroup]="formTemplate">
+    <form [formGroup]="formTemplate" class="form-styling">
       <input type="text" formControlName="groupName" class="input-styling" #groupName>
       <div *ngFor="let user of users.controls; let i=index" formArrayName="users">
         <div class="single-user" [formGroupName]="i" *ngIf="groupName.value">
