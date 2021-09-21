@@ -11,8 +11,7 @@
       <input type="text" formControlName="groupName" class="input-styling" #groupName>
       <div *ngFor="let user of users.controls; let i=index" formArrayName="users">
         <div class="single-user" [formGroupName]="i" *ngIf="groupName.value">
-          <input formControlName='email' class="email-friend-input" email placeholder="email" autocomplete="off">
-          <input formControlName='name' class="email-friend-input" placeholder="name" autocomplete="off">
+          <input formControlName='email' class="email-friend-input" email placeholder="Email" autocomplete="off">
           <mat-icon (click)="removePeople(i)" class="delete-icon">delete</mat-icon>
         </div>
       </div>

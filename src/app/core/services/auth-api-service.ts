@@ -25,6 +25,12 @@ export class AuthApiService {
       email, password
     });
   }
-  
+
+  public createGroup(name: string, usersEmails: string[]): Observable<any> {
+    return this.http.post(this.addGroupURL, {
+      name, usersEmails
+    });
+  }
+
 
 }

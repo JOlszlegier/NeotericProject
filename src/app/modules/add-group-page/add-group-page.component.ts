@@ -2,6 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import {FormArray, FormBuilder, FormControl, Validators} from "@angular/forms";
 import {GroupService} from "../../core/services/group-service";
+import {AuthApiService} from "../../core/services/auth-api-service";
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-add-group-page',
@@ -10,6 +12,7 @@ import {GroupService} from "../../core/services/group-service";
 })
 export class AddGroupPageComponent implements OnInit {
 
+  public subscriptions!: Subscription;
   formTemplate = this.fb.group({
     groupName: new FormControl('', Validators.required),
     users: this.fb.array([
@@ -19,13 +22,12 @@ export class AddGroupPageComponent implements OnInit {
 
   createUser() {
     return this.fb.group({
-      name: new FormControl('', Validators.required),
       email: new FormControl('', [Validators.email, Validators.required])
     })
   }
 
   constructor(private router: Router, private groupService: GroupService,
-              private fb: FormBuilder) {
+              private fb: FormBuilder, private api: AuthApiService) {
   }
 
   get users(): FormArray {
@@ -49,8 +51,12 @@ export class AddGroupPageComponent implements OnInit {
   }
 
   saveGroup(): void {
-    //add group to backend
-    this.router.navigate(['/main']);
+    const addGroupSub = this.api.createGroup(
+      this.formTemplate.value.groupName, this.formTemplate.value.users.map((item: { email: any; }) => item.email))
+      .subscribe(() => {
+        this.router.navigate(['/main']);
+      })
+    this.subscriptions.add(addGroupSub);
   }
 
   cancel(): void {
