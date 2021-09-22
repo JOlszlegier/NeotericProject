@@ -66,7 +66,7 @@ export class AuthPageComponent implements OnInit {
   public signIn(): void {
     this.loginFailure = false;
     const {email, password, name} = this.defaultForm.value;
-    const registerSub = this.authApi.register(email, password, name).subscribe(data => {
+    const registerSub = this.authApi.register(email, name, password).subscribe(data => {
       if (data.registerSuccess) {
         this.registerSuccess = true;
         this.cookieService.set('token', data.token);
