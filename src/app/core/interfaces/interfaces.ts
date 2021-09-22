@@ -36,7 +36,8 @@ export interface Expense {
 export interface LoginResponse {
   token: string;
   passwordCorrect: boolean,
-  expirationDate: number
+  expirationDate: number,
+  userId: string;
 }
 
 export interface RegisterResponse {
