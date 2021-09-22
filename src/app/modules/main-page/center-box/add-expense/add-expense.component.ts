@@ -172,5 +172,11 @@ export class AddExpenseComponent implements OnInit, OnDestroy {
     this.valueLeft = this.expenseValue - this.valueToDivide.reduce((acc, cur) => acc + cur, 0)
   }
 
-
+  sendInfo() {
+    // console.log(this.description);
+    // console.log(this.whoPays);
+    // console.log(this.users);
+    // console.log(this.eachUserAmount);
+    // console.log(this.currencyChoice);
+  }
 }

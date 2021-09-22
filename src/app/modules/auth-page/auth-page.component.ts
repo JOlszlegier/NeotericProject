@@ -6,6 +6,7 @@ import {AuthService} from "../../core/services/auth-service";
 import {AuthApiService} from "../../core/services/auth-api-service";
 import {Subscription} from "rxjs";
 import {CookieService} from "ngx-cookie-service";
+import {CurrencyInfoApiService} from "../../core/services/currency-info-api-service";
 
 @Component({
   selector: 'app-auth-page',
@@ -41,13 +42,21 @@ export class AuthPageComponent implements OnInit {
     password: [''],
   })
 
-  constructor(private authService: AuthService, private fb: FormBuilder, private authApi: AuthApiService, private cookieService: CookieService) {
+  constructor(private authService: AuthService, private fb: FormBuilder,
+              private authApi: AuthApiService, private cookieService: CookieService,
+              private currencyApi: CurrencyInfoApiService) {
   }
 
   ngOnInit(): void {
     setTimeout(() => {
       this.state = 'normal'
     }, 300)
+    const currencySub = this.currencyApi.getCurrencyInfoFromApi().subscribe(responseData => {
+      this.cookieService.set('PLNtoEur', Object.values(responseData)[4].PLN);
+      const PLNtoUSD = Object.values(responseData)[4].PLN / Object.values(responseData)[4].USD;
+      this.cookieService.set('PLNtoUSD', PLNtoUSD.toString());
+    })
+    this.subscriptions.add(currencySub);
   }
 
   public onSwitch(): void {
