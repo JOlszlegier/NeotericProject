@@ -3,18 +3,6 @@ export interface User {
   name: string,
 }
 
-export interface RegisterUserData {
-  email: string,
-  name: string,
-  password: string
-}
-
-//Group do DB
-export interface Group {
-  groupName: string,
-  users: User[]
-  expenses: Expense[]
-}
 
 //Group do add-group
 export interface NewGroup {
@@ -22,16 +10,6 @@ export interface NewGroup {
   users: User[]
 }
 
-export interface Expense {
-  from: User,
-  to: User[],
-  value: number,
-  currency: string,
-  conversionRate?: number,
-  description: string;
-  inGroup: boolean;
-  groupName?: string
-}
 
 export interface LoginResponse {
   token: string;
@@ -45,3 +23,8 @@ export interface RegisterResponse {
   token: string,
   registerSuccess: boolean;
 }
+
+export interface addFriendResponse {
+  friends: string[];
+}
+
