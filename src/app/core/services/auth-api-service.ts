@@ -47,11 +47,12 @@ export class AuthApiService {
     })
   }
 
-  public singleExpenseAdd(from: string[], to: string,
-                          amount: number[], currencyMultiplier: Number,
+  public singleExpenseAdd(eachUserExpense: [{ from: string, value: number }],
+                          to: string,
+                          currencyMultiplier: Number,
                           description: string): Observable<any> {
     return this.http.post(this.addExpenseURL, {
-      from, to, amount, currencyMultiplier, description
+      eachUserExpense, to, currencyMultiplier, description
     })
   }
 

@@ -41,6 +41,7 @@ export class AddExpenseComponent implements OnInit, OnDestroy {
   public valueLeft: number = 0;
   public valueToDivide: number[] = [];
   public description: string = '';
+  public finalExpenseForUser: [{ from: string, value: number }] = [{from: '', value: 0}];
   readonly separatorKeysCodes = [ENTER, COMMA] as const
 
   constructor(public dialogRef: MatDialogRef<AddExpenseComponent>,
@@ -86,6 +87,9 @@ export class AddExpenseComponent implements OnInit, OnDestroy {
   }
 
   divideSelect() {
+    if (this.users.length > 2) {
+      this.splitSelected = true;
+    }
     this.isDivideBoxVisible = !this.isDivideBoxVisible;
     if (this.isUserBoxVisible) this.isUserBoxVisible = false;
     if (this.isDivideBoxVisible) {
@@ -172,12 +176,18 @@ export class AddExpenseComponent implements OnInit, OnDestroy {
     }
     const payerIndex = this.users.indexOf(this.whoPaid)
     this.users.splice(payerIndex, 1);
-    this.eachUserAmount.splice(payerIndex, 1)
-    const whoPays = this.users;
-    const addExpenseSub = this.authApiService.singleExpenseAdd(whoPays, this.whoPaid, this.eachUserAmount,
+    this.eachUserAmount.splice(payerIndex, 1);
+
+
+    for (const value in this.eachUserAmount) {
+      this.finalExpenseForUser[value] = {from: this.users[value], value: this.eachUserAmount[value]};
+    }
+    console.log(this.finalExpenseForUser);
+    const addExpenseSub = this.authApiService.singleExpenseAdd(this.finalExpenseForUser, this.whoPaid,
       this.currencyMultiplier, this.description).subscribe(data => {
       this.dialogRef.close();
     })
+
     this.subscriptions.add(addExpenseSub);
 
   }
