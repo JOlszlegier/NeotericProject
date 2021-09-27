@@ -13,6 +13,9 @@ export class AuthApiService {
   public createUserURL: string = 'http://localhost:3000/create_user';
   public logInUserURL: string = 'http://localhost:3000/login';
   public addGroupURL: string = 'http://localhost:3000/add-group';
+  public searchGroupURL: string = 'http://localhost:3000/group-check';
+  public usersInGroupURL: string = 'http://localhost:3000/group-users';
+  public addExpenseURL: string = 'http://localhost:3000/add-expense';
 
   public register(email: string, name: string, password: string): Observable<RegisterResponse> {
     return this.http.post<RegisterResponse>(this.createUserURL, {
@@ -25,6 +28,31 @@ export class AuthApiService {
       email, password
     });
   }
-  
+
+  public createGroup(name: string, usersEmails: string[]): Observable<any> {
+    return this.http.post(this.addGroupURL, {
+      name, usersEmails
+    });
+  }
+
+  public searchGroup(userId: string): Observable<any> {
+    return this.http.post(this.searchGroupURL, {
+      userId
+    });
+  }
+
+  public usersInGroup(name: string): Observable<any> {
+    return this.http.post(this.usersInGroupURL, {
+      name
+    })
+  }
+
+  public singleExpenseAdd(eachUserExpense: [{ from: string, value: number }],
+                          to: string,
+                          description: string): Observable<any> {
+    return this.http.post(this.addExpenseURL, {
+      eachUserExpense, to, description
+    })
+  }
 
 }

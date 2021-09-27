@@ -6,6 +6,7 @@ import {AuthService} from "../../core/services/auth-service";
 import {AuthApiService} from "../../core/services/auth-api-service";
 import {Subscription} from "rxjs";
 import {CookieService} from "ngx-cookie-service";
+import {CurrencyInfoApiService} from "../../core/services/currency-info-api-service";
 
 @Component({
   selector: 'app-auth-page',
@@ -41,13 +42,21 @@ export class AuthPageComponent implements OnInit {
     password: [''],
   })
 
-  constructor(private authService: AuthService, private fb: FormBuilder, private authApi: AuthApiService, private cookieService: CookieService) {
+  constructor(private authService: AuthService, private fb: FormBuilder,
+              private authApi: AuthApiService, private cookieService: CookieService,
+              private currencyApi: CurrencyInfoApiService) {
   }
 
   ngOnInit(): void {
     setTimeout(() => {
       this.state = 'normal'
     }, 300)
+    const currencySub = this.currencyApi.getCurrencyInfoFromApi().subscribe(responseData => {
+      this.cookieService.set('PLNtoEur', Object.values(responseData)[4].PLN);
+      const PLNtoUSD = Object.values(responseData)[4].PLN / Object.values(responseData)[4].USD;
+      this.cookieService.set('PLNtoUSD', PLNtoUSD.toString());
+    })
+    this.subscriptions.add(currencySub);
   }
 
   public onSwitch(): void {
@@ -66,7 +75,7 @@ export class AuthPageComponent implements OnInit {
   public signIn(): void {
     this.loginFailure = false;
     const {email, password, name} = this.defaultForm.value;
-    const registerSub = this.authApi.register(email, password, name).subscribe(data => {
+    const registerSub = this.authApi.register(email, name, password).subscribe(data => {
       if (data.registerSuccess) {
         this.registerSuccess = true;
         this.cookieService.set('token', data.token);
@@ -84,6 +93,8 @@ export class AuthPageComponent implements OnInit {
       if (data.passwordCorrect) {
         this.cookieService.set('token', data.token);
         this.cookieService.set('expiration-date', data.expirationDate.toString())
+        this.cookieService.set('userId', data.userId);
+        this.cookieService.set('userName', data.userName);
         this.authService.onLogInActions();
       } else {
         this.loginFailure = true;

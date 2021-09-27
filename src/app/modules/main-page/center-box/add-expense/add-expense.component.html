@@ -11,7 +11,7 @@
 
     <div class="with-box">
       <mat-form-field class="example-chip-list" appearance="fill">
-        <mat-label>Share with:</mat-label>
+        <mat-label>Users involved:</mat-label>
         <mat-chip-list #chipList aria-label="Users selection">
           <mat-chip *ngFor="let user of users" [selectable]="selectable"
                     [removable]="removable" (removed)="remove(user)" class="chip">
@@ -40,12 +40,16 @@
           </select>
         </div>
         <p>Paid by
-          <button mat-button (click)="payerSelect()" [disabled]="!canExtend(users)" type="button">{{whoPays}}</button>
+          <button mat-button (click)="payerSelect()" [disabled]="!canExtend(users)" type="button">{{whoPaid}}</button>
           and split
           <button mat-button (click)="divideSelect()" [disabled]="!canExtend(users)"
                   type="button">{{howToDivide}}</button>
           .
         </p>
+        <button
+          mat-dialog-close
+          mat-button (click)="sendInfo()">Save the expense
+        </button>
       </div>
     </div>
   </div>
@@ -56,16 +60,12 @@
   </div>
   <div class="divide-box" *ngIf="this.isDivideBoxVisible">
     <button mat-button [ngClass]="{'split-button-selected': splitSelected}" class="split-button"
-            *ngIf="users.length<3" type="button"
+            type="button"
             (click)="splitExpenseSelected()">Split the expense
     </button>
-    <!-- length below will be changed after backend (your will be one of the users)-->
     <button mat-button [ngClass]="{'split-button-selected': theyOweSelected}" class="split-button"
             *ngIf="users.length<3" type="button"
             (click)="theyOweYouSelected()">They owe the full amount
-    </button>
-    <button mat-button [ngClass]="{'split-button-selected': youOweSelected}" class="split-button" *ngIf="users.length<3"
-            (click)="youOweThemSelected()" type="button">You owe the full amount
     </button>
     <div class="split-selection-box" *ngIf="splitSelected">
       <button mat-button class="select-button" (click)="divideEven()"
@@ -78,7 +78,7 @@
               matTooltip="Split by %"
               type="button"
               [matTooltipShowDelay]="showDelay"
-              [matTooltipHideDelay]="hideDelay" (click)="divideByPercent()">%
+              [matTooltipHideDelay]="hideDelay" (click)="divideByPercentView()">%
       </button>
       <button mat-button class="select-button"
               matTooltip="Split by exact value"
