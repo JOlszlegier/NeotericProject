@@ -37,7 +37,8 @@ export interface LoginResponse {
   token: string;
   passwordCorrect: boolean,
   expirationDate: number,
-  userId: string;
+  userId: string,
+  userName: string;
 }
 
 export interface RegisterResponse {

@@ -94,6 +94,7 @@ export class AuthPageComponent implements OnInit {
         this.cookieService.set('token', data.token);
         this.cookieService.set('expiration-date', data.expirationDate.toString())
         this.cookieService.set('userId', data.userId);
+        this.cookieService.set('userName', data.userName);
         this.authService.onLogInActions();
       } else {
         this.loginFailure = true;
