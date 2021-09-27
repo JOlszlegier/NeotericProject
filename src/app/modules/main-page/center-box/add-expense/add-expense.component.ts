@@ -178,13 +178,15 @@ export class AddExpenseComponent implements OnInit, OnDestroy {
     this.users.splice(payerIndex, 1);
     this.eachUserAmount.splice(payerIndex, 1);
 
-
     for (const value in this.eachUserAmount) {
-      this.finalExpenseForUser[value] = {from: this.users[value], value: this.eachUserAmount[value]};
+
+      this.finalExpenseForUser[value] = {
+        from: this.users[value],
+        value: Number((this.eachUserAmount[value] * this.currencyMultiplier).toPrecision(4))
+      };
     }
-    console.log(this.finalExpenseForUser);
     const addExpenseSub = this.authApiService.singleExpenseAdd(this.finalExpenseForUser, this.whoPaid,
-      this.currencyMultiplier, this.description).subscribe(data => {
+      this.description).subscribe(data => {
       this.dialogRef.close();
     })
 
