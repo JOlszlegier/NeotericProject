@@ -1,7 +1,13 @@
 import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {addFriendResponse, checkFriendResponse, LoginResponse, RegisterResponse} from "../interfaces/interfaces";
+import {
+  addFriendResponse,
+  balanceCheckResponse,
+  checkFriendResponse,
+  LoginResponse,
+  RegisterResponse
+} from "../interfaces/interfaces";
 import {environment} from "../../../environments/environment";
 
 @Injectable({providedIn: 'root'})
@@ -11,7 +17,7 @@ export class AuthApiService {
   }
 
   public register(email: string, name: string, password: string): Observable<RegisterResponse> {
-    return this.http.post<RegisterResponse>(`${environment.apiUrl}/create-us`, {
+    return this.http.post<RegisterResponse>(`${environment.apiUrl}/create-user`, {
       name, email, password
     });
   }
@@ -63,6 +69,12 @@ export class AuthApiService {
   public isInFriendList(user: string, friends: string): Observable<checkFriendResponse> {
     return this.http.post<checkFriendResponse>(`${environment.apiUrl}/friend-check`, {
       user, friends
+    })
+  }
+
+  public balanceCheck(userId: string): Observable<balanceCheckResponse> {
+    return this.http.post<balanceCheckResponse>(`${environment.apiUrl}/balance-check`, {
+      userId
     })
   }
 }

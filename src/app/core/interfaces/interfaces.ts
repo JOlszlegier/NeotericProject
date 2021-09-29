@@ -26,4 +26,8 @@ export interface checkFriendResponse {
   correctUser: boolean
 }
 
+export interface balanceCheckResponse {
+  outcome: number,
+  income: number
+}
 
