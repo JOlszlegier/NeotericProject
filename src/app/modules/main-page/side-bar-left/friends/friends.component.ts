@@ -17,6 +17,7 @@ export class FriendsComponent implements OnInit, OnDestroy {
   public searchPhrase: string = '';
   public newFriend: string = '';
   public subscriptions!: Subscription;
+  public incorrectInput: boolean = false;
 
   constructor(private searchService: SearchService, private authApiService: AuthApiService,
               private cookieService: CookieService) {
@@ -26,6 +27,7 @@ export class FriendsComponent implements OnInit, OnDestroy {
     this.newFriend = '';
     const addFriendSub = this.authApiService.addFriend(this.cookieService.get('userId'), friend).subscribe(data => {
       this.friendsList = data.friends;
+      this.incorrectInput = data.userAlreadyOnTheList;
     })
     this.subscriptions.add(addFriendSub);
   }

@@ -22,8 +22,9 @@
            name="friendName">
     <mat-icon matSuffix>add</mat-icon>
   </mat-form-field>
-</div>
 
+</div>
+<p *ngIf="incorrectInput" class="error-message">User is already on the list! Please change</p>
 <button mat-button (click)="addFriend(newFriend)" class="add-button" type="button" [disabled]="!newFriend">Add new
   friend
 </button>
