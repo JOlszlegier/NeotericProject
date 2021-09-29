@@ -42,6 +42,7 @@ export class AddExpenseComponent implements OnInit, OnDestroy {
   public valueToDivide: number[] = [];
   public description: string = '';
   public finalExpenseForUser: [{ from: string, value: number }] = [{from: '', value: 0}];
+  public correctFriend: boolean = true;
   readonly separatorKeysCodes = [ENTER, COMMA] as const
 
   constructor(public dialogRef: MatDialogRef<AddExpenseComponent>,
@@ -67,6 +68,9 @@ export class AddExpenseComponent implements OnInit, OnDestroy {
     }
     event.chipInput!.clear();
     this.eachUserAmount = [];
+    if (value) {
+      this.checkUser(value);
+    }
   }
 
   remove(user: string): void {
@@ -163,6 +167,13 @@ export class AddExpenseComponent implements OnInit, OnDestroy {
 
   AmountLeftCalculation() {
     this.valueLeft = this.expenseValue - this.valueToDivide.reduce((acc, cur) => acc + cur, 0)
+  }
+
+  checkUser(friend: string) {
+    const checkUserSub = this.authApiService.checkUser(this.cookieService.get('userId'), friend).subscribe(data => {
+      this.correctFriend = data.correctUser
+    })
+    this.subscriptions.add(checkUserSub);
   }
 
   sendInfo() {
