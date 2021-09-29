@@ -24,7 +24,7 @@
   </mat-form-field>
 
 </div>
-<p *ngIf="incorrectInput" class="error-message">User is already on the list! Please change</p>
+<p *ngIf="errorMessage" class="error-message">{{errorMessage}}</p>
 <button mat-button (click)="addFriend(newFriend)" class="add-button" type="button" [disabled]="!newFriend">Add new
   friend
 </button>

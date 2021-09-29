@@ -43,6 +43,7 @@ export class AddExpenseComponent implements OnInit, OnDestroy {
   public description: string = '';
   public finalExpenseForUser: [{ from: string, value: number }] = [{from: '', value: 0}];
   public correctFriend: boolean = true;
+  public incorrectFriend: string = '';
   readonly separatorKeysCodes = [ENTER, COMMA] as const
 
   constructor(public dialogRef: MatDialogRef<AddExpenseComponent>,
@@ -60,7 +61,7 @@ export class AddExpenseComponent implements OnInit, OnDestroy {
     this.subscriptions.unsubscribe();
   }
 
-  add(event: MatChipInputEvent): void {
+  async add(event: MatChipInputEvent): Promise<void> {
     const value = (event.value || '').trim();
     if (value) {
       this.users.push(value);
@@ -75,6 +76,9 @@ export class AddExpenseComponent implements OnInit, OnDestroy {
 
   remove(user: string): void {
     const index = this.users.indexOf(user);
+    if (user === this.incorrectFriend) {
+      this.correctFriend = true;
+    }
     if (index > 0) {
       this.users.splice(index, 1);
     }
@@ -171,7 +175,10 @@ export class AddExpenseComponent implements OnInit, OnDestroy {
 
   checkUser(friend: string) {
     const checkUserSub = this.authApiService.checkUser(this.cookieService.get('userId'), friend).subscribe(data => {
-      this.correctFriend = data.correctUser
+      this.correctFriend = data.correctUser;
+      if (!this.correctFriend) {
+        this.incorrectFriend = friend;
+      }
     })
     this.subscriptions.add(checkUserSub);
   }
@@ -197,7 +204,7 @@ export class AddExpenseComponent implements OnInit, OnDestroy {
       };
     }
     const addExpenseSub = this.authApiService.singleExpenseAdd(this.finalExpenseForUser, this.whoPaid,
-      this.description).subscribe(data => {
+      this.description).subscribe(() => {
       this.dialogRef.close();
     })
 
