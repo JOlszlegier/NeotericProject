@@ -16,16 +16,16 @@ export class SearchBarComponent implements OnInit, OnDestroy {
   constructor(private searchService: SearchService) {
   }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.searchTextSubscription = this.searchService.currentSearch.subscribe(
       search => this.searchText = search);
   }
 
-  ngOnDestroy(): void {
+  public ngOnDestroy(): void {
     this.searchTextSubscription.unsubscribe();
   }
 
-  valueChange(text: string): void {
+  public valueChange(text: string): void {
     this.searchService.changeSearch(text);
   }
 

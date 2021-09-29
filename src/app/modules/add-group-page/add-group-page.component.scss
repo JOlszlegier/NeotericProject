@@ -1,4 +1,5 @@
 @import 'src/app/styles/variables.scss';
+@import 'src/app/styles/shared-classes.scss';
 
 .shadow-text {
   color: gray;
@@ -123,7 +124,7 @@ button:focus {
 }
 
 .error-message {
-  color: $add-expense-color;
+  text-align: justify;
 }
 
 

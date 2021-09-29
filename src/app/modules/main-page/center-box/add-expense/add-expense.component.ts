@@ -6,7 +6,6 @@ import {HttpClient} from "@angular/common/http";
 
 import {Subscription} from "rxjs";
 import {splitByPercent, splitEvenly} from "./shared/expense-divide-helper";
-import {CurrencyInfoService} from "../../../../core/services/currency-info-service";
 import {CurrencyInfoApiService} from "../../../../core/services/currency-info-api-service";
 import {CookieService} from "ngx-cookie-service";
 import {AuthApiService} from "../../../../core/services/auth-api-service";
@@ -47,44 +46,46 @@ export class AddExpenseComponent implements OnInit, OnDestroy {
   readonly separatorKeysCodes = [ENTER, COMMA] as const
 
   constructor(public dialogRef: MatDialogRef<AddExpenseComponent>,
-              private http: HttpClient, private currencyInfo: CurrencyInfoService,
-              private currencyApiService: CurrencyInfoApiService,
+              private http: HttpClient, private currencyApiService: CurrencyInfoApiService,
               private cookieService: CookieService, private authApiService: AuthApiService) {
   }
 
-  ngOnInit() {
+  public ngOnInit(): void {
     this.dialogRef.updateSize('300px', '');
     this.users.push(this.cookieService.get('userName'));
   }
 
-  ngOnDestroy() {
+  public ngOnDestroy(): void {
     this.subscriptions.unsubscribe();
   }
 
-  async add(event: MatChipInputEvent): Promise<void> {
+  public add(event: MatChipInputEvent): void {
     const value = (event.value || '').trim();
-    if (value) {
+    if (value === this.users[0]) {
+      event.chipInput!.clear();
+    } else if (value) {
       this.users.push(value);
       this.eachUserAmount.push(0);
     }
     event.chipInput!.clear();
     this.eachUserAmount = [];
-    if (value) {
+    if (value && value != this.users[0]) {
       this.checkUser(value);
     }
   }
 
-  remove(user: string): void {
+  public remove(user: string): void {
     const index = this.users.indexOf(user);
     if (user === this.incorrectFriend) {
       this.correctFriend = true;
+      this.incorrectFriend = '';
     }
     if (index > 0) {
       this.users.splice(index, 1);
     }
   }
 
-  payerSelect() {
+  public payerSelect(): void {
     this.isUserBoxVisible = !this.isUserBoxVisible;
     if (this.isDivideBoxVisible) this.isDivideBoxVisible = false;
     if (this.isUserBoxVisible) {
@@ -94,7 +95,7 @@ export class AddExpenseComponent implements OnInit, OnDestroy {
     }
   }
 
-  divideSelect() {
+  public divideSelect(): void {
     if (this.users.length > 2) {
       this.splitSelected = true;
     }
@@ -107,18 +108,18 @@ export class AddExpenseComponent implements OnInit, OnDestroy {
     }
   }
 
-  userSelect(user: string) {
+  public userSelect(user: string): void {
     this.whoPaid = user;
     this.dialogRef.updateSize('300px', '');
     this.isUserBoxVisible = false;
   }
 
-  canExtend(users: string[]) {
+  public canExtend(users: string[]): boolean {
     return (users.length > 1 && this.expenseValue !== 0);
   }
 
 
-  divideEven() {
+  public divideEven(): void {
     this.inputValueVisible = false;
     this.inputPercentVisible = false;
     for (let i = 0; i < this.users.length; i++) {
@@ -126,7 +127,7 @@ export class AddExpenseComponent implements OnInit, OnDestroy {
     }
   }
 
-  divideByPercent() {
+  public divideByPercent(): void {
     for (let i = 0; i < this.users.length; i++) {
       if (this.percentToDivide[i])
         this.eachUserAmount[i] = splitByPercent(this.percentToDivide[i], this.expenseValue)
@@ -134,29 +135,29 @@ export class AddExpenseComponent implements OnInit, OnDestroy {
     this.percentagesLeftCalculation();
   }
 
-  divideByPercentView() {
+  public divideByPercentView(): void {
     this.eachUserAmount = [];
     this.inputValueVisible = false;
     this.inputPercentVisible = true;
   }
 
-  divideByValues(index: number) {
+  public divideByValues(index: number): void {
     this.eachUserAmount[index] = this.valueToDivide[index];
     this.AmountLeftCalculation();
   }
 
-  divideByValuesView() {
+  public divideByValuesView(): void {
     this.eachUserAmount = [];
     this.inputValueVisible = true;
     this.inputPercentVisible = false;
   }
 
-  splitExpenseSelected() {
+  public splitExpenseSelected(): void {
     this.splitSelected = true;
     this.theyOweSelected = false;
   }
 
-  theyOweYouSelected() {
+  public theyOweYouSelected(): void {
     this.inputValueVisible = false;
     this.inputPercentVisible = false;
     this.eachUserAmount[1] = this.expenseValue;
@@ -165,16 +166,16 @@ export class AddExpenseComponent implements OnInit, OnDestroy {
     this.theyOweSelected = true;
   }
 
-  percentagesLeftCalculation() {
+  public percentagesLeftCalculation(): void {
     this.percentagesLeft = 100 - this.percentToDivide.reduce((acc, cur) => acc + cur, 0)
   }
 
-  AmountLeftCalculation() {
+  public AmountLeftCalculation(): void {
     this.valueLeft = this.expenseValue - this.valueToDivide.reduce((acc, cur) => acc + cur, 0)
   }
 
-  checkUser(friend: string) {
-    const checkUserSub = this.authApiService.checkUser(this.cookieService.get('userId'), friend).subscribe(data => {
+  public checkUser(friend: string): void {
+    const checkUserSub = this.authApiService.isInFriendList(this.cookieService.get('userId'), friend).subscribe(data => {
       this.correctFriend = data.correctUser;
       if (!this.correctFriend) {
         this.incorrectFriend = friend;
@@ -183,7 +184,7 @@ export class AddExpenseComponent implements OnInit, OnDestroy {
     this.subscriptions.add(checkUserSub);
   }
 
-  sendInfo() {
+  public sendInfo(): void {
 
     if (this.currencyChoice === 'EUR') {
       this.currencyMultiplier = Number(this.cookieService.get('PLNtoEur'))
@@ -203,7 +204,7 @@ export class AddExpenseComponent implements OnInit, OnDestroy {
         value: Number((this.eachUserAmount[value] * this.currencyMultiplier).toPrecision(4))
       };
     }
-    const addExpenseSub = this.authApiService.singleExpenseAdd(this.finalExpenseForUser, this.whoPaid,
+    const addExpenseSub = this.authApiService.addExpense(this.finalExpenseForUser, this.whoPaid,
       this.description).subscribe(() => {
       this.dialogRef.close();
     })

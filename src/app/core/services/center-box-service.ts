@@ -5,7 +5,7 @@ import {BehaviorSubject} from "rxjs";
 
 export class CenterBoxService {
   private selectedSource = new BehaviorSubject<string>('Dashboard')
-  selected = this.selectedSource.asObservable();
+  public selected = this.selectedSource.asObservable();
 
   public onChangeSelected(selected: string): void {
     this.selectedSource.next(selected);

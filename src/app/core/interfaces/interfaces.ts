@@ -1,15 +1,8 @@
-export interface User {
-  email: string,
-  name: string,
+export interface currencyApiResponse {
+  base: string,
+  date: string,
+  rates: number[]
 }
-
-
-//Group do add-group
-export interface NewGroup {
-  groupName: string,
-  users: User[]
-}
-
 
 export interface LoginResponse {
   token: string;
@@ -32,4 +25,5 @@ export interface addFriendResponse {
 export interface checkFriendResponse {
   correctUser: boolean
 }
+
 

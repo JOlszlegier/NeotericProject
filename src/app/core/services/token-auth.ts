@@ -7,7 +7,7 @@ export class TokenAuth {
   constructor(private cookieService: CookieService) {
   }
 
-  getToken() {
+  public getToken(): string {
     return this.cookieService.get('token');
   }
 }

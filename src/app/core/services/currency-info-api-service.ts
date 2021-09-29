@@ -1,5 +1,7 @@
 import {Injectable} from "@angular/core";
 import {HttpBackend, HttpClient} from "@angular/common/http";
+import {currencyApiResponse} from "../interfaces/interfaces";
+import {Observable} from "rxjs";
 
 @Injectable({providedIn: `root`})
 
@@ -10,10 +12,10 @@ export class CurrencyInfoApiService {
     this.httpClient = new HttpClient(handler)
   }
 
-  urlAddress: string = 'http://api.exchangeratesapi.io/v1/latest?access_key=6ad942ce3abac5d14a21235d48f68e2a&symbols=USD,PLN&format=1'
+  public urlAddress: string = 'http://api.exchangeratesapi.io/v1/latest?access_key=6ad942ce3abac5d14a21235d48f68e2a&symbols=USD,PLN&format=1'
 
-  getCurrencyInfoFromApi() {
-    return this.httpClient.get(this.urlAddress);
+  public getCurrencyInfoFromApi(): Observable<currencyApiResponse> {
+    return this.httpClient.get<currencyApiResponse>(this.urlAddress);
   }
 
 }
