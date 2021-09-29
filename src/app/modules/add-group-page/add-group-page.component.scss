@@ -122,6 +122,10 @@ button:focus {
   opacity: 0.5;
 }
 
+.error-message {
+  color: $add-expense-color;
+}
+
 
 //Mobile design
 
@@ -177,4 +181,6 @@ button:focus {
       width: 30%;
     }
   }
+
+
 }

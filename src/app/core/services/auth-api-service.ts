@@ -1,7 +1,7 @@
 import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {addFriendResponse, LoginResponse, RegisterResponse} from "../interfaces/interfaces";
+import {addFriendResponse, checkFriendResponse, LoginResponse, RegisterResponse} from "../interfaces/interfaces";
 
 
 @Injectable({providedIn: 'root'})
@@ -18,6 +18,7 @@ export class AuthApiService {
   public addExpenseURL: string = 'http://localhost:3000/add-expense';
   public addFriendUrl: string = 'http://localhost:3000/add-friend';
   public updateFriendsListURL: string = 'http://localhost:3000/friends-list';
+  public checkUserURL: string = 'http://localhost:3000/friend-check';
 
   public register(email: string, name: string, password: string): Observable<RegisterResponse> {
     return this.http.post<RegisterResponse>(this.createUserURL, {
@@ -66,6 +67,12 @@ export class AuthApiService {
   public getFriendsList(user: string): Observable<addFriendResponse> {
     return this.http.post<addFriendResponse>(this.updateFriendsListURL, {
       user
+    })
+  }
+
+  public checkUser(user: string, friends: string): Observable<checkFriendResponse> {
+    return this.http.post<checkFriendResponse>(this.checkUserURL, {
+      user, friends
     })
   }
 }

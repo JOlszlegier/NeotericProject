@@ -29,3 +29,7 @@ export interface addFriendResponse {
   userAlreadyOnTheList: boolean
 }
 
+export interface checkFriendResponse {
+  correctUser: boolean
+}
+

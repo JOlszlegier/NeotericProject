@@ -4,6 +4,7 @@ import {FormArray, FormBuilder, FormControl, Validators} from "@angular/forms";
 import {GroupService} from "../../core/services/group-service";
 import {AuthApiService} from "../../core/services/auth-api-service";
 import {Subscription} from "rxjs";
+import {CookieService} from "ngx-cookie-service";
 
 @Component({
   selector: 'app-add-group-page',
@@ -11,7 +12,7 @@ import {Subscription} from "rxjs";
   styleUrls: ['./add-group-page.component.scss']
 })
 export class AddGroupPageComponent implements OnInit {
-
+  public isFriendCorrect: boolean = true;
   public subscriptions!: Subscription;
   formTemplate = this.fb.group({
     groupName: new FormControl('', Validators.required),
@@ -27,7 +28,7 @@ export class AddGroupPageComponent implements OnInit {
   }
 
   constructor(private router: Router, private groupService: GroupService,
-              private fb: FormBuilder, private api: AuthApiService) {
+              private fb: FormBuilder, private api: AuthApiService, private cookieService: CookieService) {
   }
 
   get users(): FormArray {
@@ -62,4 +63,12 @@ export class AddGroupPageComponent implements OnInit {
   cancel(): void {
     this.router.navigate(['/main']);
   }
+
+  friendCheck(friend: string) {
+    const friendCheckSub = this.api.checkUser(this.cookieService.get('userId'), friend).subscribe(data => {
+      this.isFriendCorrect = data.correctUser;
+    })
+    this.subscriptions.add(friendCheckSub);
+  }
+
 }

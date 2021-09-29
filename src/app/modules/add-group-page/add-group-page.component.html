@@ -11,13 +11,14 @@
       <input type="text" formControlName="groupName" class="input-styling" #groupName>
       <div *ngFor="let user of users.controls; let i=index" formArrayName="users">
         <div class="single-user" [formGroupName]="i" *ngIf="groupName.value">
-          <input formControlName='email' class="email-friend-input" email placeholder="Email" autocomplete="off">
+          <input formControlName='email' class="email-friend-input"
+                 email placeholder="Email" autocomplete="off" (change)="friendCheck(user.value.email)">
           <mat-icon (click)="removePeople(i)" class="delete-icon">delete</mat-icon>
         </div>
       </div>
     </form>
 
-
+    <p *ngIf="!isFriendCorrect" class="error-message">User is not on your friends list! Please change</p>
     <div class="friends-flex">
       <button mat-button (click)="addNewPeople()" type="button"
               class="add-more-button">Add more...
