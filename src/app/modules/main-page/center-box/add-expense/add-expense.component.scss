@@ -1,4 +1,5 @@
 @import 'src/app/styles/variables.scss';
+@import 'src/app/styles/shared-classes.scss';
 
 .expense-box {
   width: 100%;
@@ -44,6 +45,10 @@ mat-chip-list {
   border-radius: 5px;
   padding: 2px;
   width: 65%
+}
+
+.mat-form-field {
+  padding: 0;
 }
 
 .amount-input {

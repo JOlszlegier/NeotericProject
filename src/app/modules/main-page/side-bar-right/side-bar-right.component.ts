@@ -15,11 +15,11 @@ export class SideBarRightComponent implements OnInit, OnDestroy {
   constructor(private groupService: GroupService) {
   }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.usersSubscribe = this.groupService.currentUsers.subscribe(users => this.selectedUsers = users)
   }
 
-  ngOnDestroy(): void {
+  public ngOnDestroy(): void {
     this.usersSubscribe.unsubscribe();
   }
 

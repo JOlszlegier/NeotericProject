@@ -27,7 +27,7 @@ export class GroupsComponent implements OnInit, OnDestroy {
               private cookieService: CookieService) {
   }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     const searchPhraseSubscription = this.searchService.currentSearch.subscribe(search => this.searchPhrase = search)
     const groupSearchSub = this.authApiService.searchGroup(this.cookieService.get('userId')).subscribe(data => {
       for (const groupName of data) {
@@ -41,16 +41,16 @@ export class GroupsComponent implements OnInit, OnDestroy {
     this.subscriptions.add(selectedSubscription);
   }
 
-  ngOnDestroy(): void {
+  public ngOnDestroy(): void {
     // this.subscriptions.unsubscribe();
   }
 
-  newGroupLink(): void {
+  public newGroupLink(): void {
     this.router.navigate(['/new-group']);
   }
 
-  onGroupClick(groupName: string): void {
-    const usersSearchSub = this.authApiService.usersInGroup(groupName).subscribe(users => {
+  public onGroupClick(groupName: string): void {
+    const usersSearchSub = this.authApiService.getUsersInGroup(groupName).subscribe(users => {
       this.selectedGroupUsers = users;
       this.groupService.changeSearch(this.selectedGroupUsers);
       this.centerBoxService.onChangeSelected(groupName);

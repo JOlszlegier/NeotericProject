@@ -103,7 +103,7 @@ export class AuthPageComponent implements OnInit {
     this.subscriptions.add(loginSub)
   }
 
-  errorMessageHider() {
+  public errorMessageHider(): void {
     if (this.loginFailure || this.registerFailure) {
       this.loginFailure = false;
       this.registerFailure = false;

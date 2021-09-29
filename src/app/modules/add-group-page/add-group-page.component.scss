@@ -1,4 +1,5 @@
 @import 'src/app/styles/variables.scss';
+@import 'src/app/styles/shared-classes.scss';
 
 .shadow-text {
   color: gray;
@@ -122,6 +123,10 @@ button:focus {
   opacity: 0.5;
 }
 
+.error-message {
+  text-align: justify;
+}
+
 
 //Mobile design
 
@@ -177,4 +182,6 @@ button:focus {
       width: 30%;
     }
   }
+
+
 }

@@ -2,6 +2,8 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 
 import {SearchService} from "../../../../core/services/search-service";
 import {Subscription} from "rxjs";
+import {AuthApiService} from "../../../../core/services/auth-api-service";
+import {CookieService} from "ngx-cookie-service";
 
 @Component({
   selector: 'app-friends',
@@ -11,26 +13,35 @@ import {Subscription} from "rxjs";
 
 export class FriendsComponent implements OnInit, OnDestroy {
 
-  public friendsList: string[] = ['Kacper', 'Ola']
+  public friendsList: string[] = [];
   public searchPhrase: string = '';
   public newFriend: string = '';
-  public searchPhraseSubscription!: Subscription;
+  public subscriptions!: Subscription;
+  public errorMessage: string = '';
 
-  constructor(private searchService: SearchService) {
+  constructor(private searchService: SearchService, private authApiService: AuthApiService,
+              private cookieService: CookieService) {
   }
 
   addFriend(friend: string): void {
-    this.friendsList.push(friend);
     this.newFriend = '';
-    //  invite will be sent by email/ and users will be displayed when they accept the invite
+    const addFriendSub = this.authApiService.addFriend(this.cookieService.get('userId'), friend).subscribe(data => {
+      this.friendsList = data.friends;
+      this.errorMessage = data.errorMessage;
+    })
+    this.subscriptions.add(addFriendSub);
   }
 
   ngOnInit(): void {
-    this.searchPhraseSubscription = this.searchService.currentSearch.subscribe(search => this.searchPhrase = search)
+    this.subscriptions = this.searchService.currentSearch.subscribe(search => this.searchPhrase = search);
+    const updateFriendsListSub = this.authApiService.getFriendsList(this.cookieService.get('userId')).subscribe(data => {
+      this.friendsList = data.friends;
+    })
+    this.subscriptions.add(updateFriendsListSub);
   }
 
   ngOnDestroy(): void {
-    this.searchPhraseSubscription.unsubscribe()
+    this.subscriptions.unsubscribe()
   }
 
 }
