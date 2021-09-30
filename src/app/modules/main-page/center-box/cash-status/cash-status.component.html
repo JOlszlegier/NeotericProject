@@ -1,5 +1,5 @@
 <div class="main-box">
-  <div class="cash-box" [ngClass]="this.difference>0 ? 'balance-plus' : 'balance-minus'"
+  <div class="cash-box" [ngClass]="(this.difference)>0 ? 'balance-plus' : 'balance-minus'"
   >
     <div class="single-box">Total balance<br>{{this.difference}}</div>
   </div>

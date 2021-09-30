@@ -31,3 +31,9 @@ export interface balanceCheckResponse {
   income: number
 }
 
+export interface settleUpInfoResponse {
+  valueOwedToUser: [{ to: number, value: number }],
+  expensesId: [number],
+  userNames: [string]
+}
+

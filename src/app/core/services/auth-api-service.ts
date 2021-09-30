@@ -6,7 +6,8 @@ import {
   balanceCheckResponse,
   checkFriendResponse,
   LoginResponse,
-  RegisterResponse
+  RegisterResponse,
+  settleUpInfoResponse
 } from "../interfaces/interfaces";
 import {environment} from "../../../environments/environment";
 
@@ -74,6 +75,12 @@ export class AuthApiService {
 
   public balanceCheck(userId: string): Observable<balanceCheckResponse> {
     return this.http.post<balanceCheckResponse>(`${environment.apiUrl}/balance-check`, {
+      userId
+    })
+  }
+
+  public settleUpInfo(userId: string): Observable<settleUpInfoResponse> {
+    return this.http.post<settleUpInfoResponse>(`${environment.apiUrl}/settle-up-info`, {
       userId
     })
   }

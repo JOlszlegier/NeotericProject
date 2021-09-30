@@ -33,6 +33,7 @@ import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatCardModule} from "@angular/material/card";
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {TokenInterceptorService} from "./core/services/token-interceptor.service";
+import {SettleUpComponent} from './modules/main-page/center-box/settle-up/settle-up.component';
 
 
 @NgModule({
@@ -51,7 +52,8 @@ import {TokenInterceptorService} from "./core/services/token-interceptor.service
     GroupsComponent,
     AddGroupPageComponent,
     CashStatusComponent,
-    AddExpenseComponent
+    AddExpenseComponent,
+    SettleUpComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,32 @@
+@import 'src/app/styles/variables.scss';
+
+.main-box {
+  width: 300px;
+  height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.balance-info {
+  text-align: center;
+  font-weight: bold;
+  margin: 5px;
+}
+
+.buttons-space {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+  margin-top: 20px;
+}
+
+.pay-up-button {
+  background-color: $settle-color
+}
+
+.cancel-button {
+  background-color: $add-expense-color;
+}

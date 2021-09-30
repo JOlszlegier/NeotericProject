@@ -9,13 +9,13 @@ import {CookieService} from "ngx-cookie-service";
   styleUrls: ['./cash-status.component.scss']
 })
 export class CashStatusComponent implements OnInit {
-  public moneyTest: number[] = [-10, 2, 25]
   public subscriptions!: Subscription;
   public difference: number = 0;
   public outcome: number = 0;
   public income: number = 0;
 
-  constructor(private authApiService: AuthApiService, private cookieService: CookieService) {
+  constructor(private authApiService: AuthApiService, private cookieService: CookieService,
+  ) {
   }
 
   ngOnInit(): void {

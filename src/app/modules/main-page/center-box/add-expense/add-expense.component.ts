@@ -24,13 +24,13 @@ export class AddExpenseComponent implements OnInit, OnDestroy {
   public isDivideBoxVisible: boolean = false;
   public whoPaid: string = 'who?';
   public howToDivide: string = 'how?';
+  public hideDelay = 50;
+  public showDelay = 100;
   public expenseValue: number = 0;
   public eachUserAmount: number[] = [];
   public splitSelected: boolean = false;
   public currencyChoice: string = 'PLN';
   private subscriptions!: Subscription;
-  public showDelay = 100;
-  public hideDelay = 50;
   public currencyMultiplier: number = 1;
   public theyOweSelected: boolean = false;
   public inputPercentVisible: boolean = false;
@@ -47,7 +47,7 @@ export class AddExpenseComponent implements OnInit, OnDestroy {
 
   constructor(public dialogRef: MatDialogRef<AddExpenseComponent>,
               private http: HttpClient, private currencyApiService: CurrencyInfoApiService,
-              private cookieService: CookieService, private authApiService: AuthApiService) {
+              private cookieService: CookieService, private authApiService: AuthApiService,) {
   }
 
   public ngOnInit(): void {
@@ -210,6 +210,5 @@ export class AddExpenseComponent implements OnInit, OnDestroy {
     })
 
     this.subscriptions.add(addExpenseSub);
-
   }
 }
