@@ -4,6 +4,11 @@ export interface currencyApiResponse {
   rates: number[]
 }
 
+export interface addGroupResponse {
+  name: string,
+  usersEmails: [string];
+}
+
 export interface LoginResponse {
   token: string;
   passwordCorrect: boolean,
@@ -38,7 +43,11 @@ export interface settleUpInfoResponse {
 }
 
 export interface settleUpResponse {
-  amountYouPaid: number;
+  settleUpFinished: boolean;
+}
+
+export interface addExpenseResponse {
+  expenseAdded: boolean
 }
 
 

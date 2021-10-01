@@ -2,7 +2,9 @@ import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {
+  addExpenseResponse,
   addFriendResponse,
+  addGroupResponse,
   balanceCheckResponse,
   checkFriendResponse,
   LoginResponse,
@@ -30,28 +32,28 @@ export class AuthApiService {
     });
   }
 
-  public createGroup(name: string, usersEmails: string[]): Observable<any> {
-    return this.http.post(`${environment.apiUrl}/add-group`, {
+  public createGroup(name: string, usersEmails: string[]): Observable<addGroupResponse> {
+    return this.http.post<addGroupResponse>(`${environment.apiUrl}/add-group`, {
       name, usersEmails
     });
   }
 
-  public searchGroup(userId: string): Observable<any> {
-    return this.http.post(`${environment.apiUrl}/group-check`, {
+  public searchGroup(userId: string): Observable<string[]> {
+    return this.http.post<string[]>(`${environment.apiUrl}/group-check`, {
       userId
     });
   }
 
-  public getUsersInGroup(name: string): Observable<any> {
-    return this.http.post(`${environment.apiUrl}/group-users`, {
+  public getUsersInGroup(name: string): Observable<string[]> {
+    return this.http.post<string[]>(`${environment.apiUrl}/group-users`, {
       name
     })
   }
 
   public addExpense(eachUserExpense: [{ from: string, value: number }],
                     to: string,
-                    description: string): Observable<any> {
-    return this.http.post(`${environment.apiUrl}/add-expense`, {
+                    description: string): Observable<addExpenseResponse> {
+    return this.http.post<addExpenseResponse>(`${environment.apiUrl}/add-expense`, {
       eachUserExpense, to, description
     })
   }

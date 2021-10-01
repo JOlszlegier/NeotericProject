@@ -20,7 +20,7 @@ export class GroupsComponent implements OnInit, OnDestroy {
   public selectedGroupUsers: string[] = [];
   public searchPhrase: string = '';
   public selectedGroupName: string = ''
-  public subscriptions!: Subscription;
+  public subscriptions = new Subscription()
 
   constructor(private searchService: SearchService, private router: Router,
               private groupService: GroupService, private centerBoxService: CenterBoxService, private authApiService: AuthApiService,
