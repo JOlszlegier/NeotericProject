@@ -7,7 +7,8 @@ import {
   checkFriendResponse,
   LoginResponse,
   RegisterResponse,
-  settleUpInfoResponse
+  settleUpInfoResponse,
+  settleUpResponse
 } from "../interfaces/interfaces";
 import {environment} from "../../../environments/environment";
 
@@ -82,6 +83,12 @@ export class AuthApiService {
   public settleUpInfo(userId: string): Observable<settleUpInfoResponse> {
     return this.http.post<settleUpInfoResponse>(`${environment.apiUrl}/settle-up-info`, {
       userId
+    })
+  }
+
+  public settleUp(userId: string, valueOwedToUser: [{ to: number, value: number }]): Observable<settleUpResponse> {
+    return this.http.post<settleUpResponse>(`${environment.apiUrl}/settle-up`, {
+      userId, valueOwedToUser
     })
   }
 }

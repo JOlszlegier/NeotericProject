@@ -37,3 +37,8 @@ export interface settleUpInfoResponse {
   userNames: [string]
 }
 
+export interface settleUpResponse {
+  amountYouPaid: number;
+}
+
+
