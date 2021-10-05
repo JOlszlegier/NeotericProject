@@ -17,6 +17,8 @@ export class CenterBoxComponent implements OnInit, OnDestroy {
   expenseDisplay: boolean = false;
   private subscriptions!: Subscription;
   public displayString: string = 'Dashboard'
+  public displayString$ = this.centerBoxService.selectedSource.asObservable();
+  public displayState$ = this.cashService.displaySource.asObservable();
 
   constructor(private cashService: CashBoxService,
               private centerBoxService: CenterBoxService,
@@ -35,9 +37,8 @@ export class CenterBoxComponent implements OnInit, OnDestroy {
 
 
   ngOnInit(): void {
-    this.subscriptions = this.cashService.displayState.subscribe(state => this.expenseDisplay = state);
-    this.subscriptions = this.centerBoxService.selected.subscribe(
-      selected => this.displayString = selected)
+    this.displayState$.subscribe(source => this.expenseDisplay = source);
+    this.displayString$.subscribe(selected => this.displayString = selected);
   }
 
   ngOnDestroy(): void {

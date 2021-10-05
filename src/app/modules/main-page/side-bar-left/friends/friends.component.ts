@@ -18,6 +18,7 @@ export class FriendsComponent implements OnInit, OnDestroy {
   public newFriend: string = '';
   public subscriptions!: Subscription;
   public errorMessage: string = '';
+  public searchPhrase$ = this.searchService.searchSource.asObservable();
 
   constructor(private searchService: SearchService, private authApiService: AuthApiService,
               private cookieService: CookieService) {
@@ -33,7 +34,7 @@ export class FriendsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.subscriptions = this.searchService.currentSearch.subscribe(search => this.searchPhrase = search);
+    this.searchPhrase$.subscribe(searchPhrase => this.searchPhrase = searchPhrase)
     const updateFriendsListSub = this.authApiService.getFriendsList(this.cookieService.get('userId')).subscribe(data => {
       this.friendsList = data.friends;
     })

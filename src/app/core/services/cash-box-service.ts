@@ -3,8 +3,7 @@ import {BehaviorSubject} from "rxjs";
 
 @Injectable({providedIn: "root"})
 export class CashBoxService {
-  private displaySource = new BehaviorSubject<boolean>(false)
-  displayState = this.displaySource.asObservable();
+  public displaySource = new BehaviorSubject<boolean>(false)
 
 
   public onChangeDisplay(state: boolean): void {

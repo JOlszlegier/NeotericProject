@@ -4,14 +4,11 @@ import {BehaviorSubject} from "rxjs";
 @Injectable({providedIn: "root"})
 
 export class UserBalanceService {
-  incomeSource = new BehaviorSubject<number>(0);
-  income = this.incomeSource.asObservable();
+  public incomeSource = new BehaviorSubject<number>(0);
 
-  outcomeSource = new BehaviorSubject<number>(0);
-  outcome = this.outcomeSource.asObservable();
+  public outcomeSource = new BehaviorSubject<number>(0);
 
-  differenceSource = new BehaviorSubject<number>(0);
-  difference = this.differenceSource.asObservable();
+  public differenceSource = new BehaviorSubject<number>(0);
 
   onValuesChange(income: number, outcome: number): void {
     this.incomeSource.next(income);

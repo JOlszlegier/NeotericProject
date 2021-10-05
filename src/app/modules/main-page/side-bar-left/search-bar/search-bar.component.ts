@@ -12,13 +12,14 @@ import {Subscription} from "rxjs";
 export class SearchBarComponent implements OnInit, OnDestroy {
   public searchText: string = '';
   public searchTextSubscription!: Subscription;
+  public searchPhrase$ = this.searchService.searchSource.asObservable();
 
   constructor(private searchService: SearchService) {
   }
 
   public ngOnInit(): void {
-    this.searchTextSubscription = this.searchService.currentSearch.subscribe(
-      search => this.searchText = search);
+    this.searchPhrase$.subscribe(searchPhrase => this.searchText = searchPhrase)
+
   }
 
   public ngOnDestroy(): void {

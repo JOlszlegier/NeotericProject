@@ -45,9 +45,7 @@ export class AddExpenseComponent implements OnInit, OnDestroy {
   public correctFriend: boolean = true;
   public incorrectFriend: string = '';
   readonly separatorKeysCodes = [ENTER, COMMA] as const;
-  public difference: number = 0;
-  public outcome: number = 0;
-  public income: number = 0;
+
 
   constructor(public dialogRef: MatDialogRef<AddExpenseComponent>,
               private http: HttpClient, private currencyApiService: CurrencyInfoApiService,
@@ -61,7 +59,7 @@ export class AddExpenseComponent implements OnInit, OnDestroy {
   }
 
   public ngOnDestroy(): void {
-
+    this.subscriptions.unsubscribe();
   }
 
   public add(event: MatChipInputEvent): void {
@@ -212,23 +210,20 @@ export class AddExpenseComponent implements OnInit, OnDestroy {
     const addExpenseSub = this.authApiService.addExpense(this.finalExpenseForUser, this.whoPaid,
       this.description).subscribe((data) => {
       this.updateBalance();
+      this.dialogRef.close();
     })
     this.subscriptions.add(addExpenseSub);
 
   }
 
   updateBalance(): void {
-    const incomeSub = this.userBalanceService.incomeSource.subscribe(income => this.income = income);
-    const outcomeSub = this.userBalanceService.outcomeSource.subscribe(outcome => this.outcome = outcome);
-    const differenceSub = this.userBalanceService.differenceSource.subscribe(difference => this.difference = difference)
+
     const balanceUpdateSub = this.authApiService.balanceCheck(this.cookieService.get('userId')).subscribe(data => {
       this.userBalanceService.onValuesChange(data.income, data.outcome);
       this.subscriptions.unsubscribe();
     })
     this.subscriptions.add(balanceUpdateSub);
-    this.subscriptions.add(incomeSub);
-    this.subscriptions.add(outcomeSub);
-    this.subscriptions.add(differenceSub);
+
   }
 
 }

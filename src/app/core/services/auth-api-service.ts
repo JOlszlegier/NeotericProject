@@ -3,14 +3,14 @@ import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {
   addExpenseResponse,
-  addFriendResponse,
-  addGroupResponse,
-  balanceCheckResponse,
-  checkFriendResponse,
+  AddFriendResponse,
+  AddGroupResponse,
+  BalanceCheckResponse,
+  CheckFriendResponse,
   LoginResponse,
   RegisterResponse,
-  settleUpInfoResponse,
-  settleUpResponse
+  SettleUpInfoResponse,
+  SettleUpResponse
 } from "../interfaces/interfaces";
 import {environment} from "../../../environments/environment";
 
@@ -32,8 +32,8 @@ export class AuthApiService {
     });
   }
 
-  public createGroup(name: string, usersEmails: string[]): Observable<addGroupResponse> {
-    return this.http.post<addGroupResponse>(`${environment.apiUrl}/add-group`, {
+  public createGroup(name: string, usersEmails: string[]): Observable<AddGroupResponse> {
+    return this.http.post<AddGroupResponse>(`${environment.apiUrl}/add-group`, {
       name, usersEmails
     });
   }
@@ -58,38 +58,38 @@ export class AuthApiService {
     })
   }
 
-  public addFriend(user: string, friends: string): Observable<addFriendResponse> {
-    return this.http.post<addFriendResponse>(`${environment.apiUrl}/add-friend`, {
+  public addFriend(user: string, friends: string): Observable<AddFriendResponse> {
+    return this.http.post<AddFriendResponse>(`${environment.apiUrl}/add-friend`, {
       user, friends
     })
   }
 
-  public getFriendsList(user: string): Observable<addFriendResponse> {
-    return this.http.post<addFriendResponse>(`${environment.apiUrl}/friends-list`, {
+  public getFriendsList(user: string): Observable<AddFriendResponse> {
+    return this.http.post<AddFriendResponse>(`${environment.apiUrl}/friends-list`, {
       user
     })
   }
 
-  public isInFriendList(user: string, friends: string): Observable<checkFriendResponse> {
-    return this.http.post<checkFriendResponse>(`${environment.apiUrl}/friend-check`, {
+  public isInFriendList(user: string, friends: string): Observable<CheckFriendResponse> {
+    return this.http.post<CheckFriendResponse>(`${environment.apiUrl}/friend-check`, {
       user, friends
     })
   }
 
-  public balanceCheck(userId: string): Observable<balanceCheckResponse> {
-    return this.http.post<balanceCheckResponse>(`${environment.apiUrl}/balance-check`, {
+  public balanceCheck(userId: string): Observable<BalanceCheckResponse> {
+    return this.http.post<BalanceCheckResponse>(`${environment.apiUrl}/balance-check`, {
       userId
     })
   }
 
-  public settleUpInfo(userId: string): Observable<settleUpInfoResponse> {
-    return this.http.post<settleUpInfoResponse>(`${environment.apiUrl}/settle-up-info`, {
+  public settleUpInfo(userId: string): Observable<SettleUpInfoResponse> {
+    return this.http.post<SettleUpInfoResponse>(`${environment.apiUrl}/settle-up-info`, {
       userId
     })
   }
 
-  public settleUp(userId: string, valueOwedToUser: [{ to: number, value: number }]): Observable<settleUpResponse> {
-    return this.http.post<settleUpResponse>(`${environment.apiUrl}/settle-up`, {
+  public settleUp(userId: string, valueOwedToUser: [{ to: number, value: number }]): Observable<SettleUpResponse> {
+    return this.http.post<SettleUpResponse>(`${environment.apiUrl}/settle-up`, {
       userId, valueOwedToUser
     })
   }
