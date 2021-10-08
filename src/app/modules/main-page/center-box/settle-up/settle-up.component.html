@@ -1,0 +1,8 @@
+<div class="main-box">
+  <p *ngFor="let user of whoYouOweTo,let i=index" class="balance-info">You owe ${{amountYouOweTo[i]}}
+    to {{whoYouOweTo[i]}}</p>
+  <div class="buttons-space">
+    <button mat-button class="pay-up-button" (click)="onPayUp()" mat-dialog-close>Pay up !</button>
+    <button mat-button class="cancel-button" mat-dialog-close>Cancel</button>
+  </div>
+</div>

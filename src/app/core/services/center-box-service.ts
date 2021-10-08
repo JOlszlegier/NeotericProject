@@ -4,8 +4,7 @@ import {BehaviorSubject} from "rxjs";
 @Injectable({providedIn: 'root'})
 
 export class CenterBoxService {
-  private selectedSource = new BehaviorSubject<string>('Dashboard')
-  public selected = this.selectedSource.asObservable();
+  public selectedSource = new BehaviorSubject<string>('Dashboard')
 
   public onChangeSelected(selected: string): void {
     this.selectedSource.next(selected);

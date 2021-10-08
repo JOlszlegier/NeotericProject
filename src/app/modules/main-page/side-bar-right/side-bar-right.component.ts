@@ -11,12 +11,13 @@ import {Subscription} from "rxjs";
 export class SideBarRightComponent implements OnInit, OnDestroy {
   public selectedUsers: string[] = [];
   public usersSubscribe!: Subscription;
+  public selectedUsers$ = this.groupService.userSource.asObservable();
 
   constructor(private groupService: GroupService) {
   }
 
   public ngOnInit(): void {
-    this.usersSubscribe = this.groupService.currentUsers.subscribe(users => this.selectedUsers = users)
+    this.selectedUsers$.subscribe(selected => this.selectedUsers = selected);
   }
 
   public ngOnDestroy(): void {

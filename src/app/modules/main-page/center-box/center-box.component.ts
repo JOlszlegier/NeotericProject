@@ -5,6 +5,7 @@ import {CashBoxService} from "../../../core/services/cash-box-service";
 import {Subscription} from "rxjs";
 import {CenterBoxService} from "../../../core/services/center-box-service";
 import {AddExpenseComponent} from "./add-expense/add-expense.component";
+import {SettleUpComponent} from "./settle-up/settle-up.component";
 
 @Component({
   selector: 'app-center-box',
@@ -16,6 +17,8 @@ export class CenterBoxComponent implements OnInit, OnDestroy {
   expenseDisplay: boolean = false;
   private subscriptions!: Subscription;
   public displayString: string = 'Dashboard'
+  public displayString$ = this.centerBoxService.selectedSource.asObservable();
+  public displayState$ = this.cashService.displaySource.asObservable();
 
   constructor(private cashService: CashBoxService,
               private centerBoxService: CenterBoxService,
@@ -27,11 +30,15 @@ export class CenterBoxComponent implements OnInit, OnDestroy {
     this.cashService.onChangeDisplay(true);
   }
 
+  onSettleUpClick(): void {
+    this.matDialog.open(SettleUpComponent, {panelClass: 'custom-dialog-class'})
+    this.cashService.onChangeDisplay(true);
+  }
+
 
   ngOnInit(): void {
-    this.subscriptions = this.cashService.displayState.subscribe(state => this.expenseDisplay = state);
-    this.subscriptions = this.centerBoxService.selected.subscribe(
-      selected => this.displayString = selected)
+    this.displayState$.subscribe(source => this.expenseDisplay = source);
+    this.displayString$.subscribe(selected => this.displayString = selected);
   }
 
   ngOnDestroy(): void {

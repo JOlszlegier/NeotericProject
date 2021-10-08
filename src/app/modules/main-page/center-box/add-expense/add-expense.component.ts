@@ -9,6 +9,7 @@ import {splitByPercent, splitEvenly} from "./shared/expense-divide-helper";
 import {CurrencyInfoApiService} from "../../../../core/services/currency-info-api-service";
 import {CookieService} from "ngx-cookie-service";
 import {AuthApiService} from "../../../../core/services/auth-api-service";
+import {UserBalanceService} from "../../../../core/services/user-balance-service";
 
 @Component({
   selector: 'app-add-expense',
@@ -24,13 +25,13 @@ export class AddExpenseComponent implements OnInit, OnDestroy {
   public isDivideBoxVisible: boolean = false;
   public whoPaid: string = 'who?';
   public howToDivide: string = 'how?';
+  public hideDelay = 50;
+  public showDelay = 100;
   public expenseValue: number = 0;
   public eachUserAmount: number[] = [];
   public splitSelected: boolean = false;
   public currencyChoice: string = 'PLN';
-  private subscriptions!: Subscription;
-  public showDelay = 100;
-  public hideDelay = 50;
+  private subscriptions = new Subscription();
   public currencyMultiplier: number = 1;
   public theyOweSelected: boolean = false;
   public inputPercentVisible: boolean = false;
@@ -43,11 +44,13 @@ export class AddExpenseComponent implements OnInit, OnDestroy {
   public finalExpenseForUser: [{ from: string, value: number }] = [{from: '', value: 0}];
   public correctFriend: boolean = true;
   public incorrectFriend: string = '';
-  readonly separatorKeysCodes = [ENTER, COMMA] as const
+  readonly separatorKeysCodes = [ENTER, COMMA] as const;
+
 
   constructor(public dialogRef: MatDialogRef<AddExpenseComponent>,
               private http: HttpClient, private currencyApiService: CurrencyInfoApiService,
-              private cookieService: CookieService, private authApiService: AuthApiService) {
+              private cookieService: CookieService, private authApiService: AuthApiService,
+              private userBalanceService: UserBalanceService) {
   }
 
   public ngOnInit(): void {
@@ -205,11 +208,22 @@ export class AddExpenseComponent implements OnInit, OnDestroy {
       };
     }
     const addExpenseSub = this.authApiService.addExpense(this.finalExpenseForUser, this.whoPaid,
-      this.description).subscribe(() => {
+      this.description).subscribe((data) => {
+      this.updateBalance();
       this.dialogRef.close();
     })
-
     this.subscriptions.add(addExpenseSub);
 
   }
+
+  updateBalance(): void {
+
+    const balanceUpdateSub = this.authApiService.balanceCheck(this.cookieService.get('userId')).subscribe(data => {
+      this.userBalanceService.onValuesChange(data.income, data.outcome);
+      this.subscriptions.unsubscribe();
+    })
+    this.subscriptions.add(balanceUpdateSub);
+
+  }
+
 }

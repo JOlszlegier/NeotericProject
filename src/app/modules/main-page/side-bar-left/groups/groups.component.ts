@@ -20,7 +20,10 @@ export class GroupsComponent implements OnInit, OnDestroy {
   public selectedGroupUsers: string[] = [];
   public searchPhrase: string = '';
   public selectedGroupName: string = ''
-  public subscriptions!: Subscription;
+  public subscriptions = new Subscription()
+  public searchPhrase$ = this.searchService.searchSource.asObservable();
+  public selectedGroup$ = this.groupService.userSource.asObservable();
+  public selected$ = this.centerBoxService.selectedSource.asObservable();
 
   constructor(private searchService: SearchService, private router: Router,
               private groupService: GroupService, private centerBoxService: CenterBoxService, private authApiService: AuthApiService,
@@ -28,17 +31,15 @@ export class GroupsComponent implements OnInit, OnDestroy {
   }
 
   public ngOnInit(): void {
-    const searchPhraseSubscription = this.searchService.currentSearch.subscribe(search => this.searchPhrase = search)
+    this.searchPhrase$.subscribe(searchPhrase => this.searchPhrase = searchPhrase)
     const groupSearchSub = this.authApiService.searchGroup(this.cookieService.get('userId')).subscribe(data => {
       for (const groupName of data) {
         this.groupNames.push(groupName);
       }
     });
-    this.groupService.currentUsers.subscribe(users => this.selectedGroupUsers = users)
-    const selectedSubscription = this.centerBoxService.selected.subscribe(selected => this.selectedGroupName = selected)
+    this.selectedGroup$.subscribe(selectedGroup => this.selectedGroupUsers = selectedGroup);
+    this.selected$.subscribe(selected => this.selectedGroupName = selected);
     this.subscriptions.add(groupSearchSub);
-    this.subscriptions.add(searchPhraseSubscription);
-    this.subscriptions.add(selectedSubscription);
   }
 
   public ngOnDestroy(): void {
