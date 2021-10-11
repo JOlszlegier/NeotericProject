@@ -10,7 +10,7 @@ import {Subscription} from "rxjs";
 })
 export class SideBarRightComponent implements OnInit, OnDestroy {
   public selectedUsers: string[] = [];
-  public usersSubscribe!: Subscription;
+  public usersSubscribe: Subscription = new Subscription();
   public selectedUsers$ = this.groupService.userSource.asObservable();
 
   constructor(private groupService: GroupService) {

@@ -16,7 +16,7 @@ import {UserBalanceService} from "../../../core/services/user-balance-service";
 export class CenterBoxComponent implements OnInit, OnDestroy {
 
   expenseDisplay: boolean = false;
-  private subscriptions!: Subscription;
+  private subscriptions: Subscription = new Subscription();
   public displayString: string = 'Dashboard'
   public displayString$ = this.centerBoxService.selectedSource.asObservable();
   public displayState$ = this.cashService.displaySource.asObservable();

@@ -16,7 +16,7 @@ export class FriendsComponent implements OnInit, OnDestroy {
   public friendsList: string[] = [];
   public searchPhrase: string = '';
   public newFriend: string = '';
-  public subscriptions!: Subscription;
+  public subscriptions: Subscription = new Subscription();
   public errorMessage: string = '';
   public searchPhrase$ = this.searchService.searchSource.asObservable();
 

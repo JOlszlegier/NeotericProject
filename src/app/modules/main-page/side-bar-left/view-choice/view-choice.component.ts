@@ -13,7 +13,7 @@ export class ViewChoiceComponent implements OnInit, OnDestroy {
   }
 
   public selectedCenterBoxView: string = '';
-  public selectedSubscription!: Subscription;
+  public selectedSubscription: Subscription = new Subscription();
   public selected$ = this.centerBoxService.selectedSource.asObservable();
 
   public ngOnInit(): void {
