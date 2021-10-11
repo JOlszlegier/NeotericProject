@@ -163,8 +163,13 @@ export class AddExpenseComponent implements OnInit, OnDestroy {
   public theyOweYouSelected(): void {
     this.inputValueVisible = false;
     this.inputPercentVisible = false;
-    this.eachUserAmount[1] = this.expenseValue;
-    this.eachUserAmount[0] = 0;
+    if (this.whoPaid === this.users[0]) {
+      this.eachUserAmount[1] = this.expenseValue;
+      this.eachUserAmount[0] = 0;
+    } else {
+      this.eachUserAmount[0] = this.expenseValue;
+      this.eachUserAmount[1] = 0;
+    }
     this.splitSelected = false;
     this.theyOweSelected = true;
   }
