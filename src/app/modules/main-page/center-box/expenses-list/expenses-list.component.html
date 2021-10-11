@@ -1,0 +1,18 @@
+<div class="expenses-list">
+  <ul class="list-items-plus">
+    <li *ngFor="let expense of expensesArrayPlus; let i=index">
+      <div class="single-expense">
+        <p>{{expensesArrayPlus[i].description}}</p>
+        <p>{{expensesArrayPlus[i].amount}}</p>
+      </div>
+    </li>
+  </ul>
+  <ul class="list-items-minus">
+    <li *ngFor="let expense of expensesArrayMinus; let i=index">
+      <div class="single-expense">
+        <p>{{expensesArrayMinus[i].description}}</p>
+        <p>{{expensesArrayMinus[i].amount}}</p>
+      </div>
+    </li>
+  </ul>
+</div>

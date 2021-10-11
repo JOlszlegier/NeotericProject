@@ -2,11 +2,12 @@ import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {
-  addExpenseResponse,
+  AddExpenseResponse,
   AddFriendResponse,
   AddGroupResponse,
   BalanceCheckResponse,
   CheckFriendResponse,
+  ExpensesInfo,
   LoginResponse,
   RegisterResponse,
   SettleUpInfoResponse,
@@ -52,8 +53,8 @@ export class AuthApiService {
 
   public addExpense(eachUserExpense: [{ from: string, value: number }],
                     to: string,
-                    description: string): Observable<addExpenseResponse> {
-    return this.http.post<addExpenseResponse>(`${environment.apiUrl}/add-expense`, {
+                    description: string): Observable<AddExpenseResponse> {
+    return this.http.post<AddExpenseResponse>(`${environment.apiUrl}/add-expense`, {
       eachUserExpense, to, description
     })
   }
@@ -91,6 +92,18 @@ export class AuthApiService {
   public settleUp(userId: string, valueOwedToUser: [{ to: number, value: number }]): Observable<SettleUpResponse> {
     return this.http.post<SettleUpResponse>(`${environment.apiUrl}/settle-up`, {
       userId, valueOwedToUser
+    })
+  }
+
+  public expensesInfoPlus(userId: string): Observable<ExpensesInfo> {
+    return this.http.post<ExpensesInfo>(`${environment.apiUrl}/expenses-info-to-user`, {
+      userId
+    })
+  }
+
+  public expensesInfoMinus(userId: string): Observable<ExpensesInfo> {
+    return this.http.post<ExpensesInfo>(`${environment.apiUrl}/expenses-info-from-user`, {
+      userId
     })
   }
 }

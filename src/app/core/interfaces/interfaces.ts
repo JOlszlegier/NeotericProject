@@ -51,8 +51,12 @@ export interface SettleUpResponse {
   settleUpFinished: boolean;
 }
 
-export interface addExpenseResponse {
+export interface AddExpenseResponse {
   expenseAdded: boolean
 }
 
+
+export interface ExpensesInfo {
+  expensesArray: [{ description: string, amount: number }];
+}
 

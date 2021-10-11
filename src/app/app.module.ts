@@ -34,6 +34,7 @@ import {MatCardModule} from "@angular/material/card";
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {TokenInterceptorService} from "./core/services/token-interceptor.service";
 import {SettleUpComponent} from './modules/main-page/center-box/settle-up/settle-up.component';
+import { ExpensesListComponent } from './modules/main-page/center-box/expenses-list/expenses-list.component';
 
 
 @NgModule({
@@ -53,7 +54,8 @@ import {SettleUpComponent} from './modules/main-page/center-box/settle-up/settle
     AddGroupPageComponent,
     CashStatusComponent,
     AddExpenseComponent,
-    SettleUpComponent
+    SettleUpComponent,
+    ExpensesListComponent
   ],
   imports: [
     BrowserModule,

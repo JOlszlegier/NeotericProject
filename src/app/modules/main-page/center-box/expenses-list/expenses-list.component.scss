@@ -1,0 +1,33 @@
+@import 'src/app/styles/variables.scss';
+
+ul {
+  list-style: none;
+  padding-inline-start: 0;
+  margin: 0;
+}
+
+.list-items-plus {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-content: center;
+  color: $settle-color;
+}
+
+.list-items-minus {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-content: center;
+  color: $add-expense-color;
+}
+
+.single-expense {
+  width: 100%;
+  background-color: #EEEEEE;
+  display: flex;
+  align-content: center;
+  justify-content: space-around;
+  border: solid #DDDDDD 1px;
+  font-weight: bold;
+}
