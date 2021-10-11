@@ -7,14 +7,31 @@
 }
 
 .list-items {
-  padding-inline-start: 0;
+  display: flex;
+  align-content: center;
+  width: 100%;
+  flex-wrap: wrap;
+  margin-left: 40px;
 }
 
 ul {
   list-style-type: none;
   font-weight: bold;
+  justify-content: center;
+  display: flex;
+  align-content: space-around;
+  padding-inline-start: 0;
 }
 
 p {
   font-weight: bold;
 }
+
+.icon {
+  opacity: 0.5;
+  color: grey;
+  margin-right: 5px;
+}
+
+
+

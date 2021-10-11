@@ -1,7 +1,9 @@
 <div class="flexbox">
   <p>Users of current group</p>
   <ul class="list-items">
-    <li *ngFor="let user of selectedUsers" class="list-items">{{user}}</li>
+    <li *ngFor="let user of selectedUsers" class="list-items">
+      <mat-icon class="icon">account_box</mat-icon>
+      <span>{{user}}</span>
+    </li>
   </ul>
-  <p>Some fancy maps</p>
 </div>
