@@ -4,7 +4,9 @@
     <div class="text">{{displayString}}</div>
 
 
-    <button mat-button class="settle-button" type="button" (click)="onSettleUpClick()">Settle Up</button>
+    <button mat-button class="settle-button" type="button" (click)="onSettleUpClick()" [disabled]="outcome===0">Settle
+      Up
+    </button>
 
   </div>
   <app-cash-status></app-cash-status>
