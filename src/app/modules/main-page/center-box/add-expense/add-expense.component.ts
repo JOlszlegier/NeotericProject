@@ -10,6 +10,7 @@ import {CurrencyInfoApiService} from "../../../../core/services/currency-info-ap
 import {CookieService} from "ngx-cookie-service";
 import {AuthApiService} from "../../../../core/services/auth-api-service";
 import {UserBalanceService} from "../../../../core/services/user-balance-service";
+import {CenterBoxService} from "../../../../core/services/center-box-service";
 
 @Component({
   selector: 'app-add-expense',
@@ -44,18 +45,23 @@ export class AddExpenseComponent implements OnInit, OnDestroy {
   public finalExpenseForUser: [{ from: string, value: number }] = [{from: '', value: 0}];
   public correctFriend: boolean = true;
   public incorrectFriend: string = '';
+  public groupName$ = this.centerBoxService.selectedSource.asObservable();
+  public groupName: string = '';
   readonly separatorKeysCodes = [ENTER, COMMA] as const;
 
 
   constructor(public dialogRef: MatDialogRef<AddExpenseComponent>,
               private http: HttpClient, private currencyApiService: CurrencyInfoApiService,
               private cookieService: CookieService, private authApiService: AuthApiService,
-              private userBalanceService: UserBalanceService) {
+              private userBalanceService: UserBalanceService,
+              private centerBoxService: CenterBoxService) {
   }
 
   public ngOnInit(): void {
     this.dialogRef.updateSize('300px', '');
     this.users.push(this.cookieService.get('userName'));
+    const groupNameSub = this.groupName$.subscribe(selectedGroup => this.groupName = selectedGroup);
+    this.subscriptions.add(groupNameSub);
   }
 
   public ngOnDestroy(): void {
@@ -213,7 +219,7 @@ export class AddExpenseComponent implements OnInit, OnDestroy {
       };
     }
     const addExpenseSub = this.authApiService.addExpense(this.finalExpenseForUser, this.whoPaid,
-      this.description).subscribe((data) => {
+      this.description, this.groupName).subscribe((data) => {
       this.updateBalance();
       this.dialogRef.close();
     })

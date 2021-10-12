@@ -53,9 +53,9 @@ export class AuthApiService {
 
   public addExpense(eachUserExpense: [{ from: string, value: number }],
                     to: string,
-                    description: string): Observable<AddExpenseResponse> {
+                    description: string, groupName: string): Observable<AddExpenseResponse> {
     return this.http.post<AddExpenseResponse>(`${environment.apiUrl}/add-expense`, {
-      eachUserExpense, to, description
+      eachUserExpense, to, description, groupName
     })
   }
 
