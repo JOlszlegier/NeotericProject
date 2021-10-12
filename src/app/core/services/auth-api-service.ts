@@ -95,15 +95,15 @@ export class AuthApiService {
     })
   }
 
-  public expensesInfoPlus(userId: string): Observable<ExpensesInfo> {
+  public expensesInfoPlus(userId: string, groupName: string): Observable<ExpensesInfo> {
     return this.http.post<ExpensesInfo>(`${environment.apiUrl}/expenses-info-to-user`, {
-      userId
+      userId, groupName
     })
   }
 
-  public expensesInfoMinus(userId: string): Observable<ExpensesInfo> {
+  public expensesInfoMinus(userId: string, groupName: string): Observable<ExpensesInfo> {
     return this.http.post<ExpensesInfo>(`${environment.apiUrl}/expenses-info-from-user`, {
-      userId
+      userId, groupName
     })
   }
 }

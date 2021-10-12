@@ -24,6 +24,10 @@ export class GroupsComponent implements OnInit, OnDestroy {
   public searchPhrase$ = this.searchService.searchSource.asObservable();
   public selectedGroup$ = this.groupService.userSource.asObservable();
   public selected$ = this.centerBoxService.selectedSource.asObservable();
+  public expensesArrayPlus$ = this.groupService.expensesArrayPlusSource.asObservable();
+  public expensesArrayMinus$ = this.groupService.expensesArrayMinusSource.asObservable();
+  public expensesArrayPlus: [{ description: string, amount: number }] = [{description: '1', amount: 0}]
+  public expensesArrayMinus: [{ description: string, amount: number }] = [{description: '1', amount: 0}]
 
   constructor(private searchService: SearchService, private router: Router,
               private groupService: GroupService, private centerBoxService: CenterBoxService, private authApiService: AuthApiService,
@@ -31,6 +35,9 @@ export class GroupsComponent implements OnInit, OnDestroy {
   }
 
   public ngOnInit(): void {
+    this.expensesArrayPlus$.subscribe(expensesArray => this.expensesArrayPlus = expensesArray);
+    this.expensesArrayMinus$.subscribe(expensesArray => this.expensesArrayMinus = expensesArray);
+
     this.searchPhrase$.subscribe(searchPhrase => this.searchPhrase = searchPhrase)
     const groupSearchSub = this.authApiService.searchGroup(this.cookieService.get('userId')).subscribe(data => {
       for (const groupName of data) {
@@ -51,12 +58,31 @@ export class GroupsComponent implements OnInit, OnDestroy {
   }
 
   public onGroupClick(groupName: string): void {
+    this.centerBoxService.onChangeSelected(groupName);
+
     const usersSearchSub = this.authApiService.getUsersInGroup(groupName).subscribe(users => {
       this.selectedGroupUsers = users;
       this.groupService.changeSearch(this.selectedGroupUsers);
-      this.centerBoxService.onChangeSelected(groupName);
     })
     this.subscriptions.add(usersSearchSub);
+    this.expensesArrayMinus.splice(0, this.expensesArrayMinus.length);
+    this.expensesArrayPlus.splice(0, this.expensesArrayPlus.length);
+
+    const expensesSubPlus = this.authApiService.expensesInfoPlus(this.cookieService.get('userId'), this.selectedGroupName).subscribe(data => {
+      for (let expense in data.expensesArray) {
+        this.expensesArrayPlus.push(data.expensesArray[expense]);
+      }
+    })
+
+    const expensesSubMinus = this.authApiService.expensesInfoMinus(this.cookieService.get('userId'), this.selectedGroupName).subscribe(data => {
+
+      for (let expense in data.expensesArray) {
+        this.expensesArrayMinus.push(data.expensesArray[expense]);
+      }
+    })
+
+    this.subscriptions.add(expensesSubMinus);
+    this.subscriptions.add(expensesSubPlus);
 
   }
 
