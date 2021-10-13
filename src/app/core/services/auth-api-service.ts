@@ -83,15 +83,15 @@ export class AuthApiService {
     })
   }
 
-  public settleUpInfo(userId: string): Observable<SettleUpInfoResponse> {
+  public settleUpInfo(userId: string, groupName: string): Observable<SettleUpInfoResponse> {
     return this.http.post<SettleUpInfoResponse>(`${environment.apiUrl}/settle-up-info`, {
-      userId
+      userId, groupName
     })
   }
 
-  public settleUp(userId: string, valueOwedToUser: [{ to: number, value: number }]): Observable<SettleUpResponse> {
+  public settleUp(userId: string, valueOwedToUser: [{ to: number, value: number }], groupName: string): Observable<SettleUpResponse> {
     return this.http.post<SettleUpResponse>(`${environment.apiUrl}/settle-up`, {
-      userId, valueOwedToUser
+      userId, valueOwedToUser, groupName
     })
   }
 

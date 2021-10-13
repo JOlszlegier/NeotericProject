@@ -3,6 +3,7 @@ import {CookieService} from "ngx-cookie-service";
 import {AuthApiService} from "../../../../core/services/auth-api-service";
 import {Subscription} from "rxjs/";
 import {UserBalanceService} from "../../../../core/services/user-balance-service";
+import {CenterBoxService} from "../../../../core/services/center-box-service";
 
 @Component({
   selector: 'app-settle-up',
@@ -17,14 +18,17 @@ export class SettleUpComponent implements OnInit {
   public difference: number = 0;
   public outcome: number = 0;
   public income: number = 0;
+  public groupName$ = this.centerBoxService.selectedSource.asObservable();
+  public groupName: string = '';
 
   constructor(private cookieService: CookieService, private authApiService: AuthApiService,
-              private userBalanceService: UserBalanceService
+              private userBalanceService: UserBalanceService, private centerBoxService: CenterBoxService
   ) {
   }
 
   ngOnInit(): void {
-    const settleUpInfoSub = this.authApiService.settleUpInfo(this.cookieService.get('userId')).subscribe(data => {
+    this.groupName$.subscribe(groupName => this.groupName = groupName);
+    const settleUpInfoSub = this.authApiService.settleUpInfo(this.cookieService.get('userId'), this.groupName).subscribe(data => {
       this.whoYouOweTo = data.userNames;
       for (const user in data.valueOwedToUser)
         this.amountYouOweTo[user] = data.valueOwedToUser[user].value;
@@ -34,7 +38,7 @@ export class SettleUpComponent implements OnInit {
   }
 
   onPayUp(): void {
-    const settleUpSub = this.authApiService.settleUp(this.cookieService.get('userId'), this.valueOwedToUser).subscribe(
+    const settleUpSub = this.authApiService.settleUp(this.cookieService.get('userId'), this.valueOwedToUser, this.groupName).subscribe(
       data => {
         this.updateBalance();
       })

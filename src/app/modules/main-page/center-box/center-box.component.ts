@@ -7,6 +7,7 @@ import {CenterBoxService} from "../../../core/services/center-box-service";
 import {AddExpenseComponent} from "./add-expense/add-expense.component";
 import {SettleUpComponent} from "./settle-up/settle-up.component";
 import {UserBalanceService} from "../../../core/services/user-balance-service";
+import {GroupService} from "../../../core/services/group-service";
 
 @Component({
   selector: 'app-center-box',
@@ -22,11 +23,14 @@ export class CenterBoxComponent implements OnInit, OnDestroy {
   public displayState$ = this.cashService.displaySource.asObservable();
   public outcome$ = this.userBalanceService.outcomeSource.asObservable();
   public outcome: number = 0;
+  public outcomeArray$ = this.groupService.expensesArrayMinusSource.asObservable();
+  public expensesArrayMinus: [{ description: string, amount: number }] = [{description: '1', amount: 0}];
 
   constructor(private cashService: CashBoxService,
               private centerBoxService: CenterBoxService,
               private matDialog: MatDialog,
-              private userBalanceService: UserBalanceService) {
+              private userBalanceService: UserBalanceService,
+              private groupService: GroupService) {
   }
 
   onAddExpenseClick(): void {
@@ -43,6 +47,7 @@ export class CenterBoxComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.displayState$.subscribe(source => this.expenseDisplay = source);
     this.displayString$.subscribe(selected => this.displayString = selected);
+    this.outcomeArray$.subscribe(array => this.expensesArrayMinus = array);
     this.outcome$.subscribe(outcome => this.outcome = outcome);
   }
 
