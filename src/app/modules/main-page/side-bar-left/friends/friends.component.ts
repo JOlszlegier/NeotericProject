@@ -35,11 +35,16 @@ export class FriendsComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.searchPhrase$.subscribe(searchPhrase => this.searchPhrase = searchPhrase)
+    this.getFriends();
+  }
+
+  getFriends() {
     const updateFriendsListSub = this.authApiService.getFriendsList(this.cookieService.get('userId')).subscribe(data => {
       this.friendsList = data.friends;
     })
     this.subscriptions.add(updateFriendsListSub);
   }
+
 
   ngOnDestroy(): void {
     this.subscriptions.unsubscribe()

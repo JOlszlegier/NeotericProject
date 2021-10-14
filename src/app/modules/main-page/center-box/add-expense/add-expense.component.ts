@@ -5,12 +5,13 @@ import {MatDialogRef} from "@angular/material/dialog";
 import {HttpClient} from "@angular/common/http";
 
 import {Subscription} from "rxjs";
-import {splitByPercent, splitEvenly} from "./shared/expense-divide-helper";
+import {canExtend, splitByPercent, splitEvenly} from "./shared/expense-divide-helper";
 import {CurrencyInfoApiService} from "../../../../core/services/currency-info-api-service";
 import {CookieService} from "ngx-cookie-service";
 import {AuthApiService} from "../../../../core/services/auth-api-service";
 import {UserBalanceService} from "../../../../core/services/user-balance-service";
 import {CenterBoxService} from "../../../../core/services/center-box-service";
+import {GroupService} from "../../../../core/services/group-service";
 
 @Component({
   selector: 'app-add-expense',
@@ -47,6 +48,10 @@ export class AddExpenseComponent implements OnInit, OnDestroy {
   public incorrectFriend: string = '';
   public groupName$ = this.centerBoxService.selectedSource.asObservable();
   public groupName: string = '';
+  public expensesArrayPlus$ = this.groupService.expensesArrayPlusSource.asObservable();
+  public expensesArrayMinus$ = this.groupService.expensesArrayMinusSource.asObservable();
+  public expensesArrayPlus: [{ description: string, amount: number }] = [{description: '1', amount: 0}]
+  public expensesArrayMinus: [{ description: string, amount: number }] = [{description: '1', amount: 0}]
   readonly separatorKeysCodes = [ENTER, COMMA] as const;
 
 
@@ -54,7 +59,7 @@ export class AddExpenseComponent implements OnInit, OnDestroy {
               private http: HttpClient, private currencyApiService: CurrencyInfoApiService,
               private cookieService: CookieService, private authApiService: AuthApiService,
               private userBalanceService: UserBalanceService,
-              private centerBoxService: CenterBoxService) {
+              private centerBoxService: CenterBoxService, private groupService: GroupService) {
   }
 
   public ngOnInit(): void {
@@ -123,10 +128,6 @@ export class AddExpenseComponent implements OnInit, OnDestroy {
     this.isUserBoxVisible = false;
   }
 
-  public canExtend(users: string[]): boolean {
-    return (users.length > 1 && this.expenseValue !== 0);
-  }
-
 
   public divideEven(): void {
     this.inputValueVisible = false;
@@ -142,6 +143,10 @@ export class AddExpenseComponent implements OnInit, OnDestroy {
         this.eachUserAmount[i] = splitByPercent(this.percentToDivide[i], this.expenseValue)
     }
     this.percentagesLeftCalculation();
+  }
+
+  public canExtend(): boolean {
+    return canExtend(this.users, this.expenseValue)
   }
 
   public divideByPercentView(): void {
@@ -220,6 +225,7 @@ export class AddExpenseComponent implements OnInit, OnDestroy {
     }
     const addExpenseSub = this.authApiService.addExpense(this.finalExpenseForUser, this.whoPaid,
       this.description, this.groupName).subscribe((data) => {
+      this.updateList();
       this.updateBalance();
       this.dialogRef.close();
     })
@@ -235,6 +241,32 @@ export class AddExpenseComponent implements OnInit, OnDestroy {
     })
     this.subscriptions.add(balanceUpdateSub);
 
+  }
+
+  updateList(): void {
+    this.expensesArrayMinus$.subscribe(array => this.expensesArrayMinus = array);
+    this.expensesArrayPlus$.subscribe(array => this.expensesArrayPlus = array);
+    console.log(this.expensesArrayPlus);
+    const expensesSubPlus = this.authApiService.expensesInfoPlus(this.cookieService.get('userId'), this.groupName).subscribe(data => {
+      this.expensesArrayPlus.splice(0, 1);
+      console.log(this.expensesArrayPlus);
+      console.log(data);
+      for (let expense in data.expensesArray) {
+        this.expensesArrayPlus.push(data.expensesArray[expense]);
+      }
+
+    })
+
+    const expensesSubMinus = this.authApiService.expensesInfoMinus(this.cookieService.get('userId'), this.groupName).subscribe(data => {
+      this.expensesArrayMinus.splice(0, 1);
+      for (let expense in data.expensesArray) {
+        this.expensesArrayMinus.push(data.expensesArray[expense]);
+      }
+    })
+
+
+    this.subscriptions.add(expensesSubMinus);
+    this.subscriptions.add(expensesSubPlus);
   }
 
 }

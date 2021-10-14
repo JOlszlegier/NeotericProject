@@ -43,9 +43,9 @@
           </select>
         </div>
         <p>Paid by
-          <button mat-button (click)="payerSelect()" [disabled]="!canExtend(users)" type="button">{{whoPaid}}</button>
+          <button mat-button (click)="payerSelect()" [disabled]="!canExtend()" type="button">{{whoPaid}}</button>
           and split
-          <button mat-button (click)="divideSelect()" [disabled]="!canExtend(users)"
+          <button mat-button (click)="divideSelect()" [disabled]="!canExtend()"
                   type="button">{{howToDivide}}</button>
           .
         </p>
