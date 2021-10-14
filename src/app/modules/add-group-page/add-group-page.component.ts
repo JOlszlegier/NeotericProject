@@ -65,7 +65,7 @@ export class AddGroupPageComponent implements OnInit {
   }
 
   public friendCheck(friend: string): void {
-    const friendCheckSub = this.api.isInFriendList(this.cookieService.get('userId'), friend).subscribe(data => {
+    const friendCheckSub = this.api.isInFriendList(this.cookieService.get('userId'), friend, "Dashboard").subscribe(data => {
       this.isFriendCorrect = data.correctUser;
     })
     this.subscriptions.add(friendCheckSub);

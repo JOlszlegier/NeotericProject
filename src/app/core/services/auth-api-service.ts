@@ -71,9 +71,9 @@ export class AuthApiService {
     })
   }
 
-  public isInFriendList(user: string, friends: string): Observable<CheckFriendResponse> {
+  public isInFriendList(user: string, friends: string, groupName: string): Observable<CheckFriendResponse> {
     return this.http.post<CheckFriendResponse>(`${environment.apiUrl}/friend-check`, {
-      user, friends
+      user, friends, groupName
     })
   }
 

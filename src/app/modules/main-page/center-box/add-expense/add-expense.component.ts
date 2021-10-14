@@ -194,7 +194,7 @@ export class AddExpenseComponent implements OnInit, OnDestroy {
   }
 
   public checkUser(friend: string): void {
-    const checkUserSub = this.authApiService.isInFriendList(this.cookieService.get('userId'), friend).subscribe(data => {
+    const checkUserSub = this.authApiService.isInFriendList(this.cookieService.get('userId'), friend, this.groupName).subscribe(data => {
       this.correctFriend = data.correctUser;
       if (!this.correctFriend) {
         this.incorrectFriend = friend;
