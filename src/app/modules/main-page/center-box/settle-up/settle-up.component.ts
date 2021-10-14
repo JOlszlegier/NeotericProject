@@ -4,6 +4,7 @@ import {AuthApiService} from "../../../../core/services/auth-api-service";
 import {Subscription} from "rxjs/";
 import {UserBalanceService} from "../../../../core/services/user-balance-service";
 import {CenterBoxService} from "../../../../core/services/center-box-service";
+import {GroupService} from "../../../../core/services/group-service";
 
 @Component({
   selector: 'app-settle-up',
@@ -20,10 +21,14 @@ export class SettleUpComponent implements OnInit {
   public income: number = 0;
   public groupName$ = this.centerBoxService.selectedSource.asObservable();
   public groupName: string = '';
+  public expensesArrayPlus$ = this.groupService.expensesArrayPlusSource.asObservable();
+  public expensesArrayMinus$ = this.groupService.expensesArrayMinusSource.asObservable();
+  public expensesArrayPlus: [{ description: string, amount: number }] = [{description: '1', amount: 0}]
+  public expensesArrayMinus: [{ description: string, amount: number }] = [{description: '1', amount: 0}]
 
   constructor(private cookieService: CookieService, private authApiService: AuthApiService,
-              private userBalanceService: UserBalanceService, private centerBoxService: CenterBoxService
-  ) {
+              private userBalanceService: UserBalanceService, private centerBoxService: CenterBoxService,
+              private groupService: GroupService) {
   }
 
   ngOnInit(): void {
@@ -40,9 +45,10 @@ export class SettleUpComponent implements OnInit {
   onPayUp(): void {
     const settleUpSub = this.authApiService.settleUp(this.cookieService.get('userId'), this.valueOwedToUser, this.groupName).subscribe(
       data => {
+        this.updateList();
         this.updateBalance();
       })
-    this.subscriptions.add(settleUpSub)
+    this.subscriptions.add(settleUpSub);
   }
 
   updateBalance(): void {
@@ -60,5 +66,30 @@ export class SettleUpComponent implements OnInit {
     this.subscriptions.add(differenceSub);
   }
 
+  updateList(): void {
+    this.expensesArrayMinus$.subscribe(array => this.expensesArrayMinus = array);
+    this.expensesArrayPlus$.subscribe(array => this.expensesArrayPlus = array);
+    console.log(this.expensesArrayPlus);
+    const expensesSubPlus = this.authApiService.expensesInfoPlus(this.cookieService.get('userId'), this.groupName).subscribe(data => {
+      this.expensesArrayPlus.splice(0, 1);
+      console.log(this.expensesArrayPlus);
+      console.log(data);
+      for (let expense in data.expensesArray) {
+        this.expensesArrayPlus.push(data.expensesArray[expense]);
+      }
+
+    })
+
+    const expensesSubMinus = this.authApiService.expensesInfoMinus(this.cookieService.get('userId'), this.groupName).subscribe(data => {
+      this.expensesArrayMinus.splice(0, 1);
+      for (let expense in data.expensesArray) {
+        this.expensesArrayMinus.push(data.expensesArray[expense]);
+      }
+    })
+
+
+    this.subscriptions.add(expensesSubMinus);
+    this.subscriptions.add(expensesSubPlus);
+  }
 
 }
