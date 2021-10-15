@@ -8,6 +8,7 @@ import {AddExpenseComponent} from "./add-expense/add-expense.component";
 import {SettleUpComponent} from "./settle-up/settle-up.component";
 import {UserBalanceService} from "../../../core/services/user-balance-service";
 import {GroupService} from "../../../core/services/group-service";
+import {FriendsService} from "../../../core/services/friends-service";
 
 @Component({
   selector: 'app-center-box',
@@ -25,12 +26,12 @@ export class CenterBoxComponent implements OnInit, OnDestroy {
   public outcome: number = 0;
   public outcomeArray$ = this.groupService.expensesArrayMinusSource.asObservable();
   public expensesArrayMinus: [{ description: string, amount: number }] = [{description: '1', amount: 0}];
+  public friendsList$ = this.friendsService.friendsList.asObservable();
 
-  constructor(private cashService: CashBoxService,
-              private centerBoxService: CenterBoxService,
-              private matDialog: MatDialog,
-              private userBalanceService: UserBalanceService,
-              private groupService: GroupService) {
+
+  constructor(private cashService: CashBoxService, private centerBoxService: CenterBoxService,
+              private matDialog: MatDialog, private userBalanceService: UserBalanceService,
+              private groupService: GroupService, private friendsService: FriendsService) {
   }
 
   onAddExpenseClick(): void {
