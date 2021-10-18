@@ -12,14 +12,15 @@ import {CookieService} from "ngx-cookie-service";
   styleUrls: ['./add-group-page.component.scss']
 })
 export class AddGroupPageComponent implements OnInit {
-  public isFriendCorrect: boolean = true;
-  public subscriptions!: Subscription;
+  public isFriendCorrect: boolean = false;
+  public subscriptions: Subscription = new Subscription();
   formTemplate = this.fb.group({
     groupName: new FormControl('', Validators.required),
     users: this.fb.array([
       this.createUser()
     ])
   });
+  public incorrectUsers: string[] = [];
 
   public createUser(): FormGroup {
     return this.fb.group({
@@ -41,6 +42,9 @@ export class AddGroupPageComponent implements OnInit {
   }
 
   public removePeople(index: number) {
+    if (this.incorrectUsers.includes(this.formTemplate.value.users[index].email)) {
+      this.incorrectUsers.splice(this.incorrectUsers.indexOf(this.formTemplate.value.users[index]), 1);
+    }
     this.users.removeAt(index);
   }
 
@@ -48,12 +52,13 @@ export class AddGroupPageComponent implements OnInit {
     for (let i = 0; i < 2; i++) {
       (this.formTemplate.controls['users'] as FormArray).push(this.createUser());
     }
-
   }
 
   public saveGroup(): void {
+    let emailsArray: string[] = this.formTemplate.value.users.map((item: { email: any; }) => item.email);
+    emailsArray.push(this.cookieService.get(`userName`))
     const addGroupSub = this.api.createGroup(
-      this.formTemplate.value.groupName, this.formTemplate.value.users.map((item: { email: any; }) => item.email))
+      this.formTemplate.value.groupName, emailsArray)
       .subscribe(() => {
         this.router.navigate(['/main']);
       })
@@ -67,7 +72,18 @@ export class AddGroupPageComponent implements OnInit {
   public friendCheck(friend: string): void {
     const friendCheckSub = this.api.isInFriendList(this.cookieService.get('userId'), friend, "Dashboard").subscribe(data => {
       this.isFriendCorrect = data.correctUser;
+      if (!data.correctUser) {
+        this.incorrectUsers.push(friend);
+      }
+      let emailsArray: string[] = this.formTemplate.value.users.map((item: { email: any; }) => item.email);
+      for (let index in this.incorrectUsers) {
+        console.log(this.incorrectUsers);
+        if (!emailsArray.includes(this.incorrectUsers[index])) {
+          this.incorrectUsers.splice(Number(index), 1);
+        }
+      }
     })
+
     this.subscriptions.add(friendCheckSub);
   }
 

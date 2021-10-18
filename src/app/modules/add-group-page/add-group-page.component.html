@@ -18,8 +18,8 @@
       </div>
     </form>
 
-    <p *ngIf="!isFriendCorrect" class="error-message">User is not on your friends list! Please change</p>
-    
+    <p *ngIf="incorrectUsers.length>0" class="error-message">User is not on your friends list! Please change</p>
+
     <div class="friends-flex">
       <button mat-button (click)="addNewPeople()" type="button"
               class="add-more-button">Add more...
@@ -27,7 +27,9 @@
     </div>
 
     <div class="friends-flex">
-      <button mat-button [disabled]="formTemplate.invalid &&this.isFriendCorrect" type="button" (click)="saveGroup()"
+      <button mat-button [disabled]="formTemplate.invalid || incorrectUsers.length>0 || users.length<1"
+              type="button"
+              (click)="saveGroup()"
               class="save-button">Save
       </button>
     </div>
