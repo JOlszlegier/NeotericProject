@@ -1,5 +1,5 @@
 <div class="flexbox">
-  <div class="top-box">
+  <div class="top-box" *ngIf="displayString!='Location'">
     <button mat-button class="add-button" (click)="onAddExpenseClick()" type="button"
             [disabled]="!(friendsList$|async)?.length"
     >
@@ -14,6 +14,7 @@
     </button>
 
   </div>
-  <app-cash-status></app-cash-status>
-  <app-expenses-list></app-expenses-list>
+  <app-cash-status *ngIf="displayString!='Location'"></app-cash-status>
+  <app-expenses-list *ngIf="displayString!='Location'"></app-expenses-list>
+  <app-location *ngIf="displayString==='Location'"></app-location>
 </div>
