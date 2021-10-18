@@ -50,7 +50,7 @@
           .
         </p>
         <button
-          [disabled]="!correctFriend"
+          [disabled]="!correctFriend || expenseValue===0 || whoPaid==='who?' || description==='' || eachUserExpenseSum!=expenseValue"
           mat-button
           (click)="sendInfo()">Save the expense
         </button>

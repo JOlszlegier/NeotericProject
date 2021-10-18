@@ -53,7 +53,7 @@ export class AddExpenseComponent implements OnInit, OnDestroy {
   public expensesArrayPlus: [{ description: string, amount: number }] = [{description: '1', amount: 0}]
   public expensesArrayMinus: [{ description: string, amount: number }] = [{description: '1', amount: 0}]
   readonly separatorKeysCodes = [ENTER, COMMA] as const;
-
+  public eachUserExpenseSum: number = 0;
 
   constructor(public dialogRef: MatDialogRef<AddExpenseComponent>,
               private http: HttpClient, private currencyApiService: CurrencyInfoApiService,
@@ -135,6 +135,7 @@ export class AddExpenseComponent implements OnInit, OnDestroy {
     for (let i = 0; i < this.users.length; i++) {
       this.eachUserAmount[i] = splitEvenly(this.users.length, this.expenseValue)
     }
+    this.eachUserExpenseSum = this.eachUserAmount.reduce((a, b) => a + b, 0);
   }
 
   public divideByPercent(): void {
@@ -143,6 +144,7 @@ export class AddExpenseComponent implements OnInit, OnDestroy {
         this.eachUserAmount[i] = splitByPercent(this.percentToDivide[i], this.expenseValue)
     }
     this.percentagesLeftCalculation();
+    this.eachUserExpenseSum = this.eachUserAmount.reduce((a, b) => a + b, 0);
   }
 
   public canExtend(): boolean {
@@ -183,14 +185,17 @@ export class AddExpenseComponent implements OnInit, OnDestroy {
     }
     this.splitSelected = false;
     this.theyOweSelected = true;
+    this.eachUserExpenseSum = this.eachUserAmount.reduce((a, b) => a + b, 0);
   }
 
   public percentagesLeftCalculation(): void {
-    this.percentagesLeft = 100 - this.percentToDivide.reduce((acc, cur) => acc + cur, 0)
+    this.percentagesLeft = 100 - this.percentToDivide.reduce((acc, cur) => acc + cur, 0);
+    this.eachUserExpenseSum = this.eachUserAmount.reduce((a, b) => a + b, 0);
   }
 
   public AmountLeftCalculation(): void {
-    this.valueLeft = this.expenseValue - this.valueToDivide.reduce((acc, cur) => acc + cur, 0)
+    this.valueLeft = this.expenseValue - this.valueToDivide.reduce((acc, cur) => acc + cur, 0);
+    this.eachUserExpenseSum = this.eachUserAmount.reduce((a, b) => a + b, 0);
   }
 
   public checkUser(friend: string): void {
