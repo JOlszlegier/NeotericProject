@@ -27,7 +27,7 @@ import {CurrencyInfoApiService} from "../../core/services/currency-info-api-serv
 
 
 export class AuthPageComponent implements OnInit {
-  private subscriptions!: Subscription;
+  public subscriptions: Subscription = new Subscription();
   public isInLogInMode: boolean = true;
   public switchButtonText: string = 'sign in';
   public state: string = 'hidden';
@@ -40,23 +40,30 @@ export class AuthPageComponent implements OnInit {
   public defaultForm = this.fb.group({
     email: [''],
     password: [''],
-  })
+  });
+  public currencySub: Subscription = new Subscription();
 
   constructor(private authService: AuthService, private fb: FormBuilder,
               private authApi: AuthApiService, private cookieService: CookieService,
               private currencyApi: CurrencyInfoApiService) {
+
   }
 
   ngOnInit(): void {
     setTimeout(() => {
       this.state = 'normal'
     }, 300)
-    const currencySub = this.currencyApi.getCurrencyInfoFromApi().subscribe(responseData => {
+    this.currencySub = this.currencyApi.getCurrencyInfoFromApi().subscribe(responseData => {
       this.cookieService.set('PLNtoEur', Object.values(responseData)[4].PLN);
       const PLNtoUSD = Object.values(responseData)[4].PLN / Object.values(responseData)[4].USD;
       this.cookieService.set('PLNtoUSD', PLNtoUSD.toString());
     })
-    this.subscriptions.add(currencySub);
+    this.subscriptionsAdd(this.currencySub);
+  }
+
+
+  public subscriptionsAdd(sub: Subscription) {
+    this.subscriptions.add(sub);
   }
 
   public onSwitch(): void {
