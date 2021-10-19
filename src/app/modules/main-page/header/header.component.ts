@@ -16,4 +16,6 @@ export class HeaderComponent {
     this.router.navigate(['']);
     this.cookieService.deleteAll();
   }
+
+  
 }
