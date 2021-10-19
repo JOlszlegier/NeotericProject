@@ -23,11 +23,10 @@ describe('AuthPageComponent', () => {
       currencyApiMock
     );
 
-    let defaultForm = fbMock.group({
+    fixture.defaultForm = fbMock.group({
       email: [''],
       password: [''],
     });
-    fixture.defaultForm = defaultForm;
     fixture.subscriptions = new Subscription();
   })
 
