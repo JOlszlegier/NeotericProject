@@ -105,6 +105,7 @@ export class AuthPageComponent implements OnInit {
         this.authService.onLogInActions();
       } else {
         this.loginFailure = true;
+
       }
     })
     this.subscriptions.add(loginSub)
