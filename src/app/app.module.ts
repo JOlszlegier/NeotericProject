@@ -36,6 +36,7 @@ import {TokenInterceptorService} from "./core/services/token-interceptor.service
 import {SettleUpComponent} from './modules/main-page/center-box/settle-up/settle-up.component';
 import { ExpensesListComponent } from './modules/main-page/center-box/expenses-list/expenses-list.component';
 import { LocationComponent } from './modules/main-page/center-box/location/location.component';
+import {MatSnackBarModule} from "@angular/material/snack-bar";
 
 
 @NgModule({
@@ -76,13 +77,14 @@ import { LocationComponent } from './modules/main-page/center-box/location/locat
     MatDatepickerModule,
     MatCardModule,
     HttpClientModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatSnackBarModule,
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,
     useClass: TokenInterceptorService,
     multi: true
-  }],
+  },MatSnackBarModule],
   bootstrap: [AppComponent]
 })
 export class AppModule {

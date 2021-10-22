@@ -25,6 +25,7 @@ export interface RegisterResponse {
 export interface AddFriendResponse {
   friends: string[];
   errorMessage: string;
+  successMessage:string;
 }
 
 export interface CheckFriendResponse {

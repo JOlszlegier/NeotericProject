@@ -1,4 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
+@import 'src/app/styles/variables.scss';
 
 html, body {
   height: 100%;
@@ -22,4 +23,14 @@ span {
   padding: 0;
   border-radius: 20px;
   border: 1px solid #DDDDDD;
+}
+
+.friends-error-snackbar {
+  background-color: $add-expense-color;
+  font-weight: bold;
+}
+
+.friends-success-snackbar{
+  background-color: $settle-color;
+  font-weight: bold;
 }
