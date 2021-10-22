@@ -66,6 +66,7 @@ export class AddGroupPageComponent implements OnInit {
       this.formTemplate.value.groupName, emailsArray)
       .subscribe(() => {
         this.router.navigate(['/main']);
+        this.openSuccessSnackBar('Group added successfully');
       })
     this.subscriptions.add(addGroupSub);
   }
@@ -74,9 +75,18 @@ export class AddGroupPageComponent implements OnInit {
     this.router.navigate(['/main']);
   }
 
-  public openSnackBar(message:string){
+  public openErrorSnackBar(message:string){
     this.snackBar.open(message,'',{
       panelClass:['add-group-error-snackbar'],
+    })
+  }
+
+  public openSuccessSnackBar(message:string){
+    this.snackBar.open(message,'',{
+      panelClass:['add-group-success-snackbar'],
+      horizontalPosition:"left",
+      verticalPosition:"top",
+      duration:2000
     })
   }
 
@@ -85,7 +95,7 @@ export class AddGroupPageComponent implements OnInit {
       this.isFriendCorrect = data.correctUser;
       if (!data.correctUser) {
         this.incorrectUsers.push(friend);
-        this.openSnackBar('Incorrect user,please change!')
+        this.openErrorSnackBar('Incorrect user,please change!')
       }
       let emailsArray: string[] = this.formTemplate.value.users.map((item: { email: any; }) => item.email);
       for (let index in this.incorrectUsers) {

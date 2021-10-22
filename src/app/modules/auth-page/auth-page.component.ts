@@ -7,6 +7,7 @@ import {AuthApiService} from "../../core/services/auth-api-service";
 import {Subscription} from "rxjs";
 import {CookieService} from "ngx-cookie-service";
 import {CurrencyInfoApiService} from "../../core/services/currency-info-api-service";
+import {MatSnackBar,MatSnackBarModule} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-auth-page',
@@ -34,9 +35,6 @@ export class AuthPageComponent implements OnInit {
   public email: string = '';
   public password: string = '';
   public name: string = '';
-  public loginFailure: boolean = false;
-  public registerFailure: boolean = false;
-  public registerSuccess: boolean = false;
   public defaultForm = this.fb.group({
     email: [''],
     password: [''],
@@ -45,7 +43,7 @@ export class AuthPageComponent implements OnInit {
 
   constructor(private authService: AuthService, private fb: FormBuilder,
               private authApi: AuthApiService, private cookieService: CookieService,
-              private currencyApi: CurrencyInfoApiService) {
+              private currencyApi: CurrencyInfoApiService,private snackBar:MatSnackBar) {
 
   }
 
@@ -67,8 +65,6 @@ export class AuthPageComponent implements OnInit {
   }
 
   public onSwitch(): void {
-    this.loginFailure = false;
-    this.registerFailure = false;
     this.isInLogInMode = !this.isInLogInMode;
     if (this.isInLogInMode) {
       this.switchButtonText = authText.SignIn
@@ -80,15 +76,14 @@ export class AuthPageComponent implements OnInit {
   }
 
   public signIn(): void {
-    this.loginFailure = false;
     const {email, password, name} = this.defaultForm.value;
     const registerSub = this.authApi.register(email, name, password).subscribe(data => {
       if (data.registerSuccess) {
-        this.registerSuccess = true;
+        this.openSuccessSnackBar('User registered successfully!')
         this.cookieService.set('token', data.token);
         this.isInLogInMode = true;
       } else {
-        this.registerSuccess = false;
+        this.openErrorSnackBar('Email is already taken!')
       }
     })
     this.subscriptions.add(registerSub);
@@ -104,19 +99,13 @@ export class AuthPageComponent implements OnInit {
         this.cookieService.set('userName', data.userName);
         this.authService.onLogInActions();
       } else {
-        this.loginFailure = true;
-
+        this.openErrorSnackBar('Invalid password or email!')
       }
     })
     this.subscriptions.add(loginSub)
   }
 
-  public errorMessageHider(): void {
-    if (this.loginFailure || this.registerFailure) {
-      this.loginFailure = false;
-      this.registerFailure = false;
-    }
-  }
+
 
 
   public formSubmit(): void {
@@ -125,6 +114,20 @@ export class AuthPageComponent implements OnInit {
     } else {
       this.signIn();
     }
+  }
+
+  public openSuccessSnackBar(message:string){
+    this.snackBar.open(message,'',{
+      panelClass:['auth-page-success-snackbar'],
+      duration:3000,
+    })
+  }
+
+  public openErrorSnackBar(message:string){
+    this.snackBar.open(message,'',{
+      panelClass:['auth-page-error-snackbar'],
+      duration:3000,
+    })
   }
 
 
