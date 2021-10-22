@@ -206,7 +206,7 @@ export class AddExpenseComponent implements OnInit, OnDestroy {
       this.correctFriend = data.correctUser;
       if (!this.correctFriend) {
         this.incorrectFriend = friend;
-        this.openSnackBar('Incorrect user,please delete!')
+        this.openErrorSnackBar('Incorrect user,please delete!')
       }
     })
     this.subscriptions.add(checkUserSub);
@@ -237,6 +237,7 @@ export class AddExpenseComponent implements OnInit, OnDestroy {
       this.updateList();
       this.updateBalance();
       this.dialogRef.close();
+      this.openSuccessSnackBar('Expense added successfully!');
     })
     this.subscriptions.add(addExpenseSub);
 
@@ -273,10 +274,19 @@ export class AddExpenseComponent implements OnInit, OnDestroy {
     this.subscriptions.add(expensesSubPlus);
   }
 
-  openSnackBar(message:string){
+  openErrorSnackBar(message:string):void{
     this.snackBar.open(message,'',{
       panelClass:['add-expense-error-snackbar'],
-      verticalPosition:"bottom"
+      verticalPosition:"bottom",
+    })
+  }
+
+  openSuccessSnackBar(message:string):void{
+    this.snackBar.open(message,'',{
+      panelClass:['add-expense-success-snackbar'],
+      verticalPosition:"top",
+      horizontalPosition:"left",
+      duration:3000
     })
   }
 }

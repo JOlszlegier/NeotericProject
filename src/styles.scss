@@ -59,6 +59,13 @@ span {
   margin-bottom: 100px !important;
 }
 
+.add-expense-success-snackbar{
+  background-color: $settle-color;
+  font-weight: bold;
+  margin-top: 45px !important;
+  margin-left: 30px !important;
+}
+
 .auth-page-error-snackbar{
   background-color: $add-expense-color;
   font-weight: bold;
