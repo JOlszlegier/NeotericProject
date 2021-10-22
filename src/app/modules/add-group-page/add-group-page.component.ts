@@ -5,6 +5,7 @@ import {GroupService} from "../../core/services/group-service";
 import {AuthApiService} from "../../core/services/auth-api-service";
 import {Subscription} from "rxjs";
 import {CookieService} from "ngx-cookie-service";
+import {MatSnackBar,MatSnackBarModule} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-add-group-page',
@@ -29,7 +30,8 @@ export class AddGroupPageComponent implements OnInit {
   }
 
   constructor(private router: Router, private groupService: GroupService,
-              private fb: FormBuilder, private api: AuthApiService, private cookieService: CookieService) {
+              private fb: FormBuilder, private api: AuthApiService, private cookieService: CookieService,
+              private snackBar:MatSnackBar) {
   }
 
   public get users(): FormArray {
@@ -44,6 +46,9 @@ export class AddGroupPageComponent implements OnInit {
   public removePeople(index: number) {
     if (this.incorrectUsers.includes(this.formTemplate.value.users[index].email)) {
       this.incorrectUsers.splice(this.incorrectUsers.indexOf(this.formTemplate.value.users[index]), 1);
+    }
+    if(this.incorrectUsers.length===0){
+      this.snackBar.dismiss();
     }
     this.users.removeAt(index);
   }
@@ -69,18 +74,27 @@ export class AddGroupPageComponent implements OnInit {
     this.router.navigate(['/main']);
   }
 
+  public openSnackBar(message:string){
+    this.snackBar.open(message,'',{
+      panelClass:['add-group-error-snackbar'],
+    })
+  }
+
   public friendCheck(friend: string): void {
     const friendCheckSub = this.api.isInFriendList(this.cookieService.get('userId'), friend, "Dashboard").subscribe(data => {
       this.isFriendCorrect = data.correctUser;
       if (!data.correctUser) {
         this.incorrectUsers.push(friend);
+        this.openSnackBar('Incorrect user,please change!')
       }
       let emailsArray: string[] = this.formTemplate.value.users.map((item: { email: any; }) => item.email);
       for (let index in this.incorrectUsers) {
-        console.log(this.incorrectUsers);
         if (!emailsArray.includes(this.incorrectUsers[index])) {
           this.incorrectUsers.splice(Number(index), 1);
         }
+      }
+      if(this.incorrectUsers.length===0){
+        this.snackBar.dismiss();
       }
     })
 
