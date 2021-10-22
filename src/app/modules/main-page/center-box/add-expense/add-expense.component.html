@@ -27,7 +27,6 @@
             [disabled]="!correctFriend">
         </mat-chip-list>
       </mat-form-field>
-      <p *ngIf="!correctFriend" class="error-message">User is not on your friend list,please remove!</p>
       <div class="expense-info">
         <input matInput class="description-input" placeholder="Description" autocomplete="off"
                [(ngModel)]="description">

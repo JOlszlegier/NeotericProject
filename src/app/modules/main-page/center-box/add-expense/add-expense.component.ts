@@ -12,6 +12,7 @@ import {AuthApiService} from "../../../../core/services/auth-api-service";
 import {UserBalanceService} from "../../../../core/services/user-balance-service";
 import {CenterBoxService} from "../../../../core/services/center-box-service";
 import {GroupService} from "../../../../core/services/group-service";
+import {MatSnackBar,MatSnackBarModule} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-add-expense',
@@ -59,7 +60,8 @@ export class AddExpenseComponent implements OnInit, OnDestroy {
               private http: HttpClient, private currencyApiService: CurrencyInfoApiService,
               private cookieService: CookieService, private authApiService: AuthApiService,
               private userBalanceService: UserBalanceService,
-              private centerBoxService: CenterBoxService, private groupService: GroupService) {
+              private centerBoxService: CenterBoxService, private groupService: GroupService,
+              private snackBar:MatSnackBar) {
   }
 
   public ngOnInit(): void {
@@ -93,6 +95,7 @@ export class AddExpenseComponent implements OnInit, OnDestroy {
     if (user === this.incorrectFriend) {
       this.correctFriend = true;
       this.incorrectFriend = '';
+      this.snackBar.dismiss();
     }
     if (index > 0) {
       this.users.splice(index, 1);
@@ -203,6 +206,7 @@ export class AddExpenseComponent implements OnInit, OnDestroy {
       this.correctFriend = data.correctUser;
       if (!this.correctFriend) {
         this.incorrectFriend = friend;
+        this.openSnackBar('Incorrect user,please delete!')
       }
     })
     this.subscriptions.add(checkUserSub);
@@ -229,7 +233,7 @@ export class AddExpenseComponent implements OnInit, OnDestroy {
       };
     }
     const addExpenseSub = this.authApiService.addExpense(this.finalExpenseForUser, this.whoPaid,
-      this.description, this.groupName).subscribe((data) => {
+      this.description, this.groupName).subscribe(() => {
       this.updateList();
       this.updateBalance();
       this.dialogRef.close();
@@ -265,10 +269,14 @@ export class AddExpenseComponent implements OnInit, OnDestroy {
         this.expensesArrayMinus.push(data.expensesArray[expense]);
       }
     })
-
-
     this.subscriptions.add(expensesSubMinus);
     this.subscriptions.add(expensesSubPlus);
   }
 
+  openSnackBar(message:string){
+    this.snackBar.open(message,'',{
+      panelClass:['add-expense-error-snackbar'],
+      verticalPosition:"bottom"
+    })
+  }
 }
