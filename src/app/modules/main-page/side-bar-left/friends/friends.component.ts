@@ -46,7 +46,7 @@ export class FriendsComponent implements OnInit, OnDestroy {
     this.getFriends();
   }
 
-  getFriends() {
+  getFriends():void {
     const updateFriendsListSub = this.authApiService.getFriendsList(this.cookieService.get('userId')).subscribe(data => {
       this.friendsList = data.friends;
       this.friendsService.friendsList.next(this.friendsList);
@@ -54,7 +54,7 @@ export class FriendsComponent implements OnInit, OnDestroy {
     this.subscriptions.add(updateFriendsListSub);
   }
 
-  openErrorSnackBar(message:string){
+  openErrorSnackBar(message:string):void{
     this.snackBar.open(message,'',{
       panelClass:['friends-error-snackbar'],
       duration:3000,
@@ -63,7 +63,7 @@ export class FriendsComponent implements OnInit, OnDestroy {
     });
   }
 
-  openSuccessSnackBar(message:string){
+  openSuccessSnackBar(message:string):void{
     this.snackBar.open(message,'',{
       panelClass:['friends-success-snackbar'],
       duration:3000,

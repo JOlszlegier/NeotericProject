@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {GroupService} from "../../core/services/group-service";
@@ -12,7 +12,7 @@ import {MatSnackBar,MatSnackBarModule} from "@angular/material/snack-bar";
   templateUrl: './add-group-page.component.html',
   styleUrls: ['./add-group-page.component.scss']
 })
-export class AddGroupPageComponent implements OnInit {
+export class AddGroupPageComponent implements OnInit,OnDestroy {
   public isFriendCorrect: boolean = false;
   public subscriptions: Subscription = new Subscription();
   formTemplate = this.fb.group({
@@ -59,6 +59,10 @@ export class AddGroupPageComponent implements OnInit {
     }
   }
 
+  public ngOnDestroy():void {
+    this.subscriptions.unsubscribe();
+  }
+
   public saveGroup(): void {
     let emailsArray: string[] = this.formTemplate.value.users.map((item: { email: any; }) => item.email);
     emailsArray.push(this.cookieService.get(`userName`))
@@ -75,13 +79,13 @@ export class AddGroupPageComponent implements OnInit {
     this.router.navigate(['/main']);
   }
 
-  public openErrorSnackBar(message:string){
+  public openErrorSnackBar(message:string):void{
     this.snackBar.open(message,'',{
       panelClass:['add-group-error-snackbar'],
     })
   }
 
-  public openSuccessSnackBar(message:string){
+  public openSuccessSnackBar(message:string):void{
     this.snackBar.open(message,'',{
       panelClass:['add-group-success-snackbar'],
       horizontalPosition:"left",

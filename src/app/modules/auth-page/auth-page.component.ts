@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, Validators} from "@angular/forms";
 import {animate, state, style, transition, trigger} from "@angular/animations";
 import {authText} from "./shared/enums/auth.enums";
@@ -27,7 +27,7 @@ import {MatSnackBar,MatSnackBarModule} from "@angular/material/snack-bar";
 })
 
 
-export class AuthPageComponent implements OnInit {
+export class AuthPageComponent implements OnInit,OnDestroy {
   public subscriptions: Subscription = new Subscription();
   public isInLogInMode: boolean = true;
   public switchButtonText: string = 'sign in';
@@ -57,6 +57,10 @@ export class AuthPageComponent implements OnInit {
       this.cookieService.set('PLNtoUSD', PLNtoUSD.toString());
     })
     this.subscriptionsAdd(this.currencySub);
+  }
+
+  ngOnDestroy():void {
+    this.subscriptions.unsubscribe();
   }
 
 
@@ -116,14 +120,14 @@ export class AuthPageComponent implements OnInit {
     }
   }
 
-  public openSuccessSnackBar(message:string){
+  public openSuccessSnackBar(message:string):void{
     this.snackBar.open(message,'',{
       panelClass:['auth-page-success-snackbar'],
       duration:3000,
     })
   }
 
-  public openErrorSnackBar(message:string){
+  public openErrorSnackBar(message:string):void{
     this.snackBar.open(message,'',{
       panelClass:['auth-page-error-snackbar'],
       duration:3000,

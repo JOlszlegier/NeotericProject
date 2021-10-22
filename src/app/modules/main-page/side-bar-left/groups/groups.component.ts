@@ -50,7 +50,7 @@ export class GroupsComponent implements OnInit, OnDestroy {
   }
 
   public ngOnDestroy(): void {
-    // this.subscriptions.unsubscribe();
+    this.subscriptions.unsubscribe();
   }
 
   public newGroupLink(): void {

@@ -1,17 +1,18 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {CookieService} from "ngx-cookie-service";
 import {AuthApiService} from "../../../../core/services/auth-api-service";
 import {Subscription} from "rxjs/";
 import {UserBalanceService} from "../../../../core/services/user-balance-service";
 import {CenterBoxService} from "../../../../core/services/center-box-service";
 import {GroupService} from "../../../../core/services/group-service";
+import {MatSnackBar,MatSnackBarModule} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-settle-up',
   templateUrl: './settle-up.component.html',
   styleUrls: ['./settle-up.component.scss']
 })
-export class SettleUpComponent implements OnInit {
+export class SettleUpComponent implements OnInit,OnDestroy{
   private subscriptions = new Subscription()
   public whoYouOweTo: [string] = ['']
   public amountYouOweTo: [number] = [0];
@@ -28,7 +29,7 @@ export class SettleUpComponent implements OnInit {
 
   constructor(private cookieService: CookieService, private authApiService: AuthApiService,
               private userBalanceService: UserBalanceService, private centerBoxService: CenterBoxService,
-              private groupService: GroupService) {
+              private groupService: GroupService,private snackBar:MatSnackBar) {
   }
 
   ngOnInit(): void {
@@ -42,11 +43,16 @@ export class SettleUpComponent implements OnInit {
     this.subscriptions.add(settleUpInfoSub);
   }
 
+  ngOnDestroy():void {
+    this.subscriptions.unsubscribe();
+  }
+
   onPayUp(): void {
     const settleUpSub = this.authApiService.settleUp(this.cookieService.get('userId'), this.valueOwedToUser, this.groupName).subscribe(
       data => {
         this.updateList();
         this.updateBalance();
+        this.openSuccessSnackBar('You are settled up !')
       })
     this.subscriptions.add(settleUpSub);
   }
@@ -71,24 +77,28 @@ export class SettleUpComponent implements OnInit {
     this.expensesArrayPlus$.subscribe(array => this.expensesArrayPlus = array);
     const expensesSubPlus = this.authApiService.expensesInfoPlus(this.cookieService.get('userId'), this.groupName).subscribe(data => {
       this.expensesArrayPlus.splice(0, this.expensesArrayPlus.length);
-      console.log(this.expensesArrayPlus);
-      console.log(data);
       for (let expense in data.expensesArray) {
         this.expensesArrayPlus.push(data.expensesArray[expense]);
       }
 
     })
-
     const expensesSubMinus = this.authApiService.expensesInfoMinus(this.cookieService.get('userId'), this.groupName).subscribe(data => {
       this.expensesArrayMinus.splice(0, this.expensesArrayMinus.length);
       for (let expense in data.expensesArray) {
         this.expensesArrayMinus.push(data.expensesArray[expense]);
       }
     })
-
-
     this.subscriptions.add(expensesSubMinus);
     this.subscriptions.add(expensesSubPlus);
+  }
+
+  public openSuccessSnackBar(message:string):void{
+    this.snackBar.open(message,'',{
+      duration:3000,
+      panelClass:['settle-up-success-snackbar'],
+      horizontalPosition:"left",
+      verticalPosition:'top'
+    })
   }
 
 }
