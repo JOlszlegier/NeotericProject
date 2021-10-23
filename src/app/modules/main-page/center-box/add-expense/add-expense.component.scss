@@ -93,6 +93,11 @@ button {
   min-height: 0;
 }
 
+button:disabled{
+  background-color: #DDDDDD;
+  opacity: 0.7;
+}
+
 
 .user-box {
   width: 200px;
