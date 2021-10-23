@@ -8,11 +8,12 @@
 }
 
 .top-bar {
-  height: 30px;
+  height: 40px;
   display: flex;
   justify-content: space-between;
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
+  padding: 10px 20px;
 }
 
 .cancel-icon {
@@ -68,6 +69,7 @@ mat-chip-list {
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  margin-bottom: 20px;
 }
 
 select {
@@ -110,6 +112,7 @@ button:disabled{
   width: 100%;
   background-color: #F5F5F5;
 }
+
 
 
 .payer-select-li {
