@@ -5,7 +5,7 @@
       <input matInput
              type="email"
              placeholder="Enter your mail"
-             class="input-area"
+             class="input-area "
              required
              email
              formControlName="email"
@@ -29,21 +29,23 @@
              *ngIf="!isInLogInMode"
              [@buttonState]="state"
       >
-      <button mat-raised-button
-              class="sign-in-button"
-              (click)="onSwitch()"
-              [@buttonState]="state"
-              type="button"
-      >Switch to {{switchButtonText}}
-      </button>
-      <button mat-raised-button
-              class="log-in-button"
-              (click)="formSubmit()"
-              [disabled]="!defaultForm.valid"
-              [@buttonState]="state"
-              type="button"
-      >Submit!
-      </button>
+      <div class="button-div">
+        <button mat-raised-button
+                class="sign-in-button"
+                (click)="onSwitch()"
+                [@buttonState]="state"
+                type="button"
+        >Switch to {{switchButtonText}}
+        </button>
+        <button mat-raised-button
+                class="log-in-button"
+                (click)="formSubmit()"
+                [disabled]="!defaultForm.valid"
+                [@buttonState]="state"
+                type="button"
+        >Submit!
+        </button>
+      </div>
     </div>
   </div>
 </form>

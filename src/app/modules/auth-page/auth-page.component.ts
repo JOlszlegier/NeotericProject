@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, HostListener, OnDestroy, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, Validators} from "@angular/forms";
 import {animate, state, style, transition, trigger} from "@angular/animations";
 import {authText} from "./shared/enums/auth.enums";
@@ -40,11 +40,17 @@ export class AuthPageComponent implements OnInit,OnDestroy {
     password: [''],
   });
   public currencySub: Subscription = new Subscription();
+  public isMobile:boolean = window.outerHeight < 700;
 
   constructor(private authService: AuthService, private fb: FormBuilder,
               private authApi: AuthApiService, private cookieService: CookieService,
               private currencyApi: CurrencyInfoApiService,private snackBar:MatSnackBar) {
 
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize() {
+    this.isMobile = window.outerHeight < 700;
   }
 
   ngOnInit(): void {
@@ -120,10 +126,13 @@ export class AuthPageComponent implements OnInit,OnDestroy {
     }
   }
 
+
+
   public openSuccessSnackBar(message:string):void{
     this.snackBar.open(message,'',{
       panelClass:['auth-page-success-snackbar'],
       duration:3000,
+      verticalPosition: this.isMobile ? "top" : "bottom"
     })
   }
 
@@ -131,6 +140,7 @@ export class AuthPageComponent implements OnInit,OnDestroy {
     this.snackBar.open(message,'',{
       panelClass:['auth-page-error-snackbar'],
       duration:3000,
+      verticalPosition: this.isMobile ? "top" : "bottom"
     })
   }
 
