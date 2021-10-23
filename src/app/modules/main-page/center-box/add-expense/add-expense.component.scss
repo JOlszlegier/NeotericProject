@@ -21,6 +21,8 @@
   cursor: pointer
 }
 
+
+
 .example-chip-list {
   width: 100%;
 }
@@ -104,7 +106,7 @@ button:disabled{
 .user-box {
   width: 200px;
   height: 100%;
-
+  padding-top: 10px;
 }
 
 .main-expense-box {
@@ -117,6 +119,8 @@ button:disabled{
 
 .payer-select-li {
   cursor: pointer;
+  padding: 4px 10px;
+  display: flex;
 }
 
 .divide-box {
@@ -146,7 +150,7 @@ button:disabled{
   margin-top: 20px;
 }
 
-.users-list {
+.user-box {
   ul {
     list-style-type: none;
   }
@@ -190,6 +194,11 @@ button:disabled{
   display: flex;
   justify-content: center;
   width: 100%;
+}
+
+.correct-user-selected{
+  background-color: #5EFC8D3D;
+  font-weight: bold;
 }
 
 

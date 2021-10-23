@@ -42,7 +42,7 @@
           </select>
         </div>
         <p>Paid by
-          <button mat-button  (click)="payerSelect()" [disabled]="!canExtend()" type="button">{{whoPaid}}</button>
+          <button mat-button  (click)="payerSelect()" [disabled]="!canExtend()" type="button" [ngClass]="{'correct-user-selected':whoPaid != 'who?' }">{{whoPaid}}</button>
           and split
           <button mat-button (click)="divideSelect()" [disabled]="!canExtend()"
                   type="button">{{howToDivide}}</button>
@@ -57,9 +57,9 @@
     </div>
   </div>
   <div class="user-box" *ngIf="isUserBoxVisible">
-    <ul>
-      <li *ngFor="let user of users" (click)="userSelect(user)" class="payer-select-li">{{user}}</li>
-    </ul>
+      <div *ngFor="let user of users" (click)="userSelect(user)" class="payer-select-li">
+        <mat-icon class="icon">account_box</mat-icon>
+        {{user}}</div>
   </div>
   <div class="divide-box" *ngIf="isDivideBoxVisible">
     <button mat-button [ngClass]="{'split-button-selected': splitSelected}" class="split-button"
