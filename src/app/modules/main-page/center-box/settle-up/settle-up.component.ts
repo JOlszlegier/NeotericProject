@@ -54,7 +54,7 @@ export class SettleUpComponent implements OnInit,OnDestroy{
         this.updateList();
         this.updateBalance();
         this.dialogRef.close();
-        this.openSuccessSnackBar('You are settled up !')
+        this.openSuccessSnackBar('You are settled up!')
       })
     this.subscriptions.add(settleUpSub);
   }

@@ -151,6 +151,7 @@ export class AddExpenseComponent implements OnInit, OnDestroy {
     }
     this.percentagesLeftCalculation();
     this.eachUserExpenseSum = this.eachUserAmount.reduce((a, b) => a + b, 0);
+
   }
 
   public canExtend(): boolean {
@@ -232,7 +233,7 @@ export class AddExpenseComponent implements OnInit, OnDestroy {
 
       this.finalExpenseForUser[value] = {
         from: this.users[value],
-        value: Number((this.eachUserAmount[value] * this.currencyMultiplier).toPrecision(4))
+        value: Number((this.eachUserAmount[value] * this.currencyMultiplier).toFixed(2))
       };
     }
     const addExpenseSub = this.authApiService.addExpense(this.finalExpenseForUser, this.whoPaid,
