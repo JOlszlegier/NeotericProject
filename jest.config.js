@@ -1,5 +1,15 @@
-/** @type {import('ts-jest/dist/types').InitialOptionsTsJest} */
+const { pathsToModuleNameMapper } = require('ts-jest/utils');
+const { compilerOptions } = require('./tsconfig');
+
 module.exports = {
-  preset: 'ts-jest',
-  testEnvironment: 'node',
+  preset: 'jest-preset-angular',
+  roots: ['<rootDir>/src/'],
+  testMatch: ['**/+(*.)+(spec).+(ts)'],
+  setupFilesAfterEnv: ['<rootDir>/src/test.ts'],
+  collectCoverage: true,
+  coverageReporters: ['html'],
+  coverageDirectory: 'coverage/my-app',
+  moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths || {}, {
+    prefix: '<rootDir>/',
+  }),
 };
