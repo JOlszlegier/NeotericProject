@@ -6,6 +6,7 @@ import {UserBalanceService} from "../../../../core/services/user-balance-service
 import {CenterBoxService} from "../../../../core/services/center-box-service";
 import {GroupService} from "../../../../core/services/group-service";
 import {MatSnackBar,MatSnackBarModule} from "@angular/material/snack-bar";
+import {MatDialogRef} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-settle-up',
@@ -29,7 +30,7 @@ export class SettleUpComponent implements OnInit,OnDestroy{
 
   constructor(private cookieService: CookieService, private authApiService: AuthApiService,
               private userBalanceService: UserBalanceService, private centerBoxService: CenterBoxService,
-              private groupService: GroupService,private snackBar:MatSnackBar) {
+              private groupService: GroupService,private snackBar:MatSnackBar,public dialogRef: MatDialogRef<SettleUpComponent>) {
   }
 
   ngOnInit(): void {
@@ -49,9 +50,10 @@ export class SettleUpComponent implements OnInit,OnDestroy{
 
   onPayUp(): void {
     const settleUpSub = this.authApiService.settleUp(this.cookieService.get('userId'), this.valueOwedToUser, this.groupName).subscribe(
-      data => {
+      () => {
         this.updateList();
         this.updateBalance();
+        this.dialogRef.close();
         this.openSuccessSnackBar('You are settled up !')
       })
     this.subscriptions.add(settleUpSub);
@@ -62,7 +64,6 @@ export class SettleUpComponent implements OnInit,OnDestroy{
     const outcomeSub = this.userBalanceService.outcomeSource.subscribe(outcome => this.outcome = outcome);
     const differenceSub = this.userBalanceService.differenceSource.subscribe(difference => this.difference = difference)
     const balanceUpdateSub = this.authApiService.balanceCheck(this.cookieService.get('userId')).subscribe(data => {
-      console.log(data);
       this.userBalanceService.onValuesChange(data.income, data.outcome);
       this.subscriptions.unsubscribe();
     })
@@ -80,13 +81,14 @@ export class SettleUpComponent implements OnInit,OnDestroy{
       for (let expense in data.expensesArray) {
         this.expensesArrayPlus.push(data.expensesArray[expense]);
       }
-
+      console.log(this.expensesArrayPlus);
     })
     const expensesSubMinus = this.authApiService.expensesInfoMinus(this.cookieService.get('userId'), this.groupName).subscribe(data => {
       this.expensesArrayMinus.splice(0, this.expensesArrayMinus.length);
       for (let expense in data.expensesArray) {
         this.expensesArrayMinus.push(data.expensesArray[expense]);
       }
+      console.log(this.expensesArrayMinus);
     })
     this.subscriptions.add(expensesSubMinus);
     this.subscriptions.add(expensesSubPlus);
