@@ -55,6 +55,9 @@ export class AddExpenseComponent implements OnInit, OnDestroy {
   public expensesArrayMinus: [{ description: string, amount: number }] = [{description: '1', amount: 0}]
   readonly separatorKeysCodes = [ENTER, COMMA] as const;
   public eachUserExpenseSum: number = 0;
+  public defaultWidth:string = '450px';
+  public payerSelectWidth:string  = '600px';
+  public divideWidth:string = '750px';
 
   constructor(public dialogRef: MatDialogRef<AddExpenseComponent>,
               private http: HttpClient, private currencyApiService: CurrencyInfoApiService,
@@ -65,7 +68,7 @@ export class AddExpenseComponent implements OnInit, OnDestroy {
   }
 
   public ngOnInit(): void {
-    this.dialogRef.updateSize('300px', '');
+    this.dialogRef.updateSize(this.defaultWidth, '');
     this.users.push(this.cookieService.get('userName'));
     const groupNameSub = this.groupName$.subscribe(selectedGroup => this.groupName = selectedGroup);
     this.subscriptions.add(groupNameSub);
@@ -106,9 +109,9 @@ export class AddExpenseComponent implements OnInit, OnDestroy {
     this.isUserBoxVisible = !this.isUserBoxVisible;
     if (this.isDivideBoxVisible) this.isDivideBoxVisible = false;
     if (this.isUserBoxVisible) {
-      this.dialogRef.updateSize('600px', '');
+      this.dialogRef.updateSize(this.payerSelectWidth, '');
     } else {
-      this.dialogRef.updateSize('300px', '');
+      this.dialogRef.updateSize(this.defaultWidth, '');
     }
   }
 
@@ -119,15 +122,15 @@ export class AddExpenseComponent implements OnInit, OnDestroy {
     this.isDivideBoxVisible = !this.isDivideBoxVisible;
     if (this.isUserBoxVisible) this.isUserBoxVisible = false;
     if (this.isDivideBoxVisible) {
-      this.dialogRef.updateSize('600px', '');
+      this.dialogRef.updateSize(this.divideWidth, '');
     } else {
-      this.dialogRef.updateSize('300px', '');
+      this.dialogRef.updateSize(this.defaultWidth, '');
     }
   }
 
   public userSelect(user: string): void {
     this.whoPaid = user;
-    this.dialogRef.updateSize('300px', '');
+    this.dialogRef.updateSize(this.defaultWidth, '');
     this.isUserBoxVisible = false;
   }
 
