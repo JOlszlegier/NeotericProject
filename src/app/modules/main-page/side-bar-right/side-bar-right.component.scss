@@ -11,7 +11,7 @@
   align-content: center;
   width: 100%;
   flex-wrap: wrap;
-  margin-left: 40px;
+  margin-left: 10px;
 }
 
 ul {
@@ -32,6 +32,16 @@ p {
   opacity: 0.5;
   color: grey;
   margin-right: 5px;
+}
+
+
+@media (max-width: 950px) {
+  .flexbox {
+    max-width: 190px;
+  }
+  .list-items {
+    margin-left: 10px;
+  }
 }
 
 
