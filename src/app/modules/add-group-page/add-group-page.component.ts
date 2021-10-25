@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, HostListener, OnDestroy, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {GroupService} from "../../core/services/group-service";
@@ -22,6 +22,7 @@ export class AddGroupPageComponent implements OnInit, OnDestroy {
     ])
   });
   public incorrectUsers: string[] = [];
+  public isMobile: boolean = window.outerHeight < 700;
 
   public createUser(): FormGroup {
     return this.fb.group({
@@ -32,6 +33,21 @@ export class AddGroupPageComponent implements OnInit, OnDestroy {
   constructor(private router: Router, private groupService: GroupService,
               private fb: FormBuilder, private api: AuthApiService, public cookieService: CookieService,
               private snackBar: MatSnackBar) {
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize() {
+    this.isMobile = window.outerHeight < 700;
+  }
+
+  public ngOnInit(): void {
+    for (let i = 0; i < 2; i++) {
+      (this.formTemplate.controls['users'] as FormArray).push(this.createUser());
+    }
+  }
+
+  public ngOnDestroy(): void {
+    this.subscriptions.unsubscribe();
   }
 
   public get users(): FormArray {
@@ -57,15 +73,6 @@ export class AddGroupPageComponent implements OnInit, OnDestroy {
     this.users.removeAt(index);
   }
 
-  public ngOnInit(): void {
-    for (let i = 0; i < 2; i++) {
-      (this.formTemplate.controls['users'] as FormArray).push(this.createUser());
-    }
-  }
-
-  public ngOnDestroy(): void {
-    this.subscriptions.unsubscribe();
-  }
 
   public saveGroup(): void {
     let emailsArray: string[] = this.formTemplate.value.users.map((item: { email: any; }) => item.email);
@@ -86,7 +93,8 @@ export class AddGroupPageComponent implements OnInit, OnDestroy {
   public openErrorSnackBar(message: string, durationTime: number): void {
     this.snackBar.open(message, '', {
       panelClass: ['add-group-error-snackbar'],
-      duration: durationTime
+      duration: durationTime,
+      verticalPosition: this.isMobile ? "top" : "bottom"
     })
   }
 
@@ -94,7 +102,7 @@ export class AddGroupPageComponent implements OnInit, OnDestroy {
     this.snackBar.open(message, '', {
       panelClass: ['add-group-success-snackbar'],
       horizontalPosition: "left",
-      verticalPosition: "top",
+      verticalPosition: this.isMobile ? "top" : "bottom",
       duration: 2000
     })
   }
