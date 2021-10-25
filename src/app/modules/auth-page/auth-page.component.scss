@@ -26,7 +26,6 @@
 }
 
 
-
 .sign-in-button {
   background-color: $switch-button-color;
   width: 150px;
@@ -62,18 +61,20 @@
   margin-top: 50px;
 }
 
-.button-div{
+.button-div {
   display: flex;
-  gap:30px;
+  gap: 30px;
   margin-top: 20px;
 }
 
-@media only screen and (max-width: 700px){
-  .button-div{
-    gap:10px;
+.invalid-input {
+  border-color: red;
+}
+
+@media only screen and (max-width: 700px) {
+  .button-div {
+    gap: 10px;
   }
-
-
 }
 
 

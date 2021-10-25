@@ -80,21 +80,22 @@ export class AddExpenseComponent implements OnInit, OnDestroy {
   public add(event: MatChipInputEvent): void {
     const value = (event.value || '').trim();
     if (value === this.users[0]) {
-      event.chipInput!.clear();
+      this.openErrorSnackBar(`You can't share it with yourself!`);
     } else if (value) {
       this.users.push(value);
       this.eachUserAmount.push(0);
     }
-    event.chipInput!.clear();
     this.eachUserAmount = [];
     if (value && value != this.users[0]) {
-      this.checkUser(value);
+      this.checkUser(value, event);
     }
   }
 
   public remove(user: string): void {
     const index = this.users.indexOf(user);
-    this.users.splice(index, 1);
+    if (index > 0) {
+      this.users.splice(index, 1);
+    }
   }
 
   public payerSelect(): void {
@@ -197,12 +198,15 @@ export class AddExpenseComponent implements OnInit, OnDestroy {
     this.eachUserExpenseSum = this.eachUserAmount.reduce((a, b) => a + b, 0);
   }
 
-  public checkUser(friend: string): void {
+  public checkUser(friend: string, event: MatChipInputEvent): void {
     const checkUserSub = this.authApiService.isInFriendList(this.cookieService.get('userId'), friend, this.groupName).subscribe(data => {
       this.correctFriend = data.correctUser;
       if (!this.correctFriend) {
         this.users.splice(this.users.indexOf(friend), 1);
         this.openErrorSnackBar('Incorrect user, please try another one!')
+      }
+      if (data.correctUser) {
+        event.chipInput?.clear();
       }
     })
     this.subscriptions.add(checkUserSub);
