@@ -46,8 +46,20 @@ button {
   font-weight: bold;
 }
 
+.menu-button {
+  grid-column: 3/4;
+  justify-self: center;
+  display: none;
+}
+
 @media (max-width: 950px) {
   .header-grid {
     grid-template-columns:  0fr 1fr 1.5fr 1fr 0fr;
+  }
+}
+
+@media(max-width: 870px) {
+  .menu-button {
+    display: block;
   }
 }
