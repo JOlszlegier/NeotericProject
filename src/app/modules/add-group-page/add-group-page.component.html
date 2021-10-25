@@ -11,9 +11,14 @@
       <input type="text" formControlName="groupName" class="input-styling" #groupName matInput autocomplete="off">
       <div *ngFor="let user of users.controls; let i=index" formArrayName="users">
         <div class="single-user" [formGroupName]="i" *ngIf="groupName.value">
-          <input autocomplete="off" formControlName='email' class="email-friend-input"
-                 email placeholder="Email" (change)="friendCheck(user.value.email)">
-          <mat-icon (click)="removePeople(i)" class="delete-icon">delete</mat-icon>
+          <mat-form-field appearance="legacy" class="single-user-input">
+            <mat-label>Email</mat-label>
+            <input type="text" matInput formControlName='email'
+                   email (change)="friendCheck(user.value.email)">
+            <button (click)="removePeople(i)" mat-icon-button matSuffix>
+              <mat-icon>delete</mat-icon>
+            </button>
+          </mat-form-field>
         </div>
       </div>
     </form>

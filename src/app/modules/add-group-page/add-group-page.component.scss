@@ -1,6 +1,11 @@
 @import 'src/app/styles/variables.scss';
 @import 'src/app/styles/shared-classes.scss';
 
+.single-user-input {
+  padding: 0;
+  height: 50px;
+}
+
 .shadow-text {
   color: gray;
   font-size: 25px;
@@ -90,18 +95,6 @@
   height: 20px;
   margin-top: 10px;
   font-weight: bold;
-}
-
-.delete-icon {
-  cursor: pointer;
-  width: 25px;
-  height: 25px;
-  margin-top: 10px;
-}
-
-.single-user {
-  display: flex;
-  align-items: center;
 }
 
 input:focus,

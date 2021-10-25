@@ -57,7 +57,7 @@ export class AddGroupPageComponent implements OnInit, OnDestroy {
 
   public addNewPeople(): void {
     if (this.formTemplate.value.users.length > 7) {
-      this.openErrorSnackBar(`You can't add more users !`, 3000);
+      this.openErrorSnackBar(`You can't add more users!`, 3000);
     } else {
       (this.formTemplate.controls['users'] as FormArray).push(this.createUser())
     }
