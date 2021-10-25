@@ -12,7 +12,7 @@ import {AuthApiService} from "../../../../core/services/auth-api-service";
 import {UserBalanceService} from "../../../../core/services/user-balance-service";
 import {CenterBoxService} from "../../../../core/services/center-box-service";
 import {GroupService} from "../../../../core/services/group-service";
-import {MatSnackBar,MatSnackBarModule} from "@angular/material/snack-bar";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-add-expense',
@@ -46,7 +46,6 @@ export class AddExpenseComponent implements OnInit, OnDestroy {
   public description: string = '';
   public finalExpenseForUser: [{ from: string, value: number }] = [{from: '', value: 0}];
   public correctFriend: boolean = true;
-  public incorrectFriend: string = '';
   public groupName$ = this.centerBoxService.selectedSource.asObservable();
   public groupName: string = '';
   public expensesArrayPlus$ = this.groupService.expensesArrayPlusSource.asObservable();
@@ -55,16 +54,16 @@ export class AddExpenseComponent implements OnInit, OnDestroy {
   public expensesArrayMinus: [{ description: string, amount: number }] = [{description: '1', amount: 0}]
   readonly separatorKeysCodes = [ENTER, COMMA] as const;
   public eachUserExpenseSum: number = 0;
-  public defaultWidth:string = '450px';
-  public payerSelectWidth:string  = '600px';
-  public divideWidth:string = '750px';
+  public defaultWidth: string = '450px';
+  public payerSelectWidth: string = '600px';
+  public divideWidth: string = '750px';
 
   constructor(public dialogRef: MatDialogRef<AddExpenseComponent>,
               private http: HttpClient, private currencyApiService: CurrencyInfoApiService,
               private cookieService: CookieService, private authApiService: AuthApiService,
               private userBalanceService: UserBalanceService,
               private centerBoxService: CenterBoxService, private groupService: GroupService,
-              private snackBar:MatSnackBar) {
+              private snackBar: MatSnackBar) {
   }
 
   public ngOnInit(): void {
@@ -95,14 +94,7 @@ export class AddExpenseComponent implements OnInit, OnDestroy {
 
   public remove(user: string): void {
     const index = this.users.indexOf(user);
-    if (user === this.incorrectFriend) {
-      this.correctFriend = true;
-      this.incorrectFriend = '';
-      this.snackBar.dismiss();
-    }
-    if (index > 0) {
-      this.users.splice(index, 1);
-    }
+    this.users.splice(index, 1);
   }
 
   public payerSelect(): void {
@@ -209,8 +201,8 @@ export class AddExpenseComponent implements OnInit, OnDestroy {
     const checkUserSub = this.authApiService.isInFriendList(this.cookieService.get('userId'), friend, this.groupName).subscribe(data => {
       this.correctFriend = data.correctUser;
       if (!this.correctFriend) {
-        this.incorrectFriend = friend;
-        this.openErrorSnackBar('Incorrect user,please delete!')
+        this.users.splice(this.users.indexOf(friend), 1);
+        this.openErrorSnackBar('Incorrect user, please try another one!')
       }
     })
     this.subscriptions.add(checkUserSub);
@@ -278,19 +270,20 @@ export class AddExpenseComponent implements OnInit, OnDestroy {
     this.subscriptions.add(expensesSubPlus);
   }
 
-  openErrorSnackBar(message:string):void{
-    this.snackBar.open(message,'',{
-      panelClass:['add-expense-error-snackbar'],
-      verticalPosition:"bottom",
+  openErrorSnackBar(message: string): void {
+    this.snackBar.open(message, '', {
+      panelClass: ['add-expense-error-snackbar'],
+      verticalPosition: "bottom",
+      duration: 3000
     })
   }
 
-  openSuccessSnackBar(message:string):void{
-    this.snackBar.open(message,'',{
-      panelClass:['add-expense-success-snackbar'],
-      verticalPosition:"top",
-      horizontalPosition:"left",
-      duration:3000
+  openSuccessSnackBar(message: string): void {
+    this.snackBar.open(message, '', {
+      panelClass: ['add-expense-success-snackbar'],
+      verticalPosition: "top",
+      horizontalPosition: "left",
+      duration: 3000
     })
   }
 }

@@ -15,16 +15,16 @@
         <mat-chip-list #chipList aria-label="Users selection">
           <mat-chip *ngFor="let user of users,let i=index" [selectable]="selectable"
                     [removable]="removable" (removed)="remove(user)" class="chip">
-            {{i===0 ? user + ' (You)' : user}}
-            <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+            {{i === 0 ? user + ' (You)' : user}}
+            <mat-icon matChipRemove *ngIf="removable && i != 0">cancel</mat-icon>
           </mat-chip>
           <input
             [matChipInputFor]="chipList"
             [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
             [matChipInputAddOnBlur]="addOnBlur"
             (matChipInputTokenEnd)="add($event)"
-            class="input-with"
-            [disabled]="!correctFriend">
+            class="input-with">
+          <!--            [disabled]="!correctFriend">-->
         </mat-chip-list>
       </mat-form-field>
       <div class="expense-info">
@@ -42,7 +42,8 @@
           </select>
         </div>
         <p>Paid by
-          <button mat-button  (click)="payerSelect()" [disabled]="!canExtend()" type="button" [ngClass]="{'correct-user-selected':whoPaid != 'who?' }">{{whoPaid}}</button>
+          <button mat-button (click)="payerSelect()" [disabled]="!canExtend()" type="button"
+                  [ngClass]="{'correct-user-selected':whoPaid != 'who?' }">{{whoPaid}}</button>
           and split
           <button mat-button (click)="divideSelect()" [disabled]="!canExtend()"
                   type="button">{{howToDivide}}</button>
@@ -57,9 +58,9 @@
     </div>
   </div>
   <div class="user-box" *ngIf="isUserBoxVisible">
-      <div *ngFor="let user of users" (click)="userSelect(user)" class="payer-select-li">
-        <mat-icon class="icon">account_box</mat-icon>
-        {{user}}</div>
+    <div *ngFor="let user of users" (click)="userSelect(user)" class="payer-select-li">
+      <mat-icon class="icon">account_box</mat-icon>
+      {{user}}</div>
   </div>
   <div class="divide-box" *ngIf="isDivideBoxVisible">
     <button mat-button [ngClass]="{'split-button-selected': splitSelected}" class="split-button"
