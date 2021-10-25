@@ -12,12 +12,26 @@
   grid-column: 1/6;
 }
 
+.center {
+  grid-column: 3;
+}
+
+.left {
+  grid-column: 2;
+}
+
+.right {
+  grid-column: 4;
+}
+
 @media (max-width: 950px) {
   .grid-box {
     grid-template-columns:  0fr 1fr 1.5fr 1fr 0fr;
   }
 }
 
-
-
-
+@media (max-width: 870px) {
+  .left, .right {
+    display: none;
+  }
+}
