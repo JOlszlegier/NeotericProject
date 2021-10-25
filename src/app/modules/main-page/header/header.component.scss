@@ -56,10 +56,9 @@ button {
   .header-grid {
     grid-template-columns:  0fr 1fr 1.5fr 1fr 0fr;
   }
-}
-
-@media(max-width: 870px) {
   .menu-button {
     display: block;
   }
 }
+
+

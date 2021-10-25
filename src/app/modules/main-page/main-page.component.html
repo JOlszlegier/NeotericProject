@@ -8,13 +8,13 @@
 <div class="grid-box-mobile">
   <app-header class="header"></app-header>
   <mat-sidenav-container class="sidenav-container">
-    <mat-sidenav #sidenav mode="over" [(opened)]="opened">
+    <mat-sidenav #sidenav mode="over" [(opened)]="mobileView">
       <app-side-bar-left class="left"></app-side-bar-left>
     </mat-sidenav>
     <mat-sidenav-content>
       <app-center-box class="center"></app-center-box>
     </mat-sidenav-content>
-    <mat-sidenav #sidenav mode="over" [(opened)]="opened" position="end">
+    <mat-sidenav #sidenav mode="over" [(opened)]="mobileView" position="end">
       <app-side-bar-right class="right"></app-side-bar-right>
     </mat-sidenav>
   </mat-sidenav-container>
