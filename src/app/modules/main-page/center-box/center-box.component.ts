@@ -27,7 +27,7 @@ export class CenterBoxComponent implements OnInit, OnDestroy {
   public outcomeArray$ = this.groupService.expensesArrayMinusSource.asObservable();
   public expensesArrayMinus: [{ description: string, amount: number }] = [{description: '1', amount: 0}];
   public friendsList$ = this.friendsService.friendsList.asObservable();
-
+  public friendsList: string[] = [''];
 
   constructor(private cashService: CashBoxService, private centerBoxService: CenterBoxService,
               private matDialog: MatDialog, private userBalanceService: UserBalanceService,
@@ -44,16 +44,17 @@ export class CenterBoxComponent implements OnInit, OnDestroy {
     this.cashService.onChangeDisplay(true);
   }
 
-
   ngOnInit(): void {
     this.displayState$.subscribe(source => this.expenseDisplay = source);
     this.displayString$.subscribe(selected => this.displayString = selected);
     this.outcomeArray$.subscribe(array => this.expensesArrayMinus = array);
     this.outcome$.subscribe(outcome => this.outcome = outcome);
+    this.friendsList$.subscribe(friendsList => this.friendsList = friendsList)
   }
 
   ngOnDestroy(): void {
     this.subscriptions.unsubscribe();
   }
+
 
 }

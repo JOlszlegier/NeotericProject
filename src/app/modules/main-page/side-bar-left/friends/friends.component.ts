@@ -5,7 +5,7 @@ import {Subscription} from "rxjs";
 import {AuthApiService} from "../../../../core/services/auth-api-service";
 import {CookieService} from "ngx-cookie-service";
 import {FriendsService} from "../../../../core/services/friends-service";
-import {MatSnackBar,MatSnackBarModule} from "@angular/material/snack-bar";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-friends',
@@ -24,29 +24,30 @@ export class FriendsComponent implements OnInit, OnDestroy {
   public friendsList$ = this.friendsService.friendsList.asObservable();
 
   constructor(private searchService: SearchService, private authApiService: AuthApiService,
-              private cookieService: CookieService, private friendsService: FriendsService,private snackBar:MatSnackBar) {
+              private cookieService: CookieService, private friendsService: FriendsService, private snackBar: MatSnackBar) {
   }
 
   addFriend(friend: string): void {
     this.newFriend = '';
     const addFriendSub = this.authApiService.addFriend(this.cookieService.get('userId'), friend).subscribe(data => {
       this.friendsList = data.friends;
-      if(data.errorMessage){
+      if (data.errorMessage) {
         this.openErrorSnackBar(data.errorMessage);
-      }else if(data.successMessage){
-        this.openSuccessSnackBar(data.successMessage)
+      } else if (data.successMessage) {
+        this.openSuccessSnackBar(data.successMessage);
+        this.friendsService.friendsList.next(this.friendsList);
       }
-
     })
     this.subscriptions.add(addFriendSub);
   }
 
   ngOnInit(): void {
     this.searchPhrase$.subscribe(searchPhrase => this.searchPhrase = searchPhrase);
+    this.friendsList$.subscribe(friendsList => this.friendsList = friendsList);
     this.getFriends();
   }
 
-  getFriends():void {
+  getFriends(): void {
     const updateFriendsListSub = this.authApiService.getFriendsList(this.cookieService.get('userId')).subscribe(data => {
       this.friendsList = data.friends;
       this.friendsService.friendsList.next(this.friendsList);
@@ -54,19 +55,19 @@ export class FriendsComponent implements OnInit, OnDestroy {
     this.subscriptions.add(updateFriendsListSub);
   }
 
-  openErrorSnackBar(message:string):void{
-    this.snackBar.open(message,'',{
-      panelClass:['friends-error-snackbar'],
-      duration:3000,
+  openErrorSnackBar(message: string): void {
+    this.snackBar.open(message, '', {
+      panelClass: ['friends-error-snackbar'],
+      duration: 3000,
       horizontalPosition: 'left',
       verticalPosition: 'top',
     });
   }
 
-  openSuccessSnackBar(message:string):void{
-    this.snackBar.open(message,'',{
-      panelClass:['friends-success-snackbar'],
-      duration:3000,
+  openSuccessSnackBar(message: string): void {
+    this.snackBar.open(message, '', {
+      panelClass: ['friends-success-snackbar'],
+      duration: 3000,
       horizontalPosition: 'left',
       verticalPosition: 'top',
     });
