@@ -48,13 +48,18 @@
 }
 
 .input-styling {
-  width: 40%;
+  width: 260px;
   border: 1px solid #DDDDDD;
   border-radius: 10px;
   height: 30px;
   font-size: 20px;
   padding: 5px;
   margin-top: 0;
+}
+
+.actions-buttons {
+  display: flex;
+  gap: 20px;
 }
 
 .email-friend-input {
@@ -74,27 +79,14 @@
   border-radius: 10px;
 }
 
-
-.friends-flex {
-  display: flex;
-  height: 30px;
-}
-
 .add-more-button {
+  margin-top: 15px;
   background-color: $log-in-button-color;
-  line-height: 0;
-  height: 20px;
-  margin-top: 10px;
-  font-weight: bold;
-}
 
+}
 
 .save-button {
   background-color: $bars-color;
-  line-height: 0;
-  height: 20px;
-  margin-top: 10px;
-  font-weight: bold;
 }
 
 input:focus,
@@ -106,10 +98,6 @@ button:focus {
 
 .cancel-button {
   background-color: #FF5216;
-  line-height: 0;
-  height: 20px;
-  margin-top: 10px;
-  font-weight: bold;
 }
 
 .save-button:disabled {
@@ -124,12 +112,22 @@ button:focus {
   text-align: justify;
 }
 
+.buttons-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
 
 //Mobile design
 
 @media (max-width: 700px) {
   .shadow-text, .main-text {
     font-size: 25px;
+  }
+
+  .add-more-button-wrapper {
+    display: contents;
   }
   .shadow-text {
     margin-top: 35px;

@@ -23,26 +23,28 @@
       </div>
     </form>
 
-    <div class="friends-flex">
-      <button mat-button (click)="addNewPeople()" type="button"
-              [disabled]="!groupName.value"
-              class="add-more-button">Add more...
-      </button>
-    </div>
+    <div class="buttons-wrapper">
+      <div class="add-more-button-wrapper">
+        <button mat-flat-button (click)="addNewPeople()" type="button"
+                [disabled]="!groupName.value"
+                class="add-more-button">Add more...
+        </button>
+      </div>
 
-    <div class="friends-flex">
-      <button mat-button
-              [disabled]="formTemplate.invalid || incorrectUsers.length>0 || users.length<1 "
-              type="button"
-              (click)="saveGroup()"
-              class="save-button">Save
-      </button>
-    </div>
-    <div class="friends-flex">
-      <button mat-button (click)="cancel()" type="button"
-              class="cancel-button">Cancel
-      </button>
-    </div>
+      <div class="actions-buttons">
+        <button mat-flat-button
+                [disabled]="formTemplate.invalid || incorrectUsers.length>0 || users.length<1 "
+                type="button"
+                (click)="saveGroup()"
+                class="save-button">Save
+        </button>
+        <button mat-flat-button (click)="cancel()" type="button"
+                class="cancel-button">Cancel
+        </button>
+      </div>
 
+
+    </div>
   </div>
+
 </div>
