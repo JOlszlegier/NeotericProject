@@ -30,19 +30,21 @@
              [@buttonState]="state"
       >
       <div class="button-div">
-        <button mat-raised-button
-                class="sign-in-button"
-                (click)="onSwitch()"
-                [@buttonState]="state"
-                type="button"
+        <button
+          mat-flat-button
+          class="sign-in-button"
+          (click)="onSwitch()"
+          [@buttonState]="state"
+          type="button"
         >Switch to {{switchButtonText}}
         </button>
-        <button mat-raised-button
-                class="log-in-button"
-                (click)="formSubmit()"
-                [disabled]="!defaultForm.valid"
-                [@buttonState]="state"
-                type="button"
+        <button
+          mat-flat-button
+          class="log-in-button"
+          (click)="formSubmit()"
+          [disabled]="!defaultForm.valid"
+          [@buttonState]="state"
+          type="button"
         >Submit!
         </button>
       </div>
