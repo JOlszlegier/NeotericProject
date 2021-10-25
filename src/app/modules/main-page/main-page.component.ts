@@ -6,5 +6,5 @@ import {Component} from '@angular/core';
   styleUrls: ['./main-page.component.scss']
 })
 export class MainPageComponent {
-
+  opened = true;
 }

@@ -34,9 +34,10 @@ import {MatCardModule} from "@angular/material/card";
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {TokenInterceptorService} from "./core/services/token-interceptor.service";
 import {SettleUpComponent} from './modules/main-page/center-box/settle-up/settle-up.component';
-import { ExpensesListComponent } from './modules/main-page/center-box/expenses-list/expenses-list.component';
-import { LocationComponent } from './modules/main-page/center-box/location/location.component';
+import {ExpensesListComponent} from './modules/main-page/center-box/expenses-list/expenses-list.component';
+import {LocationComponent} from './modules/main-page/center-box/location/location.component';
 import {MatSnackBarModule} from "@angular/material/snack-bar";
+import {MatSidenavModule} from "@angular/material/sidenav";
 
 
 @NgModule({
@@ -79,12 +80,13 @@ import {MatSnackBarModule} from "@angular/material/snack-bar";
     HttpClientModule,
     MatTooltipModule,
     MatSnackBarModule,
+    MatSidenavModule,
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,
     useClass: TokenInterceptorService,
     multi: true
-  },MatSnackBarModule],
+  }, MatSnackBarModule],
   bootstrap: [AppComponent]
 })
 export class AppModule {
