@@ -123,6 +123,10 @@ button:focus {
   opacity: 0.5;
 }
 
+.add-more-button:disabled {
+  opacity: 0.5;
+}
+
 .error-message {
   text-align: justify;
 }

@@ -5,14 +5,14 @@ import {GroupService} from "../../core/services/group-service";
 import {AuthApiService} from "../../core/services/auth-api-service";
 import {Subscription} from "rxjs";
 import {CookieService} from "ngx-cookie-service";
-import {MatSnackBar,MatSnackBarModule} from "@angular/material/snack-bar";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-add-group-page',
   templateUrl: './add-group-page.component.html',
   styleUrls: ['./add-group-page.component.scss']
 })
-export class AddGroupPageComponent implements OnInit,OnDestroy {
+export class AddGroupPageComponent implements OnInit, OnDestroy {
   public isFriendCorrect: boolean = false;
   public subscriptions: Subscription = new Subscription();
   formTemplate = this.fb.group({
@@ -30,8 +30,8 @@ export class AddGroupPageComponent implements OnInit,OnDestroy {
   }
 
   constructor(private router: Router, private groupService: GroupService,
-              private fb: FormBuilder, private api: AuthApiService, private cookieService: CookieService,
-              private snackBar:MatSnackBar) {
+              private fb: FormBuilder, private api: AuthApiService, public cookieService: CookieService,
+              private snackBar: MatSnackBar) {
   }
 
   public get users(): FormArray {
@@ -40,14 +40,18 @@ export class AddGroupPageComponent implements OnInit,OnDestroy {
 
 
   public addNewPeople(): void {
-    (this.formTemplate.controls['users'] as FormArray).push(this.createUser())
+    if (this.formTemplate.value.users.length > 7) {
+      this.openErrorSnackBar(`You can't add more users !`, 3000);
+    } else {
+      (this.formTemplate.controls['users'] as FormArray).push(this.createUser())
+    }
   }
 
   public removePeople(index: number) {
     if (this.incorrectUsers.includes(this.formTemplate.value.users[index].email)) {
       this.incorrectUsers.splice(this.incorrectUsers.indexOf(this.formTemplate.value.users[index]), 1);
     }
-    if(this.incorrectUsers.length===0){
+    if (this.incorrectUsers.length === 0) {
       this.snackBar.dismiss();
     }
     this.users.removeAt(index);
@@ -59,7 +63,7 @@ export class AddGroupPageComponent implements OnInit,OnDestroy {
     }
   }
 
-  public ngOnDestroy():void {
+  public ngOnDestroy(): void {
     this.subscriptions.unsubscribe();
   }
 
@@ -79,18 +83,19 @@ export class AddGroupPageComponent implements OnInit,OnDestroy {
     this.router.navigate(['/main']);
   }
 
-  public openErrorSnackBar(message:string):void{
-    this.snackBar.open(message,'',{
-      panelClass:['add-group-error-snackbar'],
+  public openErrorSnackBar(message: string, durationTime: number): void {
+    this.snackBar.open(message, '', {
+      panelClass: ['add-group-error-snackbar'],
+      duration: durationTime
     })
   }
 
-  public openSuccessSnackBar(message:string):void{
-    this.snackBar.open(message,'',{
-      panelClass:['add-group-success-snackbar'],
-      horizontalPosition:"left",
-      verticalPosition:"top",
-      duration:2000
+  public openSuccessSnackBar(message: string): void {
+    this.snackBar.open(message, '', {
+      panelClass: ['add-group-success-snackbar'],
+      horizontalPosition: "left",
+      verticalPosition: "top",
+      duration: 2000
     })
   }
 
@@ -99,7 +104,7 @@ export class AddGroupPageComponent implements OnInit,OnDestroy {
       this.isFriendCorrect = data.correctUser;
       if (!data.correctUser) {
         this.incorrectUsers.push(friend);
-        this.openErrorSnackBar('Incorrect user,please change!')
+        this.openErrorSnackBar(`Incorrect user, please change!`, 30000)
       }
       let emailsArray: string[] = this.formTemplate.value.users.map((item: { email: any; }) => item.email);
       for (let index in this.incorrectUsers) {
@@ -107,7 +112,7 @@ export class AddGroupPageComponent implements OnInit,OnDestroy {
           this.incorrectUsers.splice(Number(index), 1);
         }
       }
-      if(this.incorrectUsers.length===0){
+      if (this.incorrectUsers.length === 0) {
         this.snackBar.dismiss();
       }
     })
