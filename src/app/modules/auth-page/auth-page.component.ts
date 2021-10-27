@@ -41,6 +41,7 @@ export class AuthPageComponent implements OnInit, OnDestroy {
   });
   public currencySub: Subscription = new Subscription();
   public isMobile: boolean = window.outerHeight < 700;
+  public checkBool: boolean = false;
 
   constructor(private authService: AuthService, private fb: FormBuilder,
               private authApi: AuthApiService, private cookieService: CookieService,
@@ -103,6 +104,7 @@ export class AuthPageComponent implements OnInit, OnDestroy {
     const {email, password} = this.defaultForm.value;
     const loginSub = this.authApi.login(email, password).subscribe(data => {
       if (data.passwordCorrect) {
+        this.checkBool = true;
         this.cookieService.set('token', data.token);
         this.cookieService.set('expiration-date', data.expirationDate.toString())
         this.cookieService.set('userId', data.userId);
