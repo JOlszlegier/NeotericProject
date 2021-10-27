@@ -7,7 +7,7 @@ import {AuthApiService} from "../../core/services/auth-api-service";
 import {Subscription} from "rxjs";
 import {CookieService} from "ngx-cookie-service";
 import {CurrencyInfoApiService} from "../../core/services/currency-info-api-service";
-import {MatSnackBar,MatSnackBarModule} from "@angular/material/snack-bar";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-auth-page',
@@ -27,7 +27,7 @@ import {MatSnackBar,MatSnackBarModule} from "@angular/material/snack-bar";
 })
 
 
-export class AuthPageComponent implements OnInit,OnDestroy {
+export class AuthPageComponent implements OnInit, OnDestroy {
   public subscriptions: Subscription = new Subscription();
   public isInLogInMode: boolean = true;
   public switchButtonText: string = 'sign in';
@@ -40,11 +40,11 @@ export class AuthPageComponent implements OnInit,OnDestroy {
     password: [''],
   });
   public currencySub: Subscription = new Subscription();
-  public isMobile:boolean = window.outerHeight < 700;
+  public isMobile: boolean = window.outerHeight < 700;
 
   constructor(private authService: AuthService, private fb: FormBuilder,
               private authApi: AuthApiService, private cookieService: CookieService,
-              private currencyApi: CurrencyInfoApiService,private snackBar:MatSnackBar) {
+              private currencyApi: CurrencyInfoApiService, private snackBar: MatSnackBar) {
 
   }
 
@@ -65,7 +65,7 @@ export class AuthPageComponent implements OnInit,OnDestroy {
     this.subscriptionsAdd(this.currencySub);
   }
 
-  ngOnDestroy():void {
+  ngOnDestroy(): void {
     this.subscriptions.unsubscribe();
   }
 
@@ -116,8 +116,6 @@ export class AuthPageComponent implements OnInit,OnDestroy {
   }
 
 
-
-
   public formSubmit(): void {
     if (this.isInLogInMode) {
       this.logIn();
@@ -127,19 +125,18 @@ export class AuthPageComponent implements OnInit,OnDestroy {
   }
 
 
-
-  public openSuccessSnackBar(message:string):void{
-    this.snackBar.open(message,'',{
-      panelClass:['auth-page-success-snackbar'],
-      duration:3000,
+  public openSuccessSnackBar(message: string): void {
+    this.snackBar.open(message, '', {
+      panelClass: ['auth-page-success-snackbar'],
+      duration: 3000,
       verticalPosition: this.isMobile ? "top" : "bottom"
     })
   }
 
-  public openErrorSnackBar(message:string):void{
-    this.snackBar.open(message,'',{
-      panelClass:['auth-page-error-snackbar'],
-      duration:3000,
+  public openErrorSnackBar(message: string): void {
+    this.snackBar.open(message, '', {
+      panelClass: ['auth-page-error-snackbar'],
+      duration: 3000,
       verticalPosition: this.isMobile ? "top" : "bottom"
     })
   }

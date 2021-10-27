@@ -49,12 +49,15 @@
 
 .input-styling {
   width: 260px;
-  border: 1px solid #DDDDDD;
-  border-radius: 10px;
+  border-bottom: 1px solid #AAAAAA;
   height: 30px;
   font-size: 20px;
   padding: 5px;
   margin-top: 0;
+}
+
+input {
+  border: 0;
 }
 
 .actions-buttons {
@@ -71,13 +74,6 @@
   border-radius: 10px;
 }
 
-.name-friend-input {
-  width: 20%;
-  margin-top: 10px;
-  padding: 5px;
-  border: 1px solid #333333;
-  border-radius: 10px;
-}
 
 .add-more-button {
   margin-top: 15px;

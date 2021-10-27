@@ -1,18 +1,29 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
+import {RouterTestingModule} from "@angular/router/testing";
 import {AuthPageComponent} from './auth-page.component';
 import {ReactiveFormsModule} from "@angular/forms";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import {Router, RouterModule} from "@angular/router";
+import {AuthApiService} from "../../core/services/auth-api-service";
+import {CookieService} from "ngx-cookie-service";
+import {CurrencyInfoApiService} from "../../core/services/currency-info-api-service";
+import {MatSnackBar, MatSnackBarModule} from "@angular/material/snack-bar";
+import {HttpClientTestingModule} from "@angular/common/http/testing";
+
 
 describe('AuthPageComponent', () => {
   let component: AuthPageComponent;
   let fixture: ComponentFixture<AuthPageComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
+  beforeEach((async () => {
+    await TestBed.configureTestingModule({
       declarations: [AuthPageComponent],
-      imports: [ReactiveFormsModule, BrowserAnimationsModule, RouterModule, Router],
-      providers: [Router, RouterModule]
+      imports: [RouterTestingModule, HttpClientTestingModule, ReactiveFormsModule, BrowserAnimationsModule, MatSnackBarModule],
+      providers: [
+        {provide: AuthApiService},
+        {provide: CookieService},
+        {provide: CurrencyInfoApiService},
+        {provide: MatSnackBar}
+      ]
     })
       .compileComponents();
   }));

@@ -1,4 +1,4 @@
-import {Component, HostListener, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {GroupService} from "../../core/services/group-service";
@@ -22,7 +22,7 @@ export class AddGroupPageComponent implements OnInit, OnDestroy {
     ])
   });
   public incorrectUsers: string[] = [];
-  public isMobile: boolean = window.outerHeight < 700;
+
 
   public createUser(): FormGroup {
     return this.fb.group({
@@ -35,10 +35,6 @@ export class AddGroupPageComponent implements OnInit, OnDestroy {
               private snackBar: MatSnackBar) {
   }
 
-  @HostListener('window:resize', ['$event'])
-  onResize() {
-    this.isMobile = window.outerHeight < 700;
-  }
 
   public ngOnInit(): void {
     for (let i = 0; i < 2; i++) {
@@ -94,7 +90,8 @@ export class AddGroupPageComponent implements OnInit, OnDestroy {
     this.snackBar.open(message, '', {
       panelClass: ['add-group-error-snackbar'],
       duration: durationTime,
-      verticalPosition: this.isMobile ? "top" : "bottom"
+      verticalPosition: "top",
+      horizontalPosition: "left"
     })
   }
 
@@ -102,7 +99,7 @@ export class AddGroupPageComponent implements OnInit, OnDestroy {
     this.snackBar.open(message, '', {
       panelClass: ['add-group-success-snackbar'],
       horizontalPosition: "left",
-      verticalPosition: this.isMobile ? "top" : "bottom",
+      verticalPosition: "top",
       duration: 2000
     })
   }
