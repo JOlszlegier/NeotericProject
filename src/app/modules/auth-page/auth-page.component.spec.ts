@@ -37,4 +37,15 @@ describe('AuthPageComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  describe('ngOnInit', () => {
+    it('should call subscriptionsAdd', () => {
+      let subscriptionsAddSpy = jest.spyOn(component, 'subscriptionsAdd');
+      component.ngOnInit();
+      expect(subscriptionsAddSpy).toHaveBeenCalled();
+    })
+
+
+  })
+
 });
