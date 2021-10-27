@@ -94,6 +94,35 @@ describe('AuthPageComponent', () => {
 
   })
 
+  describe('onSwitch', () => {
+    describe('isInLogin value change', () => {
+      it('should change isInLogin value to true', () => {
+        component.isInLogInMode = false;
+        component.onSwitch();
+        expect(component.isInLogInMode).toEqual(true);
+      })
+    })
+
+    describe('Button text check', () => {
+      describe('displaying text check in logIn mode ', () => {
+        it(`should display 'sign in' in logIn mode`, () => {
+          component.isInLogInMode = false;
+          component.onSwitch();
+          expect(component.switchButtonText).toEqual('sign in')
+        })
+      })
+      describe(`displaying text check in logIn mode`, () => {
+        it(`should display 'log in' in signIn mode`, () => {
+          component.isInLogInMode = true;
+          component.onSwitch();
+          expect(component.switchButtonText).toEqual('log in')
+        })
+      })
+    })
+
+
+  })
+
   // describe('LogIn', () => {
   //   it('should change boolean the user to main page if the input is correct', () => {
   //     component.logIn();
