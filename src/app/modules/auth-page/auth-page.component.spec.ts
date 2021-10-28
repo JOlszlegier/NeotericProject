@@ -120,20 +120,20 @@ describe('AuthPageComponent', () => {
 
   })
 
-  // describe('LogIn', () => {
-  //   it('should change boolean the user to main page if the input is correct', () => {
-  //     component.logIn();
-  //     authApiService.login = jest.fn().mockReturnValue({
-  //       data: {
-  //         passwordCorrect: true,
-  //         token: '1234',
-  //         expirationDate: 12,
-  //         userId: 'Kuba',
-  //         userName: 'Kubson'
-  //       }
-  //     });
-  //     expect(component.checkBool).toEqual(true);
-  //   })
-  // })
+  describe('LogIn', () => {
+    it('should change boolean the user to main page if the input is correct', () => {
+      component.logIn();
+      authApiService.login = jest.fn().mockReturnValue({
+        data: {
+          passwordCorrect: true,
+          token: '1234',
+          expirationDate: 12,
+          userId: 'Kuba',
+          userName: 'Kubson'
+        }
+      });
+      expect(component.checkBool).toEqual(true);
+    })
+  })
 
 });
