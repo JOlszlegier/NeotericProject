@@ -25,6 +25,7 @@ export interface RegisterResponse {
 export interface AddFriendResponse {
   friends: string[];
   errorMessage: string;
+  successMessage: string;
 }
 
 export interface CheckFriendResponse {
@@ -51,8 +52,16 @@ export interface SettleUpResponse {
   settleUpFinished: boolean;
 }
 
-export interface addExpenseResponse {
+export interface AddExpenseResponse {
   expenseAdded: boolean
 }
 
 
+export interface ExpensesInfo {
+  expensesArray: [{ description: string, amount: number }];
+}
+
+export interface Expenses {
+  description: string,
+  amount: number
+}

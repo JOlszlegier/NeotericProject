@@ -1,6 +1,11 @@
 @import 'src/app/styles/variables.scss';
 @import 'src/app/styles/shared-classes.scss';
 
+.single-user-input {
+  padding: 0;
+  height: 50px;
+}
+
 .shadow-text {
   color: gray;
   font-size: 25px;
@@ -43,13 +48,21 @@
 }
 
 .input-styling {
-  width: 40%;
-  border: 1px solid #DDDDDD;
-  border-radius: 10px;
+  width: 260px;
+  border-bottom: 1px solid $input-border-bottom;
   height: 30px;
   font-size: 20px;
   padding: 5px;
   margin-top: 0;
+}
+
+input {
+  border: 0;
+}
+
+.actions-buttons {
+  display: flex;
+  gap: 20px;
 }
 
 .email-friend-input {
@@ -61,47 +74,14 @@
   border-radius: 10px;
 }
 
-.name-friend-input {
-  width: 20%;
-  margin-top: 10px;
-  padding: 5px;
-  border: 1px solid #333333;
-  border-radius: 10px;
-}
-
-
-.friends-flex {
-  display: flex;
-  height: 30px;
-}
 
 .add-more-button {
+  margin-top: 15px;
   background-color: $log-in-button-color;
-  line-height: 0;
-  height: 20px;
-  margin-top: 10px;
-  font-weight: bold;
 }
-
 
 .save-button {
   background-color: $bars-color;
-  line-height: 0;
-  height: 20px;
-  margin-top: 10px;
-  font-weight: bold;
-}
-
-.delete-icon {
-  cursor: pointer;
-  width: 25px;
-  height: 25px;
-  margin-top: 10px;
-}
-
-.single-user {
-  display: flex;
-  align-items: center;
 }
 
 input:focus,
@@ -112,19 +92,25 @@ button:focus {
 }
 
 .cancel-button {
-  background-color: #FF5216;
-  line-height: 0;
-  height: 20px;
-  margin-top: 10px;
-  font-weight: bold;
+  background-color: $add-expense-color;
 }
 
 .save-button:disabled {
   opacity: 0.5;
 }
 
+.add-more-button:disabled {
+  opacity: 0.5;
+}
+
 .error-message {
   text-align: justify;
+}
+
+.buttons-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
 }
 
 
@@ -133,6 +119,13 @@ button:focus {
 @media (max-width: 700px) {
   .shadow-text, .main-text {
     font-size: 25px;
+  }
+
+  .add-more-button-wrapper {
+    display: contents;
+  }
+  .shadow-text {
+    margin-top: 35px;
   }
   //bottom flex
   .right-flexbox {

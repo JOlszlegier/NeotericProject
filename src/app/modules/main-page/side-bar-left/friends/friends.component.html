@@ -9,14 +9,14 @@
 </ul>
 
 <div class="text-box">
-  <p>Invite friends</p>
+  <p>Add new friends</p>
 </div>
 
 <div class="friend-flex">
   <mat-form-field appearance="fill" class="input-styling">
     <mat-label>Type email</mat-label>
     <input matInput
-           type="text"
+           type="email"
            autocomplete="off"
            [(ngModel)]="newFriend"
            name="friendName">
@@ -24,7 +24,6 @@
   </mat-form-field>
 
 </div>
-<p *ngIf="errorMessage" class="error-message">{{errorMessage}}</p>
 <button mat-button (click)="addFriend(newFriend)" class="add-button" type="button" [disabled]="!newFriend">Add new
   friend
 </button>

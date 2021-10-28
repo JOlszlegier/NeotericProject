@@ -4,21 +4,23 @@
 .expense-box {
   width: 100%;
   border-radius: 20px;
-  background-color: #F5F5F5;
+  background-color: $expense-box-background;
 }
 
 .top-bar {
-  height: 30px;
+  height: 40px;
   display: flex;
   justify-content: space-between;
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
+  padding: 10px 20px;
 }
 
 .cancel-icon {
   margin-top: 10px;
   cursor: pointer
 }
+
 
 .example-chip-list {
   width: 100%;
@@ -40,11 +42,12 @@ mat-chip-list {
 }
 
 .description-input {
-  border: #DDDDDD 1px solid;
+  border: $add-expense-input-border 1px solid;
   margin-top: 10px;
   border-radius: 5px;
   padding: 2px;
-  width: 65%
+  width: 65%;
+  margin-bottom: 10px;
 }
 
 .mat-form-field {
@@ -52,7 +55,7 @@ mat-chip-list {
 }
 
 .amount-input {
-  border: #DDDDDD 1px solid;
+  border: $add-expense-input-border 1px solid;
   margin-top: 10px;
   border-radius: 5px;
   padding: 10px;
@@ -68,12 +71,13 @@ mat-chip-list {
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  margin-bottom: 20px;
 }
 
 select {
   width: 15%;
   font-size: 20px;
-  border: #DDDDDD 1px solid;
+  border: $add-expense-input-border 1px solid;
   border-radius: 2px;
   padding: 0;
   margin-top: 25px;
@@ -87,28 +91,36 @@ select {
 }
 
 button {
-  border: #DDDDDD 1px solid;
+  border: $add-expense-input-border 1px solid;
   padding: 2px;
   min-width: 0;
   min-height: 0;
+}
+
+button:disabled {
+  background-color: $add-expense-input-border;
+  opacity: 0.7;
 }
 
 
 .user-box {
   width: 200px;
   height: 100%;
-
+  padding-top: 20px;
+  padding-left: 10px;
 }
 
 .main-expense-box {
   display: flex;
   width: 100%;
-  background-color: #F5F5F5;
+  background-color: $main-expense-box;
 }
 
 
 .payer-select-li {
   cursor: pointer;
+  padding: 4px 10px;
+  display: flex;
 }
 
 .divide-box {
@@ -138,7 +150,7 @@ button {
   margin-top: 20px;
 }
 
-.users-list {
+.user-box {
   ul {
     list-style-type: none;
   }
@@ -152,11 +164,17 @@ button {
 }
 
 .percent-input {
-  border: #B8B8B8 1px solid;
-  width: 20px;
+  border: $percent-input 1px solid;
+  width: 40px;
   margin-right: 5px;
   padding: 2px;
   max-height: 24px;
+}
+
+.user-data {
+  text-overflow: ellipsis;
+  max-width: 120px;
+  overflow: hidden;
 }
 
 .values-input {
@@ -182,6 +200,11 @@ button {
   display: flex;
   justify-content: center;
   width: 100%;
+}
+
+.correct-user-selected {
+  background-color: $correct-user-selected;
+  font-weight: bold;
 }
 
 

@@ -20,8 +20,12 @@
   margin-left: 25%;
   background-color: $left-side-color;
   width: auto;
-  border: 1px solid #DDDDDD;
+  border: 1px solid $add-expense-input-border;
   font-weight: bold;
+
+  &:disabled {
+    opacity: 0.7;
+  }
 }
 
 .input-styling {
@@ -57,3 +61,5 @@ p {
   padding: 0;
   margin-bottom: 0;
 }
+
+

@@ -1,7 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Subscription} from "rxjs";
 
 import {GroupService} from "../../../core/services/group-service";
-import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-side-bar-right',
@@ -10,7 +10,7 @@ import {Subscription} from "rxjs";
 })
 export class SideBarRightComponent implements OnInit, OnDestroy {
   public selectedUsers: string[] = [];
-  public usersSubscribe!: Subscription;
+  public usersSubscribe: Subscription = new Subscription();
   public selectedUsers$ = this.groupService.userSource.asObservable();
 
   constructor(private groupService: GroupService) {

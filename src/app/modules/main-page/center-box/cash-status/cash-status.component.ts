@@ -1,7 +1,8 @@
-import {Component, OnInit} from '@angular/core';
-import {AuthApiService} from "../../../../core/services/auth-api-service";
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Subscription} from "rxjs";
 import {CookieService} from "ngx-cookie-service";
+
+import {AuthApiService} from "../../../../core/services/auth-api-service";
 import {UserBalanceService} from "../../../../core/services/user-balance-service";
 
 @Component({
@@ -9,7 +10,7 @@ import {UserBalanceService} from "../../../../core/services/user-balance-service
   templateUrl: './cash-status.component.html',
   styleUrls: ['./cash-status.component.scss']
 })
-export class CashStatusComponent implements OnInit {
+export class CashStatusComponent implements OnInit, OnDestroy {
   public subscriptions = new Subscription();
   public difference: number = 0;
   public outcome: number = 0;
@@ -30,6 +31,10 @@ export class CashStatusComponent implements OnInit {
       this.userBalanceService.onValuesChange(data.income, data.outcome);
     })
     this.subscriptions.add(balanceUpdateSub);
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe();
   }
 
 }

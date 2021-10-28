@@ -1,7 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Subscription} from "rxjs";
 
 import {SearchService} from "../../../../core/services/search-service";
-import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-search-bar',
@@ -11,7 +11,7 @@ import {Subscription} from "rxjs";
 
 export class SearchBarComponent implements OnInit, OnDestroy {
   public searchText: string = '';
-  public searchTextSubscription!: Subscription;
+  public searchTextSubscription: Subscription = new Subscription();
   public searchPhrase$ = this.searchService.searchSource.asObservable();
 
   constructor(private searchService: SearchService) {

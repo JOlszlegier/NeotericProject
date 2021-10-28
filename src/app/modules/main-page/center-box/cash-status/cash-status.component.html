@@ -1,13 +1,13 @@
 <div class="main-box">
-  <div class="cash-box" [ngClass]="(difference)>0 ? 'balance-plus' : 'balance-minus'"
-  >
+  <div class="cash-box"
+       [ngClass]="{'balance-minus':difference<0,'balance-plus':difference>0,'balance-neutral':difference==0}">
     <div class="single-box">Total balance<br>{{difference}}</div>
   </div>
-  <div class="cash-box" [ngClass]="outcome<0 ? 'balance-plus' : 'balance-minus'"
+  <div class="cash-box" [ngClass]="{'balance-minus':outcome>0,'balance-neutral':outcome==0}"
   >
     <div class="single-box">You owe <br>{{outcome}}</div>
   </div>
-  <div class="cash-box" [ngClass]="income>0 ? 'balance-plus' : 'balance-minus'"
+  <div class="cash-box" [ngClass]="{'balance-plus':income>0,'balance-neutral':income==0}"
   >
     <div class="single-box">You are owed <br>{{income}}</div>
   </div>

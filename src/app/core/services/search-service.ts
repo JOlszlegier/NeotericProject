@@ -7,10 +7,8 @@ import {BehaviorSubject} from "rxjs";
 export class SearchService {
   public searchSource = new BehaviorSubject<string>('');
 
-
   public changeSearch(message: string): void {
     this.searchSource.next(message);
   }
-
 
 }

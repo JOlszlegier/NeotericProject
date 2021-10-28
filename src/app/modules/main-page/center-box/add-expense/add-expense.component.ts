@@ -3,13 +3,18 @@ import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import {MatChipInputEvent} from '@angular/material/chips';
 import {MatDialogRef} from "@angular/material/dialog";
 import {HttpClient} from "@angular/common/http";
-
+import {MatSnackBar} from "@angular/material/snack-bar";
 import {Subscription} from "rxjs";
-import {splitByPercent, splitEvenly} from "./shared/expense-divide-helper";
-import {CurrencyInfoApiService} from "../../../../core/services/currency-info-api-service";
 import {CookieService} from "ngx-cookie-service";
+
+import {canExtend, splitByPercent, splitEvenly} from "./shared/expense-divide-helper";
+import {CurrencyInfoApiService} from "../../../../core/services/currency-info-api-service";
 import {AuthApiService} from "../../../../core/services/auth-api-service";
 import {UserBalanceService} from "../../../../core/services/user-balance-service";
+import {CenterBoxService} from "../../../../core/services/center-box-service";
+import {GroupService} from "../../../../core/services/group-service";
+import {SnackbarEnums} from "../../../shared/snackbar-enums";
+import {Expenses} from "../../../../core/interfaces/interfaces";
 
 @Component({
   selector: 'app-add-expense',
@@ -43,19 +48,31 @@ export class AddExpenseComponent implements OnInit, OnDestroy {
   public description: string = '';
   public finalExpenseForUser: [{ from: string, value: number }] = [{from: '', value: 0}];
   public correctFriend: boolean = true;
-  public incorrectFriend: string = '';
+  public groupName$ = this.centerBoxService.selectedSource.asObservable();
+  public groupName: string = '';
+  public expensesArrayPlus$ = this.groupService.expensesArrayPlusSource.asObservable();
+  public expensesArrayMinus$ = this.groupService.expensesArrayMinusSource.asObservable();
+  public expensesArrayPlus: Expenses[] = [{description: '1', amount: 0}]
+  public expensesArrayMinus: Expenses[] = [{description: '1', amount: 0}]
   readonly separatorKeysCodes = [ENTER, COMMA] as const;
-
+  public eachUserExpenseSum: number = 0;
+  public defaultWidth: string = '450px';
+  public payerSelectWidth: string = '600px';
+  public divideWidth: string = '750px';
 
   constructor(public dialogRef: MatDialogRef<AddExpenseComponent>,
               private http: HttpClient, private currencyApiService: CurrencyInfoApiService,
               private cookieService: CookieService, private authApiService: AuthApiService,
-              private userBalanceService: UserBalanceService) {
+              private userBalanceService: UserBalanceService,
+              private centerBoxService: CenterBoxService, private groupService: GroupService,
+              private snackBar: MatSnackBar) {
   }
 
   public ngOnInit(): void {
-    this.dialogRef.updateSize('300px', '');
+    this.dialogRef.updateSize(this.defaultWidth, '');
     this.users.push(this.cookieService.get('userName'));
+    const groupNameSub = this.groupName$.subscribe(selectedGroup => this.groupName = selectedGroup);
+    this.subscriptions.add(groupNameSub);
   }
 
   public ngOnDestroy(): void {
@@ -65,24 +82,19 @@ export class AddExpenseComponent implements OnInit, OnDestroy {
   public add(event: MatChipInputEvent): void {
     const value = (event.value || '').trim();
     if (value === this.users[0]) {
-      event.chipInput!.clear();
+      this.openErrorSnackBar(SnackbarEnums.AddExpensesAddingYourself);
     } else if (value) {
       this.users.push(value);
       this.eachUserAmount.push(0);
     }
-    event.chipInput!.clear();
     this.eachUserAmount = [];
     if (value && value != this.users[0]) {
-      this.checkUser(value);
+      this.checkUser(value, event);
     }
   }
 
   public remove(user: string): void {
     const index = this.users.indexOf(user);
-    if (user === this.incorrectFriend) {
-      this.correctFriend = true;
-      this.incorrectFriend = '';
-    }
     if (index > 0) {
       this.users.splice(index, 1);
     }
@@ -92,9 +104,9 @@ export class AddExpenseComponent implements OnInit, OnDestroy {
     this.isUserBoxVisible = !this.isUserBoxVisible;
     if (this.isDivideBoxVisible) this.isDivideBoxVisible = false;
     if (this.isUserBoxVisible) {
-      this.dialogRef.updateSize('600px', '');
+      this.dialogRef.updateSize(this.payerSelectWidth, '');
     } else {
-      this.dialogRef.updateSize('300px', '');
+      this.dialogRef.updateSize(this.defaultWidth, '');
     }
   }
 
@@ -105,20 +117,16 @@ export class AddExpenseComponent implements OnInit, OnDestroy {
     this.isDivideBoxVisible = !this.isDivideBoxVisible;
     if (this.isUserBoxVisible) this.isUserBoxVisible = false;
     if (this.isDivideBoxVisible) {
-      this.dialogRef.updateSize('600px', '');
+      this.dialogRef.updateSize(this.divideWidth, '');
     } else {
-      this.dialogRef.updateSize('300px', '');
+      this.dialogRef.updateSize(this.defaultWidth, '');
     }
   }
 
   public userSelect(user: string): void {
     this.whoPaid = user;
-    this.dialogRef.updateSize('300px', '');
+    this.dialogRef.updateSize(this.defaultWidth, '');
     this.isUserBoxVisible = false;
-  }
-
-  public canExtend(users: string[]): boolean {
-    return (users.length > 1 && this.expenseValue !== 0);
   }
 
 
@@ -128,6 +136,7 @@ export class AddExpenseComponent implements OnInit, OnDestroy {
     for (let i = 0; i < this.users.length; i++) {
       this.eachUserAmount[i] = splitEvenly(this.users.length, this.expenseValue)
     }
+    this.eachUserExpenseSum = this.eachUserAmount.reduce((a, b) => a + b, 0);
   }
 
   public divideByPercent(): void {
@@ -136,6 +145,12 @@ export class AddExpenseComponent implements OnInit, OnDestroy {
         this.eachUserAmount[i] = splitByPercent(this.percentToDivide[i], this.expenseValue)
     }
     this.percentagesLeftCalculation();
+    this.eachUserExpenseSum = this.eachUserAmount.reduce((a, b) => a + b, 0);
+
+  }
+
+  public canExtend(): boolean {
+    return canExtend(this.users, this.expenseValue)
   }
 
   public divideByPercentView(): void {
@@ -163,25 +178,37 @@ export class AddExpenseComponent implements OnInit, OnDestroy {
   public theyOweYouSelected(): void {
     this.inputValueVisible = false;
     this.inputPercentVisible = false;
-    this.eachUserAmount[1] = this.expenseValue;
-    this.eachUserAmount[0] = 0;
+    if (this.whoPaid === this.users[0]) {
+      this.eachUserAmount[1] = this.expenseValue;
+      this.eachUserAmount[0] = 0;
+    } else {
+      this.eachUserAmount[0] = this.expenseValue;
+      this.eachUserAmount[1] = 0;
+    }
     this.splitSelected = false;
     this.theyOweSelected = true;
+    this.eachUserExpenseSum = this.eachUserAmount.reduce((a, b) => a + b, 0);
   }
 
   public percentagesLeftCalculation(): void {
-    this.percentagesLeft = 100 - this.percentToDivide.reduce((acc, cur) => acc + cur, 0)
+    this.percentagesLeft = 100 - this.percentToDivide.reduce((acc, cur) => acc + cur, 0);
+    this.eachUserExpenseSum = this.eachUserAmount.reduce((a, b) => a + b, 0);
   }
 
   public AmountLeftCalculation(): void {
-    this.valueLeft = this.expenseValue - this.valueToDivide.reduce((acc, cur) => acc + cur, 0)
+    this.valueLeft = this.expenseValue - this.valueToDivide.reduce((acc, cur) => acc + cur, 0);
+    this.eachUserExpenseSum = this.eachUserAmount.reduce((a, b) => a + b, 0);
   }
 
-  public checkUser(friend: string): void {
-    const checkUserSub = this.authApiService.isInFriendList(this.cookieService.get('userId'), friend).subscribe(data => {
+  public checkUser(friend: string, event: MatChipInputEvent): void {
+    const checkUserSub = this.authApiService.isInFriendList(this.cookieService.get('userId'), friend, this.groupName).subscribe(data => {
       this.correctFriend = data.correctUser;
       if (!this.correctFriend) {
-        this.incorrectFriend = friend;
+        this.users.splice(this.users.indexOf(friend), 1);
+        this.openErrorSnackBar(SnackbarEnums.AddExpenseIncorrectUser)
+      }
+      if (data.correctUser) {
+        event.chipInput?.clear();
       }
     })
     this.subscriptions.add(checkUserSub);
@@ -204,13 +231,15 @@ export class AddExpenseComponent implements OnInit, OnDestroy {
 
       this.finalExpenseForUser[value] = {
         from: this.users[value],
-        value: Number((this.eachUserAmount[value] * this.currencyMultiplier).toPrecision(4))
+        value: Number((this.eachUserAmount[value] * this.currencyMultiplier).toFixed(2))
       };
     }
     const addExpenseSub = this.authApiService.addExpense(this.finalExpenseForUser, this.whoPaid,
-      this.description).subscribe((data) => {
+      this.description, this.groupName).subscribe(() => {
+      this.updateList();
       this.updateBalance();
       this.dialogRef.close();
+      this.openSuccessSnackBar(SnackbarEnums.AddExpenseSuccess);
     })
     this.subscriptions.add(addExpenseSub);
 
@@ -226,4 +255,41 @@ export class AddExpenseComponent implements OnInit, OnDestroy {
 
   }
 
+  updateList(): void {
+    this.expensesArrayMinus$.subscribe(array => this.expensesArrayMinus = array);
+    this.expensesArrayPlus$.subscribe(array => this.expensesArrayPlus = array);
+    const expensesSubPlus = this.authApiService.expensesInfoPlus(this.cookieService.get('userId'), this.groupName).subscribe(data => {
+      this.expensesArrayPlus.splice(0, this.expensesArrayPlus.length);
+      for (let expense in data.expensesArray) {
+        this.expensesArrayPlus.push(data.expensesArray[expense]);
+      }
+
+    })
+
+    const expensesSubMinus = this.authApiService.expensesInfoMinus(this.cookieService.get('userId'), this.groupName).subscribe(data => {
+      this.expensesArrayMinus.splice(0, this.expensesArrayMinus.length);
+      for (let expense in data.expensesArray) {
+        this.expensesArrayMinus.push(data.expensesArray[expense]);
+      }
+    })
+    this.subscriptions.add(expensesSubMinus);
+    this.subscriptions.add(expensesSubPlus);
+  }
+
+  openErrorSnackBar(message: string): void {
+    this.snackBar.open(message, '', {
+      panelClass: ['add-expense-error-snackbar'],
+      verticalPosition: "bottom",
+      duration: 3000
+    })
+  }
+
+  openSuccessSnackBar(message: string): void {
+    this.snackBar.open(message, '', {
+      panelClass: ['add-expense-success-snackbar'],
+      verticalPosition: "top",
+      horizontalPosition: "left",
+      duration: 3000
+    })
+  }
 }

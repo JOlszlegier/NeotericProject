@@ -1,4 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
+@import 'src/app/styles/variables.scss';
 
 html, body {
   height: 100%;
@@ -22,4 +23,65 @@ span {
   padding: 0;
   border-radius: 20px;
   border: 1px solid #DDDDDD;
+}
+
+.friends-error-snackbar {
+  background-color: $add-expense-color;
+  font-weight: bold;
+  margin-top: 45px !important;
+  margin-left: 30px !important;
+}
+
+.friends-success-snackbar{
+  background-color: $settle-color;
+  font-weight: bold;
+  margin-top: 45px !important;
+  margin-left: 30px !important;
+}
+
+.add-group-error-snackbar{
+  background-color: $add-expense-color;
+  font-weight: bold;
+  margin-top: 45px !important;
+  margin-left: 30px !important;
+}
+
+.add-group-success-snackbar{
+  background-color: $settle-color;
+  font-weight: bold;
+  margin-top: 45px !important;
+  margin-left: 30px !important;
+}
+
+.add-expense-error-snackbar{
+  background-color: $add-expense-color;
+  font-weight: bold;
+  margin-bottom: 100px !important;
+}
+
+.add-expense-success-snackbar{
+  background-color: $settle-color;
+  font-weight: bold;
+  margin-top: 45px !important;
+  margin-left: 30px !important;
+}
+
+.auth-page-error-snackbar{
+  background-color: $add-expense-color;
+  font-weight: bold;
+  margin-bottom: 100px !important;
+}
+
+.auth-page-success-snackbar{
+  background-color: $settle-color;
+  font-weight: bold;
+  margin-top: 45px !important;
+  margin-left: 30px !important;
+}
+
+.settle-up-success-snackbar{
+  background-color: $settle-color;
+  font-weight: bold;
+  margin-top: 45px !important;
+  margin-left: 30px !important;
 }

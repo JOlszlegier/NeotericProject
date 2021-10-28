@@ -2,11 +2,12 @@ import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {
-  addExpenseResponse,
+  AddExpenseResponse,
   AddFriendResponse,
   AddGroupResponse,
   BalanceCheckResponse,
   CheckFriendResponse,
+  ExpensesInfo,
   LoginResponse,
   RegisterResponse,
   SettleUpInfoResponse,
@@ -52,9 +53,9 @@ export class AuthApiService {
 
   public addExpense(eachUserExpense: [{ from: string, value: number }],
                     to: string,
-                    description: string): Observable<addExpenseResponse> {
-    return this.http.post<addExpenseResponse>(`${environment.apiUrl}/add-expense`, {
-      eachUserExpense, to, description
+                    description: string, groupName: string): Observable<AddExpenseResponse> {
+    return this.http.post<AddExpenseResponse>(`${environment.apiUrl}/add-expense`, {
+      eachUserExpense, to, description, groupName
     })
   }
 
@@ -70,9 +71,9 @@ export class AuthApiService {
     })
   }
 
-  public isInFriendList(user: string, friends: string): Observable<CheckFriendResponse> {
+  public isInFriendList(user: string, friends: string, groupName: string): Observable<CheckFriendResponse> {
     return this.http.post<CheckFriendResponse>(`${environment.apiUrl}/friend-check`, {
-      user, friends
+      user, friends, groupName
     })
   }
 
@@ -82,15 +83,27 @@ export class AuthApiService {
     })
   }
 
-  public settleUpInfo(userId: string): Observable<SettleUpInfoResponse> {
+  public settleUpInfo(userId: string, groupName: string): Observable<SettleUpInfoResponse> {
     return this.http.post<SettleUpInfoResponse>(`${environment.apiUrl}/settle-up-info`, {
-      userId
+      userId, groupName
     })
   }
 
-  public settleUp(userId: string, valueOwedToUser: [{ to: number, value: number }]): Observable<SettleUpResponse> {
+  public settleUp(userId: string, valueOwedToUser: [{ to: number, value: number }], groupName: string): Observable<SettleUpResponse> {
     return this.http.post<SettleUpResponse>(`${environment.apiUrl}/settle-up`, {
-      userId, valueOwedToUser
+      userId, valueOwedToUser, groupName
+    })
+  }
+
+  public expensesInfoPlus(userId: string, groupName: string): Observable<ExpensesInfo> {
+    return this.http.post<ExpensesInfo>(`${environment.apiUrl}/expenses-info-to-user`, {
+      userId, groupName
+    })
+  }
+
+  public expensesInfoMinus(userId: string, groupName: string): Observable<ExpensesInfo> {
+    return this.http.post<ExpensesInfo>(`${environment.apiUrl}/expenses-info-from-user`, {
+      userId, groupName
     })
   }
 }

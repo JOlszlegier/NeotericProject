@@ -10,7 +10,6 @@
 
 .form-items {
   display: flex;
-
   align-items: center;
   flex-direction: column;
   width: 30vw;
@@ -19,12 +18,13 @@
 
 .input-area {
   width: 200px;
-  min-height: 4vh;
+  height: 30px;
   font-size: 16px;
   padding-left: 5px;
   border-radius: 5px;
   border: 1px solid #333333;
 }
+
 
 .sign-in-button {
   background-color: $switch-button-color;
@@ -46,7 +46,7 @@
 }
 
 .success-box {
-  background-color: #22bb33;
+  background-color: $success-box;
   border-radius: 5px;
   padding: 5px;
   font-size: 14px;
@@ -60,3 +60,21 @@
   margin-bottom: 30px;
   margin-top: 50px;
 }
+
+.button-div {
+  display: flex;
+  gap: 30px;
+  margin-top: 20px;
+}
+
+.invalid-input {
+  border-color: red;
+}
+
+@media only screen and (max-width: 700px) {
+  .button-div {
+    gap: 10px;
+  }
+}
+
+

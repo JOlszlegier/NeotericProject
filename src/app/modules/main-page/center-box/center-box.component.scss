@@ -2,7 +2,7 @@
 
 .flexbox {
   display: flex;
-  height: 96.5vh;
+  height: 100%;
   flex-direction: column;
   box-shadow: 0 0 12px rgba(0, 0, 0, 0.2)
 }
@@ -16,25 +16,59 @@
   justify-content: space-between;
   font-size: 30px;
   color: #333333;
-  border-right: solid #DDDDDD 1px;
-  border-left: solid #DDDDDD 1px;
+  border-right: solid $add-expense-input-border 1px;
+  border-left: solid $add-expense-input-border 1px;
 }
 
 .add-button {
   background-color: $add-expense-color;
   margin: 10px;
   font-weight: bold;
+  width: 150px;
+
+  &:disabled {
+    opacity: 0.7;
+  }
 }
 
 .settle-button {
   background-color: $settle-color;
   margin: 10px;
   font-weight: bold;
+  width: 150px;
+
+  &:disabled {
+    opacity: 0.7;
+  }
 }
 
 .text {
   font-size: 24px;
   font-weight: bold;
+}
+
+@media (max-width: 950px) {
+  .text {
+    font-size: 16px;
+    text-align: center;
+  }
+
+  .settle-button {
+    width: 100px;
+    font-size: 12px;
+  }
+
+  .add-button {
+    width: 100px;
+    font-size: 12px;
+    padding: 0 8px;
+  }
+}
+
+@media (max-width: 1640px) {
+  .text {
+    font-size: 20px;
+  }
 }
 
 

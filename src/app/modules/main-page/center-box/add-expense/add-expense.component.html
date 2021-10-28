@@ -13,27 +13,28 @@
       <mat-form-field class="example-chip-list" appearance="fill">
         <mat-label>Users involved:</mat-label>
         <mat-chip-list #chipList aria-label="Users selection">
-          <mat-chip *ngFor="let user of users" [selectable]="selectable"
+          <mat-chip *ngFor="let user of users,let i=index" [selectable]="selectable"
                     [removable]="removable" (removed)="remove(user)" class="chip">
-            {{user}}
-            <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+            {{i === 0 ? user + ' (You)' : user}}
+            <mat-icon matChipRemove *ngIf="removable && i != 0">cancel</mat-icon>
           </mat-chip>
           <input
             [matChipInputFor]="chipList"
             [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
             [matChipInputAddOnBlur]="addOnBlur"
             (matChipInputTokenEnd)="add($event)"
-            class="input-with"
-            [disabled]="!correctFriend">
+            class="input-with">
+          <!--            [disabled]="!correctFriend">-->
         </mat-chip-list>
       </mat-form-field>
-      <p *ngIf="!correctFriend" class="error-message">User is not on your friend list,please remove!</p>
       <div class="expense-info">
         <input matInput class="description-input" placeholder="Description" autocomplete="off"
                [(ngModel)]="description">
         <div class="amount-field">
           <input matInput class="amount-input" placeholder="0.00"
-                 autocomplete="off" type="number" step="0.1" [(ngModel)]="expenseValue">
+                 autocomplete="off" type="number" step="0.1" min="0" lang="en-US"
+                 oninput="value = !!value && Math.abs(value) >= 0 ? Math.abs(value) : null"
+                 [(ngModel)]="expenseValue">
           <select matNativeControl required matSuffix [(ngModel)]="currencyChoice">
             <option value="PLN">PLN</option>
             <option value="USD">USD</option>
@@ -41,14 +42,15 @@
           </select>
         </div>
         <p>Paid by
-          <button mat-button (click)="payerSelect()" [disabled]="!canExtend(users)" type="button">{{whoPaid}}</button>
+          <button mat-button (click)="payerSelect()" [disabled]="!canExtend()" type="button"
+                  [ngClass]="{'correct-user-selected':whoPaid != 'who?' }">{{whoPaid}}</button>
           and split
-          <button mat-button (click)="divideSelect()" [disabled]="!canExtend(users)"
+          <button mat-button (click)="divideSelect()" [disabled]="!canExtend()"
                   type="button">{{howToDivide}}</button>
           .
         </p>
         <button
-          [disabled]="!correctFriend"
+          [disabled]="!correctFriend || expenseValue===0 || whoPaid==='who?' || description==='' || eachUserExpenseSum!=expenseValue || percentagesLeft!=0 || valueLeft!=0"
           mat-button
           (click)="sendInfo()">Save the expense
         </button>
@@ -56,9 +58,9 @@
     </div>
   </div>
   <div class="user-box" *ngIf="isUserBoxVisible">
-    <ul>
-      <li *ngFor="let user of users" (click)="userSelect(user)" class="payer-select-li">{{user}}</li>
-    </ul>
+    <div *ngFor="let user of users" (click)="userSelect(user)" class="payer-select-li">
+      <mat-icon class="icon">account_box</mat-icon>
+      {{user}}</div>
   </div>
   <div class="divide-box" *ngIf="isDivideBoxVisible">
     <button mat-button [ngClass]="{'split-button-selected': splitSelected}" class="split-button"
@@ -93,7 +95,7 @@
       <mat-list>
         <mat-list-item *ngFor="let user of users; let i=index">
           <div class="single-user-expense-display">
-            <div>{{user}}</div>
+            <div class="user-data">{{user}}</div>
             <div class="values-input">
               <input matInput class="percent-input" *ngIf="inputPercentVisible"
                      autocomplete="off" [(ngModel)]="percentToDivide[i]"
@@ -102,15 +104,17 @@
               <input matInput class="percent-input" *ngIf="inputValueVisible"
                      autocomplete="off" [(ngModel)]="valueToDivide[i]"
                      type="number" (change)="divideByValues(i)">
-              <div>{{eachUserAmount[i]}}</div>
+              <div>{{eachUserAmount[i] ? eachUserAmount[i].toFixed(2) : ''}}</div>
             </div>
           </div>
         </mat-list-item>
         <div class="extra-info-percentages" *ngIf="inputPercentVisible">
-          <p *ngIf="percentagesLeft !==0">{{percentagesLeft}}% left, please change the values!
+          <p *ngIf="percentagesLeft  > 0">{{percentagesLeft}}% left, please change the values!
+          <p *ngIf="percentagesLeft < 0"> Invalid amount!</p>
         </div>
         <div class="extra-info-values" *ngIf="inputValueVisible">
-          <p *ngIf="valueLeft !==0">{{valueLeft}} left, please change the values!
+          <p *ngIf="valueLeft > 0">{{valueLeft}} left, please change the values!
+          <p *ngIf="valueLeft < 0"> Invalid amount!</p>
         </div>
       </mat-list>
     </div>

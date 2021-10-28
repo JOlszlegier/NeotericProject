@@ -3,15 +3,15 @@
     <div class="form-items">
       <img src="../../../assets/splitwise%20logo.png" class='logo' alt="logo">
       <input matInput
+             [ngClass]="{'invalid-input': defaultForm.controls.email.invalid && defaultForm.value.email!=''}"
              type="email"
              placeholder="Enter your mail"
-             class="input-area"
+             class="input-area "
              required
              email
              formControlName="email"
              autocomplete="off"
              [@buttonState]="state"
-             (change)="errorMessageHider()"
       >
       <input matInput
              type="password"
@@ -20,7 +20,6 @@
              required
              formControlName="password"
              [@buttonState]="state"
-             (change)="errorMessageHider()"
       >
       <input type="text"
              formControlName="name"
@@ -30,31 +29,25 @@
              autocomplete="off"
              *ngIf="!isInLogInMode"
              [@buttonState]="state"
-             (change)="errorMessageHider()"
       >
-      <button mat-raised-button
-              class="sign-in-button"
-              (click)="onSwitch()"
-              [@buttonState]="state"
-              type="button"
-      >Switch to {{switchButtonText}}
-      </button>
-      <button mat-raised-button
-              class="log-in-button"
-              (click)="formSubmit()"
-              [disabled]="!defaultForm.valid"
-              [@buttonState]="state"
-              type="button"
-      >Submit!
-      </button>
-      <div *ngIf="loginFailure" class="failure-box">
-        Wrong email or password !
-      </div>
-      <div *ngIf="registerFailure" class="failure-box">
-        Email is already taken !
-      </div>
-      <div *ngIf="registerSuccess" class="success-box">
-        User registered ! Please log in now.
+      <div class="button-div">
+        <button
+          mat-flat-button
+          class="sign-in-button"
+          (click)="onSwitch()"
+          [@buttonState]="state"
+          type="button"
+        >Switch to {{switchButtonText}}
+        </button>
+        <button
+          mat-flat-button
+          class="log-in-button"
+          (click)="formSubmit()"
+          [disabled]="!defaultForm.valid"
+          [@buttonState]="state"
+          type="button"
+        >Submit!
+        </button>
       </div>
     </div>
   </div>
