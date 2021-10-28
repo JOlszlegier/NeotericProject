@@ -26,10 +26,13 @@ export class ExpensesListComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.groupName$.subscribe(groupName => this.groupName = groupName);
-    this.expensesArrayPlus$.subscribe(expensesArray => this.expensesArrayPlus = expensesArray);
-    this.expensesArrayMinus$.subscribe(expensesArray => this.expensesArrayMinus = expensesArray);
-
+    let groupNameSubscription = this.groupName$.subscribe(groupName => this.groupName = groupName);
+    let expensesArrayPlusSub = this.expensesArrayPlus$.subscribe(expensesArray => this.expensesArrayPlus = expensesArray);
+    let expensesArrayMinusSub = this.expensesArrayMinus$.subscribe(expensesArray => this.expensesArrayMinus = expensesArray);
+    this.subscription.add(groupNameSubscription);
+    this.subscription.add(expensesArrayPlusSub);
+    this.subscription.add(expensesArrayMinusSub);
+    
     const expensesSubPlus = this.authApiService.expensesInfoPlus(this.cookieService.get('userId'), this.groupName).subscribe(data => {
       this.expensesArrayPlus.splice(0, 1);
       for (let expense in data.expensesArray) {

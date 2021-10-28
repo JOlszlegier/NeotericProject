@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Loader} from "@googlemaps/js-api-loader";
 
 @Component({
@@ -6,7 +6,7 @@ import {Loader} from "@googlemaps/js-api-loader";
   templateUrl: './location.component.html',
   styleUrls: ['./location.component.scss']
 })
-export class LocationComponent implements OnInit,OnDestroy {
+export class LocationComponent implements OnInit {
 
   constructor() {
   }
@@ -31,8 +31,5 @@ export class LocationComponent implements OnInit,OnDestroy {
     })
   }
 
-  ngOnDestroy():void {
-
-  }
 
 }
