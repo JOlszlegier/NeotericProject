@@ -9,6 +9,7 @@ import {authText} from "./shared/enums/auth.enums";
 import {AuthService} from "../../core/services/auth-service";
 import {AuthApiService} from "../../core/services/auth-api-service";
 import {CurrencyInfoApiService} from "../../core/services/currency-info-api-service";
+import {SnackbarEnums} from "../shared/snackbar-enums"
 
 @Component({
   selector: 'app-auth-page',
@@ -92,11 +93,11 @@ export class AuthPageComponent implements OnInit, OnDestroy {
     const {email, password, name} = this.defaultForm.value;
     const registerSub = this.authApi.register(email, name, password).subscribe(data => {
       if (data.registerSuccess) {
-        this.openSuccessSnackBar('User registered successfully!')
+        this.openSuccessSnackBar(SnackbarEnums.AuthPageRegisterSuccess)
         this.cookieService.set('token', data.token);
         this.isInLogInMode = true;
       } else {
-        this.openErrorSnackBar('Email is already taken!')
+        this.openErrorSnackBar(SnackbarEnums.AuthPageRegisterError)
       }
     })
     this.subscriptions.add(registerSub);
@@ -113,7 +114,7 @@ export class AuthPageComponent implements OnInit, OnDestroy {
         this.cookieService.set('userName', data.userName);
         this.authService.onLogInActions();
       } else {
-        this.openErrorSnackBar('Invalid password or email!')
+        this.openErrorSnackBar(SnackbarEnums.AuthPageLoginFailure)
       }
     })
     this.subscriptions.add(loginSub)

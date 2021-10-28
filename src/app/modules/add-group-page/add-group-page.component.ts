@@ -7,6 +7,7 @@ import {CookieService} from "ngx-cookie-service";
 
 import {GroupService} from "../../core/services/group-service";
 import {AuthApiService} from "../../core/services/auth-api-service";
+import {SnackbarEnums} from "../shared/snackbar-enums";
 
 @Component({
   selector: 'app-add-group-page',
@@ -78,7 +79,7 @@ export class AddGroupPageComponent implements OnInit, OnDestroy {
       this.formTemplate.value.groupName, emailsArray)
       .subscribe(() => {
         this.router.navigate(['/main']);
-        this.openSuccessSnackBar('Group added successfully');
+        this.openSuccessSnackBar(SnackbarEnums.AddGroupSuccess);
       })
     this.subscriptions.add(addGroupSub);
   }
@@ -110,7 +111,7 @@ export class AddGroupPageComponent implements OnInit, OnDestroy {
       this.isFriendCorrect = data.correctUser;
       if (!data.correctUser) {
         this.incorrectUsers.push(friend);
-        this.openErrorSnackBar(`Incorrect user, please change!`, 30000)
+        this.openErrorSnackBar(SnackbarEnums.AddGroupFailure, 30000)
       }
       let emailsArray: string[] = this.formTemplate.value.users.map((item: { email: any; }) => item.email);
       for (let index in this.incorrectUsers) {

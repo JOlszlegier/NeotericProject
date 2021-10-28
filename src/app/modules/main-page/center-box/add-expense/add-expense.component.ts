@@ -13,6 +13,7 @@ import {AuthApiService} from "../../../../core/services/auth-api-service";
 import {UserBalanceService} from "../../../../core/services/user-balance-service";
 import {CenterBoxService} from "../../../../core/services/center-box-service";
 import {GroupService} from "../../../../core/services/group-service";
+import {SnackbarEnums} from "../../../shared/snackbar-enums";
 
 @Component({
   selector: 'app-add-expense',
@@ -80,7 +81,7 @@ export class AddExpenseComponent implements OnInit, OnDestroy {
   public add(event: MatChipInputEvent): void {
     const value = (event.value || '').trim();
     if (value === this.users[0]) {
-      this.openErrorSnackBar(`You can't share it with yourself!`);
+      this.openErrorSnackBar(SnackbarEnums.AddExpensesAddingYourself);
     } else if (value) {
       this.users.push(value);
       this.eachUserAmount.push(0);
@@ -203,7 +204,7 @@ export class AddExpenseComponent implements OnInit, OnDestroy {
       this.correctFriend = data.correctUser;
       if (!this.correctFriend) {
         this.users.splice(this.users.indexOf(friend), 1);
-        this.openErrorSnackBar('Incorrect user, please try another one!')
+        this.openErrorSnackBar(SnackbarEnums.AddExpenseIncorrectUser)
       }
       if (data.correctUser) {
         event.chipInput?.clear();
@@ -237,7 +238,7 @@ export class AddExpenseComponent implements OnInit, OnDestroy {
       this.updateList();
       this.updateBalance();
       this.dialogRef.close();
-      this.openSuccessSnackBar('Expense added successfully!');
+      this.openSuccessSnackBar(SnackbarEnums.AddExpenseSuccess);
     })
     this.subscriptions.add(addExpenseSub);
 

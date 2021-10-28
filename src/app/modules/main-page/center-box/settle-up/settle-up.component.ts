@@ -8,7 +8,7 @@ import {AuthApiService} from "../../../../core/services/auth-api-service";
 import {UserBalanceService} from "../../../../core/services/user-balance-service";
 import {CenterBoxService} from "../../../../core/services/center-box-service";
 import {GroupService} from "../../../../core/services/group-service";
-
+import {SnackbarEnums} from "../../../shared/snackbar-enums";
 
 @Component({
   selector: 'app-settle-up',
@@ -56,7 +56,7 @@ export class SettleUpComponent implements OnInit, OnDestroy {
         this.updateList();
         this.updateBalance();
         this.dialogRef.close();
-        this.openSuccessSnackBar('You are settled up!')
+        this.openSuccessSnackBar(SnackbarEnums.SettleUpSuccess)
       })
     this.subscriptions.add(settleUpSub);
   }
