@@ -7,6 +7,7 @@ import {SearchService} from "../../../../core/services/search-service";
 import {GroupService} from "../../../../core/services/group-service";
 import {CenterBoxService} from "../../../../core/services/center-box-service";
 import {AuthApiService} from "../../../../core/services/auth-api-service";
+import {Expenses} from "../../../../core/interfaces/interfaces";
 
 @Component({
   selector: 'app-groups',
@@ -26,8 +27,8 @@ export class GroupsComponent implements OnInit, OnDestroy {
   public selected$ = this.centerBoxService.selectedSource.asObservable();
   public expensesArrayPlus$ = this.groupService.expensesArrayPlusSource.asObservable();
   public expensesArrayMinus$ = this.groupService.expensesArrayMinusSource.asObservable();
-  public expensesArrayPlus: [{ description: string, amount: number }] = [{description: '1', amount: 0}]
-  public expensesArrayMinus: [{ description: string, amount: number }] = [{description: '1', amount: 0}]
+  public expensesArrayPlus: Expenses[] = [{description: '1', amount: 0}]
+  public expensesArrayMinus: Expenses[] = [{description: '1', amount: 0}]
 
   constructor(private searchService: SearchService, private router: Router,
               private groupService: GroupService, private centerBoxService: CenterBoxService, private authApiService: AuthApiService,

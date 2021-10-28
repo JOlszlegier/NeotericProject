@@ -5,6 +5,7 @@ import {CookieService} from "ngx-cookie-service";
 import {AuthApiService} from "../../../../core/services/auth-api-service";
 import {CenterBoxService} from "../../../../core/services/center-box-service";
 import {GroupService} from "../../../../core/services/group-service";
+import {Expenses} from "../../../../core/interfaces/interfaces";
 
 @Component({
   selector: 'app-expenses-list',
@@ -15,8 +16,8 @@ export class ExpensesListComponent implements OnInit, OnDestroy {
 
   public expensesArrayPlus$ = this.groupService.expensesArrayPlusSource.asObservable();
   public expensesArrayMinus$ = this.groupService.expensesArrayMinusSource.asObservable();
-  public expensesArrayPlus: [{ description: string, amount: number }] = [{description: '1', amount: 0}]
-  public expensesArrayMinus: [{ description: string, amount: number }] = [{description: '1', amount: 0}]
+  public expensesArrayPlus: Expenses[] = [{description: '1', amount: 0}]
+  public expensesArrayMinus: Expenses[] = [{description: '1', amount: 0}]
   public subscription: Subscription = new Subscription;
   public groupName$ = this.centerBoxService.selectedSource.asObservable();
   public groupName: string = '';
@@ -32,7 +33,7 @@ export class ExpensesListComponent implements OnInit, OnDestroy {
     this.subscription.add(groupNameSubscription);
     this.subscription.add(expensesArrayPlusSub);
     this.subscription.add(expensesArrayMinusSub);
-    
+
     const expensesSubPlus = this.authApiService.expensesInfoPlus(this.cookieService.get('userId'), this.groupName).subscribe(data => {
       this.expensesArrayPlus.splice(0, 1);
       for (let expense in data.expensesArray) {

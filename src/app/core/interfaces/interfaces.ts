@@ -25,7 +25,7 @@ export interface RegisterResponse {
 export interface AddFriendResponse {
   friends: string[];
   errorMessage: string;
-  successMessage:string;
+  successMessage: string;
 }
 
 export interface CheckFriendResponse {
@@ -61,3 +61,7 @@ export interface ExpensesInfo {
   expensesArray: [{ description: string, amount: number }];
 }
 
+export interface Expenses {
+  description: string,
+  amount: number
+}

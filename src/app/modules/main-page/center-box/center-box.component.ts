@@ -9,6 +9,7 @@ import {SettleUpComponent} from "./settle-up/settle-up.component";
 import {UserBalanceService} from "../../../core/services/user-balance-service";
 import {GroupService} from "../../../core/services/group-service";
 import {FriendsService} from "../../../core/services/friends-service";
+import {Expenses} from "../../../core/interfaces/interfaces";
 
 @Component({
   selector: 'app-center-box',
@@ -25,7 +26,7 @@ export class CenterBoxComponent implements OnInit, OnDestroy {
   public outcome$ = this.userBalanceService.outcomeSource.asObservable();
   public outcome: number = 0;
   public outcomeArray$ = this.groupService.expensesArrayMinusSource.asObservable();
-  public expensesArrayMinus: [{ description: string, amount: number }] = [{description: '1', amount: 0}];
+  public expensesArrayMinus: Expenses[] = [{description: '1', amount: 0}];
   public friendsList$ = this.friendsService.friendsList.asObservable();
   public friendsList: string[] = [''];
 

@@ -14,6 +14,7 @@ import {UserBalanceService} from "../../../../core/services/user-balance-service
 import {CenterBoxService} from "../../../../core/services/center-box-service";
 import {GroupService} from "../../../../core/services/group-service";
 import {SnackbarEnums} from "../../../shared/snackbar-enums";
+import {Expenses} from "../../../../core/interfaces/interfaces";
 
 @Component({
   selector: 'app-add-expense',
@@ -51,8 +52,8 @@ export class AddExpenseComponent implements OnInit, OnDestroy {
   public groupName: string = '';
   public expensesArrayPlus$ = this.groupService.expensesArrayPlusSource.asObservable();
   public expensesArrayMinus$ = this.groupService.expensesArrayMinusSource.asObservable();
-  public expensesArrayPlus: [{ description: string, amount: number }] = [{description: '1', amount: 0}]
-  public expensesArrayMinus: [{ description: string, amount: number }] = [{description: '1', amount: 0}]
+  public expensesArrayPlus: Expenses[] = [{description: '1', amount: 0}]
+  public expensesArrayMinus: Expenses[] = [{description: '1', amount: 0}]
   readonly separatorKeysCodes = [ENTER, COMMA] as const;
   public eachUserExpenseSum: number = 0;
   public defaultWidth: string = '450px';
