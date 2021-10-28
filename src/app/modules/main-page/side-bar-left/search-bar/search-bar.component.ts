@@ -1,7 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Subscription} from "rxjs";
 
 import {SearchService} from "../../../../core/services/search-service";
-import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-search-bar',

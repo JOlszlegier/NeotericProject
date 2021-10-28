@@ -1,10 +1,11 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-
 import {Subscription} from "rxjs";
+import {CookieService} from "ngx-cookie-service";
+
 import {CenterBoxService} from "../../../../core/services/center-box-service";
 import {GroupService} from "../../../../core/services/group-service";
 import {AuthApiService} from "../../../../core/services/auth-api-service";
-import {CookieService} from "ngx-cookie-service";
+
 
 @Component({
   selector: 'app-view-choice',

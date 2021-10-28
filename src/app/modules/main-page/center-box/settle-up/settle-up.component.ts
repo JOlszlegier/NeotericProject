@@ -1,19 +1,21 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {CookieService} from "ngx-cookie-service";
-import {AuthApiService} from "../../../../core/services/auth-api-service";
+import {MatSnackBar} from "@angular/material/snack-bar";
+import {MatDialogRef} from "@angular/material/dialog";
 import {Subscription} from "rxjs/";
+import {CookieService} from "ngx-cookie-service";
+
+import {AuthApiService} from "../../../../core/services/auth-api-service";
 import {UserBalanceService} from "../../../../core/services/user-balance-service";
 import {CenterBoxService} from "../../../../core/services/center-box-service";
 import {GroupService} from "../../../../core/services/group-service";
-import {MatSnackBar,MatSnackBarModule} from "@angular/material/snack-bar";
-import {MatDialogRef} from "@angular/material/dialog";
+
 
 @Component({
   selector: 'app-settle-up',
   templateUrl: './settle-up.component.html',
   styleUrls: ['./settle-up.component.scss']
 })
-export class SettleUpComponent implements OnInit,OnDestroy{
+export class SettleUpComponent implements OnInit, OnDestroy {
   private subscriptions = new Subscription()
   public whoYouOweTo: [string] = ['']
   public amountYouOweTo: [number] = [0];
@@ -30,7 +32,7 @@ export class SettleUpComponent implements OnInit,OnDestroy{
 
   constructor(private cookieService: CookieService, private authApiService: AuthApiService,
               private userBalanceService: UserBalanceService, private centerBoxService: CenterBoxService,
-              private groupService: GroupService,private snackBar:MatSnackBar,public dialogRef: MatDialogRef<SettleUpComponent>) {
+              private groupService: GroupService, private snackBar: MatSnackBar, public dialogRef: MatDialogRef<SettleUpComponent>) {
   }
 
   ngOnInit(): void {
@@ -44,7 +46,7 @@ export class SettleUpComponent implements OnInit,OnDestroy{
     this.subscriptions.add(settleUpInfoSub);
   }
 
-  ngOnDestroy():void {
+  ngOnDestroy(): void {
     this.subscriptions.unsubscribe();
   }
 
@@ -94,12 +96,12 @@ export class SettleUpComponent implements OnInit,OnDestroy{
     this.subscriptions.add(expensesSubPlus);
   }
 
-  public openSuccessSnackBar(message:string):void{
-    this.snackBar.open(message,'',{
-      duration:3000,
-      panelClass:['settle-up-success-snackbar'],
-      horizontalPosition:"left",
-      verticalPosition:'top'
+  public openSuccessSnackBar(message: string): void {
+    this.snackBar.open(message, '', {
+      duration: 3000,
+      panelClass: ['settle-up-success-snackbar'],
+      horizontalPosition: "left",
+      verticalPosition: 'top'
     })
   }
 

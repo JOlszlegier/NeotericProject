@@ -1,18 +1,20 @@
-import {Component, HostListener, OnDestroy, OnInit} from '@angular/core';
+import {Component, HostListener, OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
 import {FormBuilder, FormControl, Validators} from "@angular/forms";
 import {animate, state, style, transition, trigger} from "@angular/animations";
+import {MatSnackBar} from "@angular/material/snack-bar";
+import {Subscription} from "rxjs";
+import {CookieService} from "ngx-cookie-service";
+
 import {authText} from "./shared/enums/auth.enums";
 import {AuthService} from "../../core/services/auth-service";
 import {AuthApiService} from "../../core/services/auth-api-service";
-import {Subscription} from "rxjs";
-import {CookieService} from "ngx-cookie-service";
 import {CurrencyInfoApiService} from "../../core/services/currency-info-api-service";
-import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-auth-page',
   templateUrl: './auth-page.component.html',
   styleUrls: ['./auth-page.component.scss'],
+  encapsulation: ViewEncapsulation.None,
   animations: [
     trigger('buttonState', [
       state('hidden', style({
@@ -131,7 +133,8 @@ export class AuthPageComponent implements OnInit, OnDestroy {
     this.snackBar.open(message, '', {
       panelClass: ['auth-page-success-snackbar'],
       duration: 3000,
-      verticalPosition: this.isMobile ? "top" : "bottom"
+      verticalPosition: this.isMobile ? "top" : "bottom",
+
     })
   }
 

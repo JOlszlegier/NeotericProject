@@ -1,11 +1,11 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
+import {MatSnackBar} from "@angular/material/snack-bar";
+import {Subscription} from "rxjs";
+import {CookieService} from "ngx-cookie-service";
 
 import {SearchService} from "../../../../core/services/search-service";
-import {Subscription} from "rxjs";
 import {AuthApiService} from "../../../../core/services/auth-api-service";
-import {CookieService} from "ngx-cookie-service";
 import {FriendsService} from "../../../../core/services/friends-service";
-import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-friends',

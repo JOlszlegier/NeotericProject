@@ -1,7 +1,8 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {AuthApiService} from "../../../../core/services/auth-api-service";
 import {Subscription} from "rxjs";
 import {CookieService} from "ngx-cookie-service";
+
+import {AuthApiService} from "../../../../core/services/auth-api-service";
 import {CenterBoxService} from "../../../../core/services/center-box-service";
 import {GroupService} from "../../../../core/services/group-service";
 
@@ -10,7 +11,7 @@ import {GroupService} from "../../../../core/services/group-service";
   templateUrl: './expenses-list.component.html',
   styleUrls: ['./expenses-list.component.scss']
 })
-export class ExpensesListComponent implements OnInit,OnDestroy {
+export class ExpensesListComponent implements OnInit, OnDestroy {
 
   public expensesArrayPlus$ = this.groupService.expensesArrayPlusSource.asObservable();
   public expensesArrayMinus$ = this.groupService.expensesArrayMinusSource.asObservable();
@@ -49,7 +50,7 @@ export class ExpensesListComponent implements OnInit,OnDestroy {
 
   }
 
-  ngOnDestroy():void {
+  ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
 

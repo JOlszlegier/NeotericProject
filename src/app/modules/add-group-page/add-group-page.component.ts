@@ -1,11 +1,12 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
-import {GroupService} from "../../core/services/group-service";
-import {AuthApiService} from "../../core/services/auth-api-service";
+import {MatSnackBar} from "@angular/material/snack-bar";
 import {Subscription} from "rxjs";
 import {CookieService} from "ngx-cookie-service";
-import {MatSnackBar} from "@angular/material/snack-bar";
+
+import {GroupService} from "../../core/services/group-service";
+import {AuthApiService} from "../../core/services/auth-api-service";
 
 @Component({
   selector: 'app-add-group-page',

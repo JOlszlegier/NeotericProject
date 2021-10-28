@@ -1,7 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Subscription} from "rxjs";
 
 import {GroupService} from "../../../core/services/group-service";
-import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-side-bar-right',

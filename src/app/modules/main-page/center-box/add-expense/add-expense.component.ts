@@ -3,16 +3,16 @@ import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import {MatChipInputEvent} from '@angular/material/chips';
 import {MatDialogRef} from "@angular/material/dialog";
 import {HttpClient} from "@angular/common/http";
-
+import {MatSnackBar} from "@angular/material/snack-bar";
 import {Subscription} from "rxjs";
+import {CookieService} from "ngx-cookie-service";
+
 import {canExtend, splitByPercent, splitEvenly} from "./shared/expense-divide-helper";
 import {CurrencyInfoApiService} from "../../../../core/services/currency-info-api-service";
-import {CookieService} from "ngx-cookie-service";
 import {AuthApiService} from "../../../../core/services/auth-api-service";
 import {UserBalanceService} from "../../../../core/services/user-balance-service";
 import {CenterBoxService} from "../../../../core/services/center-box-service";
 import {GroupService} from "../../../../core/services/group-service";
-import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-add-expense',

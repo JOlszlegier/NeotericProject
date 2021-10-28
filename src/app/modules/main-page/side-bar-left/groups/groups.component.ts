@@ -1,12 +1,12 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
+import {Subscription} from "rxjs";
+import {CookieService} from "ngx-cookie-service";
 
 import {SearchService} from "../../../../core/services/search-service";
-import {Subscription} from "rxjs";
 import {GroupService} from "../../../../core/services/group-service";
 import {CenterBoxService} from "../../../../core/services/center-box-service";
 import {AuthApiService} from "../../../../core/services/auth-api-service";
-import {CookieService} from "ngx-cookie-service";
 
 @Component({
   selector: 'app-groups',

@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+
 import {MobileViewService} from "../../core/services/mobile-view-service";
 
 @Component({

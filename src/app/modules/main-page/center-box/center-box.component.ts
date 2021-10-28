@@ -1,8 +1,8 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
+import {Subscription} from "rxjs";
 
 import {CashBoxService} from "../../../core/services/cash-box-service";
-import {Subscription} from "rxjs";
 import {CenterBoxService} from "../../../core/services/center-box-service";
 import {AddExpenseComponent} from "./add-expense/add-expense.component";
 import {SettleUpComponent} from "./settle-up/settle-up.component";
