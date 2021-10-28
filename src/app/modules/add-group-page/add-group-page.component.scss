@@ -49,7 +49,7 @@
 
 .input-styling {
   width: 260px;
-  border-bottom: 1px solid #AAAAAA;
+  border-bottom: 1px solid $input-border-bottom;
   height: 30px;
   font-size: 20px;
   padding: 5px;
@@ -78,7 +78,6 @@ input {
 .add-more-button {
   margin-top: 15px;
   background-color: $log-in-button-color;
-
 }
 
 .save-button {
@@ -93,7 +92,7 @@ button:focus {
 }
 
 .cancel-button {
-  background-color: #FF5216;
+  background-color: $add-expense-color;
 }
 
 .save-button:disabled {

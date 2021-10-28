@@ -6,8 +6,8 @@
   justify-content: space-evenly;
   align-items: center;
   display: flex;
-  border-top: 1px #DDDDDD solid;
-  border-bottom: 1px #DDDDDD solid;
+  border-top: 1px $add-expense-input-border solid;
+  border-bottom: 1px $add-expense-input-border solid;
 }
 
 .cash-box {
@@ -15,7 +15,7 @@
   background-color: $dashboard-color;
   width: 100%;
   display: flex;
-  border: solid 1px #DDDDDD;
+  border: solid 1px $add-expense-input-border;
   font-weight: bold;
 }
 
@@ -37,5 +37,5 @@
 }
 
 .balance-neutral {
-  color: #333333;
+  color: $balance-neutral;
 }

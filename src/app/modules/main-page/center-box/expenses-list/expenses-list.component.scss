@@ -24,10 +24,10 @@ ul {
 
 .single-expense {
   width: 100%;
-  background-color: #EEEEEE;
+  background-color: $dashboard-color;
   display: flex;
   align-content: center;
   justify-content: space-around;
-  border: solid #DDDDDD 1px;
+  border: solid $add-expense-input-border 1px;
   font-weight: bold;
 }

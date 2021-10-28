@@ -16,8 +16,8 @@
   justify-content: space-between;
   font-size: 30px;
   color: #333333;
-  border-right: solid #DDDDDD 1px;
-  border-left: solid #DDDDDD 1px;
+  border-right: solid $add-expense-input-border 1px;
+  border-left: solid $add-expense-input-border 1px;
 }
 
 .add-button {
