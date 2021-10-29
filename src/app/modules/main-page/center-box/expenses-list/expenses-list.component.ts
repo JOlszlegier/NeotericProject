@@ -33,11 +33,14 @@ export class ExpensesListComponent implements OnInit, OnDestroy {
     this.subscription.add(groupNameSubscription);
     this.subscription.add(expensesArrayPlusSub);
     this.subscription.add(expensesArrayMinusSub);
-
+    this.expensesArrayPlus = [];
+    this.expensesArrayMinus = [];
     const expensesSubPlus = this.authApiService.expensesInfoPlus(this.cookieService.get('userId'), this.groupName).subscribe(data => {
-      this.expensesArrayPlus.splice(0, 1);
-      for (let expense in data.expensesArray) {
-        this.expensesArrayPlus.push(data.expensesArray[expense]);
+      if (data.expensesArray !== this.expensesArrayPlus) {
+        this.expensesArrayPlus.splice(0, 1);
+        for (let expense in data.expensesArray) {
+          this.expensesArrayPlus.push(data.expensesArray[expense]);
+        }
       }
     })
 

@@ -104,7 +104,7 @@ export class AuthPageComponent implements OnInit, OnDestroy {
 
   public logIn(): void {
     const {email, password} = this.defaultForm.value;
-    const loginSub = this.authApi.login(email, password).subscribe(data => {
+    this.subscriptions.add(this.authApi.login(email, password).subscribe(data => {
       if (data.passwordCorrect) {
         this.checkBool = true;
         this.cookieService.set('token', data.token);
@@ -115,8 +115,8 @@ export class AuthPageComponent implements OnInit, OnDestroy {
       } else {
         this.openErrorSnackBar(SnackbarEnums.AuthPageLoginFailure)
       }
-    })
-    this.subscriptions.add(loginSub)
+    }))
+
   }
 
 

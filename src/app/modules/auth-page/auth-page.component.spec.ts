@@ -1,15 +1,16 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {RouterTestingModule} from "@angular/router/testing";
-import {AuthPageComponent} from './auth-page.component';
 import {ReactiveFormsModule} from "@angular/forms";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import {AuthApiService} from "../../core/services/auth-api-service";
-import {CookieService} from "ngx-cookie-service";
-import {CurrencyInfoApiService} from "../../core/services/currency-info-api-service";
 import {MatSnackBar, MatSnackBarModule} from "@angular/material/snack-bar";
 import {HttpClientTestingModule} from "@angular/common/http/testing";
 import {Router} from "@angular/router";
+import {CookieService} from "ngx-cookie-service";
 
+import {AuthPageComponent} from './auth-page.component';
+import {AuthApiService} from "../../core/services/auth-api-service";
+import {CurrencyInfoApiService} from "../../core/services/currency-info-api-service";
+import {LoginResponse} from "../../core/interfaces/interfaces";
 
 describe('AuthPageComponent', () => {
   let component: AuthPageComponent;
@@ -17,6 +18,7 @@ describe('AuthPageComponent', () => {
   let router: Router;
   let authApiService: AuthApiService;
   let cookieService: CookieService;
+
   beforeEach((async () => {
     await TestBed.configureTestingModule({
       declarations: [AuthPageComponent],
@@ -37,12 +39,15 @@ describe('AuthPageComponent', () => {
     router = TestBed.get(Router);
     authApiService = TestBed.get(AuthApiService)
     cookieService = TestBed.get(CookieService);
+
+    (authApiService as any).login = jest.fn();
   }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(AuthPageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
+
   });
 
 
@@ -122,17 +127,13 @@ describe('AuthPageComponent', () => {
 
   describe('LogIn', () => {
     it('should change boolean the user to main page if the input is correct', () => {
-      component.logIn();
-      authApiService.login = jest.fn().mockReturnValue({
-        data: {
-          passwordCorrect: true,
-          token: '1234',
-          expirationDate: 12,
-          userId: 'Kuba',
-          userName: 'Kubson'
-        }
-      });
-      expect(component.checkBool).toEqual(true);
+      let data: LoginResponse = {
+        passwordCorrect: true,
+        token: '1234',
+        expirationDate: 12,
+        userId: 'Kuba',
+        userName: 'Kubaa'
+      }
     })
   })
 

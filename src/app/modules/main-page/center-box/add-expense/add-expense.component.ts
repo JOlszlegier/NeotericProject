@@ -258,12 +258,15 @@ export class AddExpenseComponent implements OnInit, OnDestroy {
   updateList(): void {
     this.expensesArrayMinus$.subscribe(array => this.expensesArrayMinus = array);
     this.expensesArrayPlus$.subscribe(array => this.expensesArrayPlus = array);
+    this.expensesArrayPlus = [];
+    this.expensesArrayMinus = [];
+
     const expensesSubPlus = this.authApiService.expensesInfoPlus(this.cookieService.get('userId'), this.groupName).subscribe(data => {
       this.expensesArrayPlus.splice(0, this.expensesArrayPlus.length);
       for (let expense in data.expensesArray) {
         this.expensesArrayPlus.push(data.expensesArray[expense]);
       }
-
+      this.groupService.expensesArrayPlusSource.next(this.expensesArrayPlus);
     })
 
     const expensesSubMinus = this.authApiService.expensesInfoMinus(this.cookieService.get('userId'), this.groupName).subscribe(data => {
@@ -271,6 +274,7 @@ export class AddExpenseComponent implements OnInit, OnDestroy {
       for (let expense in data.expensesArray) {
         this.expensesArrayMinus.push(data.expensesArray[expense]);
       }
+      this.groupService.expensesArrayMinusSource.next(this.expensesArrayMinus);
     })
     this.subscriptions.add(expensesSubMinus);
     this.subscriptions.add(expensesSubPlus);
