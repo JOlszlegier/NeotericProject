@@ -208,3 +208,24 @@ button:disabled {
 }
 
 
+@media (max-width: 530px) {
+  .main-expense-box {
+    flex-direction: column;
+  }
+
+  .divide-box {
+    width: 300px;
+    height: 250px;
+  }
+
+  .split-button {
+    line-height: 0;
+    height: 30px;
+  }
+
+
+  .select-button {
+    margin: 0;
+  }
+
+}

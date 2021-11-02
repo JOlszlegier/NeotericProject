@@ -63,10 +63,7 @@ export class AddExpenseComponent implements OnInit, OnDestroy {
 
   @HostListener('window:resize', ['$event'])
   onResize() {
-    this.isMobile = window.outerHeight < 700;
-    if (this.isMobile) {
-      this.dialogRef.updateSize('250px', '400px');
-    }
+    this.isMobile = window.outerWidth < 530;
   }
 
   constructor(public dialogRef: MatDialogRef<AddExpenseComponent>,
@@ -82,6 +79,7 @@ export class AddExpenseComponent implements OnInit, OnDestroy {
     this.users.push(this.cookieService.get('userName'));
     const groupNameSub = this.groupName$.subscribe(selectedGroup => this.groupName = selectedGroup);
     this.subscriptions.add(groupNameSub);
+    this.isMobile = window.outerWidth < 530;
   }
 
   public ngOnDestroy(): void {
@@ -100,6 +98,9 @@ export class AddExpenseComponent implements OnInit, OnDestroy {
     if (value && value != this.users[0]) {
       this.checkUser(value, event);
     }
+    if (this.users.length > 2) {
+      this.divideSelect();
+    }
   }
 
   public remove(user: string): void {
@@ -113,7 +114,11 @@ export class AddExpenseComponent implements OnInit, OnDestroy {
     this.isUserBoxVisible = !this.isUserBoxVisible;
     if (this.isDivideBoxVisible) this.isDivideBoxVisible = false;
     if (this.isUserBoxVisible) {
-      this.dialogRef.updateSize(this.payerSelectWidth, '');
+      if (this.isMobile) {
+        this.dialogRef.updateSize('', '500px');
+      } else {
+        this.dialogRef.updateSize(this.payerSelectWidth, '');
+      }
     } else {
       this.dialogRef.updateSize(this.defaultWidth, '');
     }
@@ -126,6 +131,9 @@ export class AddExpenseComponent implements OnInit, OnDestroy {
     this.isDivideBoxVisible = !this.isDivideBoxVisible;
     if (this.isUserBoxVisible) this.isUserBoxVisible = false;
     if (this.isDivideBoxVisible) {
+      if (this.isMobile) {
+        this.dialogRef.updateSize('', '600px');
+      }
       this.dialogRef.updateSize(this.divideWidth, '');
     } else {
       this.dialogRef.updateSize(this.defaultWidth, '');
