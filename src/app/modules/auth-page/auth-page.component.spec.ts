@@ -1,15 +1,18 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {RouterTestingModule} from "@angular/router/testing";
-import {AuthPageComponent} from './auth-page.component';
 import {ReactiveFormsModule} from "@angular/forms";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import {AuthApiService} from "../../core/services/auth-api-service";
-import {CookieService} from "ngx-cookie-service";
-import {CurrencyInfoApiService} from "../../core/services/currency-info-api-service";
 import {MatSnackBar, MatSnackBarModule} from "@angular/material/snack-bar";
 import {HttpClientTestingModule} from "@angular/common/http/testing";
 import {Router} from "@angular/router";
+import {CookieService} from "ngx-cookie-service";
+import {of} from "rxjs";
 
+
+import {AuthPageComponent} from './auth-page.component';
+import {AuthApiService} from "../../core/services/auth-api-service";
+import {CurrencyInfoApiService} from "../../core/services/currency-info-api-service";
+import {AuthApiServiceMock, CookieServiceMock, snackbarMock} from "../../../unit/auth-mock";
 
 describe('AuthPageComponent', () => {
   let component: AuthPageComponent;
@@ -17,15 +20,17 @@ describe('AuthPageComponent', () => {
   let router: Router;
   let authApiService: AuthApiService;
   let cookieService: CookieService;
+
+
   beforeEach((async () => {
     await TestBed.configureTestingModule({
       declarations: [AuthPageComponent],
       imports: [RouterTestingModule, HttpClientTestingModule, ReactiveFormsModule, BrowserAnimationsModule, MatSnackBarModule],
       providers: [
-        {provide: AuthApiService},
-        {provide: CookieService},
+        {provide: AuthApiService, useClass: AuthApiServiceMock},
+        {provide: CookieService, useClass: CookieServiceMock},
         {provide: CurrencyInfoApiService},
-        {provide: MatSnackBar},
+        {provide: MatSnackBar, useValue: snackbarMock},
         {
           provide: Router, useClass: class {
             navigate = jest.fn();
@@ -37,12 +42,14 @@ describe('AuthPageComponent', () => {
     router = TestBed.get(Router);
     authApiService = TestBed.get(AuthApiService)
     cookieService = TestBed.get(CookieService);
+
   }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(AuthPageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
+
   });
 
 
@@ -120,20 +127,39 @@ describe('AuthPageComponent', () => {
 
   })
 
-  // describe('LogIn', () => {
-  //   it('should change boolean the user to main page if the input is correct', () => {
-  //     component.logIn();
-  //     authApiService.login = jest.fn().mockReturnValue({
-  //       data: {
-  //         passwordCorrect: true,
-  //         token: '1234',
-  //         expirationDate: 12,
-  //         userId: 'Kuba',
-  //         userName: 'Kubson'
-  //       }
-  //     });
-  //     expect(component.checkBool).toEqual(true);
-  //   })
-  // })
+  describe('LogIn', () => {
+    it(`should set propety to true`, () => {
+      component.logIn();
+      expect(component.checkBool).toEqual(true);
+    })
+    it('should set cookies', () => {
+      component.logIn();
+      expect(cookieService.get('token')).toEqual('123');
+      expect(cookieService.get('userName')).toEqual('testUser');
+      expect(cookieService.get('userId')).toEqual('123');
+    })
+    it('should redirect you to main page', () => {
+      component.logIn();
+      expect(router.navigate).toHaveBeenCalled();
+    })
+    it('should open error snackbar on login failure', () => {
+      authApiService.login = jest.fn().mockReturnValue(of({}));
+      component.logIn();
+      expect(snackbarMock.open).toHaveBeenCalled();
+    })
+  })
 
+  describe('signIn', () => {
+    it('should open snackbar with success message on success', () => {
+      component.signIn();
+      expect(snackbarMock.open).toHaveBeenCalled();
+    })
+    it('should open snackbar with error message on success', () => {
+      authApiService.register = jest.fn().mockReturnValue(of({
+        registerSuccess: false
+      }))
+      component.signIn();
+      expect(snackbarMock.open).toHaveBeenCalled();
+    })
+  })
 });

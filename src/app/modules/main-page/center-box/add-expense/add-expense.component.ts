@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, HostListener, OnDestroy, OnInit} from '@angular/core';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import {MatChipInputEvent} from '@angular/material/chips';
 import {MatDialogRef} from "@angular/material/dialog";
@@ -59,6 +59,15 @@ export class AddExpenseComponent implements OnInit, OnDestroy {
   public defaultWidth: string = '450px';
   public payerSelectWidth: string = '600px';
   public divideWidth: string = '750px';
+  public isMobile: boolean = false;
+
+  @HostListener('window:resize', ['$event'])
+  onResize() {
+    this.isMobile = window.outerHeight < 700;
+    if (this.isMobile) {
+      this.dialogRef.updateSize('250px', '400px');
+    }
+  }
 
   constructor(public dialogRef: MatDialogRef<AddExpenseComponent>,
               private http: HttpClient, private currencyApiService: CurrencyInfoApiService,
@@ -236,9 +245,7 @@ export class AddExpenseComponent implements OnInit, OnDestroy {
     }
     const addExpenseSub = this.authApiService.addExpense(this.finalExpenseForUser, this.whoPaid,
       this.description, this.groupName).subscribe(() => {
-      this.updateList();
       this.updateBalance();
-      this.dialogRef.close();
       this.openSuccessSnackBar(SnackbarEnums.AddExpenseSuccess);
     })
     this.subscriptions.add(addExpenseSub);
@@ -246,24 +253,25 @@ export class AddExpenseComponent implements OnInit, OnDestroy {
   }
 
   updateBalance(): void {
-
     const balanceUpdateSub = this.authApiService.balanceCheck(this.cookieService.get('userId')).subscribe(data => {
       this.userBalanceService.onValuesChange(data.income, data.outcome);
-      this.subscriptions.unsubscribe();
+      this.updateList();
     })
     this.subscriptions.add(balanceUpdateSub);
-
   }
 
   updateList(): void {
     this.expensesArrayMinus$.subscribe(array => this.expensesArrayMinus = array);
     this.expensesArrayPlus$.subscribe(array => this.expensesArrayPlus = array);
+    this.expensesArrayPlus = [];
+    this.expensesArrayMinus = [];
+
     const expensesSubPlus = this.authApiService.expensesInfoPlus(this.cookieService.get('userId'), this.groupName).subscribe(data => {
       this.expensesArrayPlus.splice(0, this.expensesArrayPlus.length);
       for (let expense in data.expensesArray) {
         this.expensesArrayPlus.push(data.expensesArray[expense]);
       }
-
+      this.groupService.expensesArrayPlusSource.next(this.expensesArrayPlus);
     })
 
     const expensesSubMinus = this.authApiService.expensesInfoMinus(this.cookieService.get('userId'), this.groupName).subscribe(data => {
@@ -271,6 +279,8 @@ export class AddExpenseComponent implements OnInit, OnDestroy {
       for (let expense in data.expensesArray) {
         this.expensesArrayMinus.push(data.expensesArray[expense]);
       }
+      this.groupService.expensesArrayMinusSource.next(this.expensesArrayMinus);
+      this.dialogRef.close();
     })
     this.subscriptions.add(expensesSubMinus);
     this.subscriptions.add(expensesSubPlus);

@@ -45,6 +45,7 @@ export class ViewChoiceComponent implements OnInit, OnDestroy {
       for (let expense in data.expensesArray) {
         this.expensesArrayPlus.push(data.expensesArray[expense]);
       }
+      this.groupService.expensesArrayPlusSource.next(this.expensesArrayPlus);
     })
 
     const expensesSubMinus = this.authApiService.expensesInfoMinus(this.cookieService.get('userId'), this.selectedCenterBoxView).subscribe(data => {
@@ -52,6 +53,7 @@ export class ViewChoiceComponent implements OnInit, OnDestroy {
       for (let expense in data.expensesArray) {
         this.expensesArrayMinus.push(data.expensesArray[expense]);
       }
+      this.groupService.expensesArrayMinusSource.next(this.expensesArrayMinus);
     })
 
     this.selectedSubscription.add(expensesSubMinus);

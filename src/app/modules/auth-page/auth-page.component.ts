@@ -1,4 +1,4 @@
-import {Component, HostListener, OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
+import {Component, HostListener, OnDestroy, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, Validators} from "@angular/forms";
 import {animate, state, style, transition, trigger} from "@angular/animations";
 import {MatSnackBar} from "@angular/material/snack-bar";
@@ -15,7 +15,6 @@ import {SnackbarEnums} from "../shared/snackbar-enums"
   selector: 'app-auth-page',
   templateUrl: './auth-page.component.html',
   styleUrls: ['./auth-page.component.scss'],
-  encapsulation: ViewEncapsulation.None,
   animations: [
     trigger('buttonState', [
       state('hidden', style({
@@ -105,7 +104,7 @@ export class AuthPageComponent implements OnInit, OnDestroy {
 
   public logIn(): void {
     const {email, password} = this.defaultForm.value;
-    const loginSub = this.authApi.login(email, password).subscribe(data => {
+    this.subscriptions.add(this.authApi.login(email, password).subscribe(data => {
       if (data.passwordCorrect) {
         this.checkBool = true;
         this.cookieService.set('token', data.token);
@@ -116,8 +115,8 @@ export class AuthPageComponent implements OnInit, OnDestroy {
       } else {
         this.openErrorSnackBar(SnackbarEnums.AuthPageLoginFailure)
       }
-    })
-    this.subscriptions.add(loginSub)
+    }))
+
   }
 
 

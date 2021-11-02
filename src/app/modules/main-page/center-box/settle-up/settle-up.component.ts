@@ -54,9 +54,7 @@ export class SettleUpComponent implements OnInit, OnDestroy {
   onPayUp(): void {
     const settleUpSub = this.authApiService.settleUp(this.cookieService.get('userId'), this.valueOwedToUser, this.groupName).subscribe(
       () => {
-        this.updateList();
         this.updateBalance();
-        this.dialogRef.close();
         this.openSuccessSnackBar(SnackbarEnums.SettleUpSuccess)
       })
     this.subscriptions.add(settleUpSub);
@@ -68,7 +66,7 @@ export class SettleUpComponent implements OnInit, OnDestroy {
     const differenceSub = this.userBalanceService.differenceSource.subscribe(difference => this.difference = difference)
     const balanceUpdateSub = this.authApiService.balanceCheck(this.cookieService.get('userId')).subscribe(data => {
       this.userBalanceService.onValuesChange(data.income, data.outcome);
-      this.subscriptions.unsubscribe();
+      this.updateList();
     })
     this.subscriptions.add(balanceUpdateSub);
     this.subscriptions.add(incomeSub);
@@ -84,17 +82,20 @@ export class SettleUpComponent implements OnInit, OnDestroy {
       for (let expense in data.expensesArray) {
         this.expensesArrayPlus.push(data.expensesArray[expense]);
       }
-      console.log(this.expensesArrayPlus);
+      this.groupService.expensesArrayPlusSource.next(this.expensesArrayPlus);
     })
     const expensesSubMinus = this.authApiService.expensesInfoMinus(this.cookieService.get('userId'), this.groupName).subscribe(data => {
       this.expensesArrayMinus.splice(0, this.expensesArrayMinus.length);
       for (let expense in data.expensesArray) {
         this.expensesArrayMinus.push(data.expensesArray[expense]);
       }
-      console.log(this.expensesArrayMinus);
+      this.groupService.expensesArrayMinusSource.next(this.expensesArrayMinus);
+      this.dialogRef.close();
+
     })
     this.subscriptions.add(expensesSubMinus);
     this.subscriptions.add(expensesSubPlus);
+
   }
 
   public openSuccessSnackBar(message: string): void {
