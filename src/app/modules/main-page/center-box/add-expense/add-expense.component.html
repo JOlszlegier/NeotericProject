@@ -99,21 +99,24 @@
             <div class="values-input">
               <input matInput class="percent-input" *ngIf="inputPercentVisible"
                      autocomplete="off" [(ngModel)]="percentToDivide[i]"
-                     (change)="divideByPercent()"
+                     (change)="divideByPercent()" min="0"
+                     oninput="value = !!value && Math.abs(value) >= 0 ? Math.abs(value) : null"
                      type="number">
               <input matInput class="percent-input" *ngIf="inputValueVisible"
                      autocomplete="off" [(ngModel)]="valueToDivide[i]"
+                     min="0" lang="en-US"
+                     oninput="value = !!value && Math.abs(value) >= 0 ? Math.abs(value) : null"
                      type="number" (change)="divideByValues(i)">
               <div>{{eachUserAmount[i] ? eachUserAmount[i].toFixed(2) : ''}}</div>
             </div>
           </div>
         </mat-list-item>
         <div class="extra-info-percentages" *ngIf="inputPercentVisible">
-          <p *ngIf="percentagesLeft  > 0">{{percentagesLeft}}% left, please change the values!
+          <p *ngIf="percentagesLeft  > 0">{{percentagesLeft | number: '1.0-2'}}% left, please change the values!
           <p *ngIf="percentagesLeft < 0"> Invalid amount!</p>
         </div>
         <div class="extra-info-values" *ngIf="inputValueVisible">
-          <p *ngIf="valueLeft > 0">{{valueLeft}} left, please change the values!
+          <p *ngIf="valueLeft > 0">{{valueLeft| number: '1.0-2'}} left, please change the values!
           <p *ngIf="valueLeft < 0"> Invalid amount!</p>
         </div>
       </mat-list>
