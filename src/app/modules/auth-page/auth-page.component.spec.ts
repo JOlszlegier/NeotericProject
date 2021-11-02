@@ -12,7 +12,7 @@ import {of} from "rxjs";
 import {AuthPageComponent} from './auth-page.component';
 import {AuthApiService} from "../../core/services/auth-api-service";
 import {CurrencyInfoApiService} from "../../core/services/currency-info-api-service";
-
+import {AuthApiServiceMock, CookieServiceMock, snackbarMock} from "../../../unit/auth-mock";
 
 describe('AuthPageComponent', () => {
   let component: AuthPageComponent;
@@ -21,42 +21,6 @@ describe('AuthPageComponent', () => {
   let authApiService: AuthApiService;
   let cookieService: CookieService;
 
-  class AuthApiServiceMock {
-    login() {
-      return of({
-        token: '123',
-        passwordCorrect: true,
-        expirationDate: 123,
-        userId: '123',
-        userName: 'testUser'
-      });
-    }
-
-    register() {
-      return of({
-        token: '123',
-        registerSuccess: true
-      });
-    }
-  }
-
-  class CookieServiceMock {
-    cookieState = {} as any;
-
-    get(key: string) {
-      return this.cookieState[key]
-    }
-
-    set(key: string, value: string) {
-      this.cookieState[key] = value;
-    }
-  }
-
-  const snackbarMock = {
-    openFromComponent: jest.fn(),
-    open: jest.fn(),
-    dismiss: jest.fn()
-  }
 
   beforeEach((async () => {
     await TestBed.configureTestingModule({

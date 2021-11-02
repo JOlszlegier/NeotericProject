@@ -100,12 +100,10 @@
               <input matInput class="percent-input" *ngIf="inputPercentVisible"
                      autocomplete="off" [(ngModel)]="percentToDivide[i]"
                      (change)="divideByPercent()" min="0"
-                     oninput="value = !!value && Math.abs(value) >= 0 ? Math.abs(value) : null"
                      type="number">
               <input matInput class="percent-input" *ngIf="inputValueVisible"
                      autocomplete="off" [(ngModel)]="valueToDivide[i]"
                      min="0" lang="en-US"
-                     oninput="value = !!value && Math.abs(value) >= 0 ? Math.abs(value) : null"
                      type="number" (change)="divideByValues(i)">
               <div>{{eachUserAmount[i] ? eachUserAmount[i].toFixed(2) : ''}}</div>
             </div>
