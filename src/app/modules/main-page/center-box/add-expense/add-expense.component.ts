@@ -86,6 +86,7 @@ export class AddExpenseComponent implements OnInit, OnDestroy {
     this.subscriptions.unsubscribe();
   }
 
+
   public add(event: MatChipInputEvent): void {
     const value = (event.value || '').trim();
     if (value === this.users[0]) {
@@ -98,9 +99,7 @@ export class AddExpenseComponent implements OnInit, OnDestroy {
     if (value && value != this.users[0]) {
       this.checkUser(value, event);
     }
-    if (this.users.length > 2) {
-      this.divideSelect();
-    }
+
   }
 
   public remove(user: string): void {

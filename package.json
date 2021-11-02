@@ -2,15 +2,16 @@
   "name": "splitwise-app",
   "version": "0.0.0",
   "engines": {
-    "node": "14.x"
+    "node": "14.17.4"
   },
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "build": "ng build --prod",
     "watch": "ng build --watch --configuration development",
     "test": "jest --detect-open-handles",
-    "postinstall": "ngcc"
+    "postinstall": "ngcc",
+    "heroku-postbuild": "ng-build --prod"
   },
   "private": true,
   "dependencies": {
