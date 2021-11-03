@@ -37,26 +37,34 @@ export class ViewChoiceComponent implements OnInit, OnDestroy {
   }
 
 
-  onClick(selected: string): void {
-    this.expensesArrayMinus.splice(0, this.expensesArrayMinus.length);
-    this.expensesArrayPlus.splice(0, this.expensesArrayPlus.length);
+  public onClick(selected: string): void {
+
+    this.groupService.changeSearch([]);
+    this.groupService.expensesArrayPlusSource.next([]);
+    this.groupService.expensesArrayMinusSource.next([]);
+
+    if (this.selectedCenterBoxView != 'Location') {
+      this.centerBoxService.onChangeSelected(selected);
+      const expensesSubPlus = this.authApiService.expensesInfoPlus(this.cookieService.get('userId'), this.selectedCenterBoxView).subscribe(data => {
+        this.expensesArrayPlus.splice(0, this.expensesArrayPlus.length);
+        for (let expense in data.expensesArray) {
+          this.expensesArrayPlus.push(data.expensesArray[expense]);
+        }
+        this.groupService.expensesArrayPlusSource.next(this.expensesArrayPlus);
+      })
+
+      const expensesSubMinus = this.authApiService.expensesInfoMinus(this.cookieService.get('userId'), this.selectedCenterBoxView).subscribe(data => {
+        this.expensesArrayMinus.splice(0, this.expensesArrayMinus.length);
+        for (let expense in data.expensesArray) {
+          this.expensesArrayMinus.push(data.expensesArray[expense]);
+        }
+        this.groupService.expensesArrayMinusSource.next(this.expensesArrayMinus);
+      })
+
+
+      this.selectedSubscription.add(expensesSubMinus);
+      this.selectedSubscription.add(expensesSubPlus);
+    }
     this.centerBoxService.onChangeSelected(selected);
-    const expensesSubPlus = this.authApiService.expensesInfoPlus(this.cookieService.get('userId'), this.selectedCenterBoxView).subscribe(data => {
-      for (let expense in data.expensesArray) {
-        this.expensesArrayPlus.push(data.expensesArray[expense]);
-      }
-      this.groupService.expensesArrayPlusSource.next(this.expensesArrayPlus);
-    })
-
-    const expensesSubMinus = this.authApiService.expensesInfoMinus(this.cookieService.get('userId'), this.selectedCenterBoxView).subscribe(data => {
-
-      for (let expense in data.expensesArray) {
-        this.expensesArrayMinus.push(data.expensesArray[expense]);
-      }
-      this.groupService.expensesArrayMinusSource.next(this.expensesArrayMinus);
-    })
-
-    this.selectedSubscription.add(expensesSubMinus);
-    this.selectedSubscription.add(expensesSubPlus);
   }
 }

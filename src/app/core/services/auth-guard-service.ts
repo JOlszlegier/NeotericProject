@@ -11,18 +11,6 @@ export class AuthGuardService implements CanActivate {
   constructor(private http: HttpClient, private router: Router, private cookieService: CookieService) {
   }
 
-  // token verification,might be useful
-  // public tokenVerificationURL = 'http://localhost:3000/token-verification'
-  // public isLoggedIn: boolean = false;
-  // public async tokenCheck() {
-  //   await this.http.get(this.tokenVerificationURL,).subscribe(res => {
-  //     this.isLoggedIn = true;
-  //   }, err => {
-  //     this.isLoggedIn = false;
-  //   });
-  // }
-
-
   public canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
     let currentDate = new Date();
     let expirationDate = Number(this.cookieService.get('expiration-date'))
