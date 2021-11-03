@@ -10,8 +10,7 @@
     "build": "ng build --prod",
     "watch": "ng build --watch --configuration development",
     "test": "jest --detect-open-handles",
-    "heroku-prebuild": "npm i",
-    "heroku-postbuild": "ng-build --prod"
+    "heroku-prebuild": "npm i"
   },
   "private": true,
   "dependencies": {
