@@ -11,6 +11,7 @@
     "watch": "ng build --watch --configuration development",
     "test": "jest --detect-open-handles",
     "postinstall": "ngcc",
+    "heroku-prebuild": "npm i",
     "heroku-postbuild": "ng-build --prod"
   },
   "private": true,
