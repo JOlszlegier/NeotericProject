@@ -20,8 +20,8 @@ export class HeaderComponent implements OnDestroy {
 
   public onLogout(): void {
     this.subscription = this.mobileView$.subscribe(state => this.mobileView = state);
-    this.router.navigate(['']);
     this.cookieService.deleteAll();
+    this.router.navigate(['']);
   }
 
   public onMobileView(): void {
