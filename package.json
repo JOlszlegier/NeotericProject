@@ -6,7 +6,7 @@
   },
   "scripts": {
     "ng": "ng",
-    "start": "cd src && ts-node server.ts",
+    "start": "ng serve",
     "build": "ng build --prod",
     "watch": "ng build --watch --configuration development",
     "test": "jest --detect-open-handles",
