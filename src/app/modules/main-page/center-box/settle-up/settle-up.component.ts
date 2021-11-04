@@ -18,8 +18,8 @@ import {Expenses} from "../../../../core/interfaces/interfaces";
 })
 export class SettleUpComponent implements OnInit, OnDestroy {
   private subscriptions = new Subscription()
-  public whoYouOweTo: [string] = ['']
-  public amountYouOweTo: [number] = [0];
+  public whoYouOweTo: string[] = ['']
+  public amountYouOweTo: number[] = [0];
   public valueOwedToUser: [{ to: number, value: number }] = [{to: 0, value: 0}]
   public difference: number = 0;
   public outcome: number = 0;

@@ -6,10 +6,10 @@ import {Subscription} from "rxjs";
 import {CookieService} from "ngx-cookie-service";
 
 import {authText} from "./shared/enums/auth.enums";
-import {AuthService} from "../../core/services/auth-service";
 import {AuthApiService} from "../../core/services/auth-api-service";
 import {CurrencyInfoApiService} from "../../core/services/currency-info-api-service";
 import {SnackbarEnums} from "../shared/snackbar-enums"
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-auth-page',
@@ -45,9 +45,9 @@ export class AuthPageComponent implements OnInit, OnDestroy {
   public isMobile: boolean = window.outerHeight < 700;
   public checkBool: boolean = false;
 
-  constructor(private authService: AuthService, private fb: FormBuilder,
+  constructor(private fb: FormBuilder,
               private authApi: AuthApiService, private cookieService: CookieService,
-              private currencyApi: CurrencyInfoApiService, private snackBar: MatSnackBar) {
+              private currencyApi: CurrencyInfoApiService, private snackBar: MatSnackBar, private router: Router) {
 
   }
 
@@ -111,7 +111,7 @@ export class AuthPageComponent implements OnInit, OnDestroy {
         this.cookieService.set('expiration-date', data.expirationDate.toString())
         this.cookieService.set('userId', data.userId);
         this.cookieService.set('userName', data.userName);
-        this.authService.onLogInActions();
+        this.router.navigate(['/main']);
       } else {
         this.openErrorSnackBar(SnackbarEnums.AuthPageLoginFailure)
       }

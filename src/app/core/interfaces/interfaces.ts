@@ -44,8 +44,8 @@ export interface ValueOwedToUser {
 
 export interface SettleUpInfoResponse {
   valueOwedToUser: [ValueOwedToUser],
-  expensesId: [number];
-  userNames: [string]
+  expensesId: number[];
+  userNames: string[]
 }
 
 export interface SettleUpResponse {
@@ -58,8 +58,9 @@ export interface AddExpenseResponse {
 
 
 export interface ExpensesInfo {
-  expensesArray: [{ description: string, amount: number }];
+  expensesArray: [Expenses];
 }
+
 
 export interface Expenses {
   description: string,
