@@ -10,6 +10,7 @@ import {AuthApiService} from "../../core/services/auth-api-service";
 import {CurrencyInfoApiService} from "../../core/services/currency-info-api-service";
 import {SnackbarEnums} from "../shared/snackbar-enums"
 import {Router} from "@angular/router";
+import {MessagesService} from "../../core/services/messages-service";
 
 @Component({
   selector: 'app-auth-page',
@@ -47,7 +48,8 @@ export class AuthPageComponent implements OnInit, OnDestroy {
 
   constructor(private fb: FormBuilder,
               private authApi: AuthApiService, private cookieService: CookieService,
-              private currencyApi: CurrencyInfoApiService, private snackBar: MatSnackBar, private router: Router) {
+              private currencyApi: CurrencyInfoApiService, private snackBar: MatSnackBar,
+              private router: Router, private messageService: MessagesService) {
 
   }
 
@@ -92,11 +94,11 @@ export class AuthPageComponent implements OnInit, OnDestroy {
     const {email, password, name} = this.defaultForm.value;
     const registerSub = this.authApi.register(email, name, password).subscribe(data => {
       if (data.registerSuccess) {
-        this.openSuccessSnackBar(SnackbarEnums.AuthPageRegisterSuccess)
+        this.messageService.openSuccessSnackBarAuthPage(SnackbarEnums.AuthPageRegisterSuccess, this.isMobile)
         this.cookieService.set('token', data.token);
         this.isInLogInMode = true;
       } else {
-        this.openErrorSnackBar(SnackbarEnums.AuthPageRegisterError)
+        this.messageService.openErrorSnackBarAuthPage(SnackbarEnums.AuthPageRegisterError, this.isMobile)
       }
     })
     this.subscriptions.add(registerSub);
@@ -113,12 +115,11 @@ export class AuthPageComponent implements OnInit, OnDestroy {
         this.cookieService.set('userName', data.userName);
         this.router.navigate(['/main']);
       } else {
-        this.openErrorSnackBar(SnackbarEnums.AuthPageLoginFailure)
+        this.messageService.openErrorSnackBarAuthPage(SnackbarEnums.AuthPageLoginFailure, this.isMobile);
       }
     }))
 
   }
-
 
   public formSubmit(): void {
     if (this.isInLogInMode) {
@@ -126,24 +127,6 @@ export class AuthPageComponent implements OnInit, OnDestroy {
     } else {
       this.signIn();
     }
-  }
-
-
-  public openSuccessSnackBar(message: string): void {
-    this.snackBar.open(message, '', {
-      panelClass: ['auth-page-success-snackbar'],
-      duration: 3000,
-      verticalPosition: this.isMobile ? "top" : "bottom",
-
-    })
-  }
-
-  public openErrorSnackBar(message: string): void {
-    this.snackBar.open(message, '', {
-      panelClass: ['auth-page-error-snackbar'],
-      duration: 3000,
-      verticalPosition: this.isMobile ? "top" : "bottom"
-    })
   }
 
 

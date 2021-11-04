@@ -27,4 +27,21 @@ export class MessagesService {
       duration: 2000
     })
   }
+
+  public openSuccessSnackBarAuthPage(message: string, isMobile: boolean): void {
+    this.snackBar.open(message, '', {
+      panelClass: ['auth-page-success-snackbar'],
+      duration: 3000,
+      verticalPosition: isMobile ? "top" : "bottom",
+
+    })
+  }
+
+  public openErrorSnackBarAuthPage(message: string, isMobile: boolean): void {
+    this.snackBar.open(message, '', {
+      panelClass: ['auth-page-error-snackbar'],
+      duration: 3000,
+      verticalPosition: isMobile ? "top" : "bottom"
+    })
+  }
 }
