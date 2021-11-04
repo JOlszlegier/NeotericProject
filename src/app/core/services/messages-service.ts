@@ -10,35 +10,19 @@ export class MessagesService {
   }
 
   public openSuccessSnackBar(message: string, durationTime: number, isMobile?: boolean): void {
-    if (isMobile != undefined) {
-      this.snackBar.open(message, '', {
-        panelClass: ['add-group-success-snackbar'],
-        duration: durationTime,
-        verticalPosition: isMobile ? "top" : "bottom",
-        horizontalPosition: "left"
-      })
-    }
     this.snackBar.open(message, '', {
       panelClass: ['add-group-success-snackbar'],
       duration: durationTime,
-      verticalPosition: "top",
+      verticalPosition: !isMobile ? "top" : "bottom",
       horizontalPosition: "left"
     })
   }
 
   public openErrorSnackBar(message: string, durationTime: number, isMobile?: boolean): void {
-    if (isMobile != undefined) {
-      this.snackBar.open(message, '', {
-        panelClass: ['add-group-error-snackbar'],
-        duration: durationTime,
-        verticalPosition: isMobile ? "top" : "bottom",
-        horizontalPosition: "left"
-      })
-    }
     this.snackBar.open(message, '', {
       panelClass: ['add-group-error-snackbar'],
       duration: durationTime,
-      verticalPosition: "top",
+      verticalPosition: !isMobile ? "top" : "bottom",
       horizontalPosition: "left"
     })
   }
