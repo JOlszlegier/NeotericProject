@@ -12,7 +12,8 @@ export class CurrencyInfoApiService {
     this.httpClient = new HttpClient(handler)
   }
 
-  public urlAddress: string = 'http://api.exchangeratesapi.io/v1/latest?access_key=6ad942ce3abac5d14a21235d48f68e2a&symbols=USD,PLN&format=1'
+  // public urlAddress: string = 'https://api.exchangeratesapi.io/v1/latest?access_key=6ad942ce3abac5d14a21235d48f68e2a&symbols=USD,PLN&format=1'
+  public urlAddress: string = 'https://cors-anywhere.herokuapp.com/http://api.exchangeratesapi.io/v1/latest?access_key=6ad942ce3abac5d14a21235d48f68e2a&symbols=USD,PLN&format=1'
 
   public getCurrencyInfoFromApi(): Observable<CurrencyApiResponse> {
     return this.httpClient.get<CurrencyApiResponse>(this.urlAddress);
