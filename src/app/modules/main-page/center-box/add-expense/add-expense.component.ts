@@ -3,7 +3,6 @@ import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import {MatChipInputEvent} from '@angular/material/chips';
 import {MatDialogRef} from "@angular/material/dialog";
 import {HttpClient} from "@angular/common/http";
-import {MatSnackBar} from "@angular/material/snack-bar";
 import {Subscription} from "rxjs";
 import {CookieService} from "ngx-cookie-service";
 
@@ -15,6 +14,7 @@ import {CenterBoxService} from "../../../../core/services/center-box-service";
 import {GroupService} from "../../../../core/services/group-service";
 import {SnackbarEnums} from "../../../shared/snackbar-enums";
 import {Expenses} from "../../../../core/interfaces/interfaces";
+import {MessagesService} from "../../../../core/services/messages-service";
 
 @Component({
   selector: 'app-add-expense',
@@ -71,7 +71,7 @@ export class AddExpenseComponent implements OnInit, OnDestroy {
               private cookieService: CookieService, private authApiService: AuthApiService,
               private userBalanceService: UserBalanceService,
               private centerBoxService: CenterBoxService, private groupService: GroupService,
-              private snackBar: MatSnackBar) {
+              private messageService: MessagesService) {
   }
 
   public ngOnInit(): void {
@@ -90,7 +90,7 @@ export class AddExpenseComponent implements OnInit, OnDestroy {
   public add(event: MatChipInputEvent): void {
     const value = (event.value || '').trim();
     if (value === this.users[0]) {
-      this.openErrorSnackBar(SnackbarEnums.AddExpensesAddingYourself);
+      this.messageService.openErrorSnackBarAddExpense(SnackbarEnums.AddExpensesAddingYourself);
     } else if (value) {
       this.users.push(value);
       this.eachUserAmount.push(0);
@@ -221,7 +221,7 @@ export class AddExpenseComponent implements OnInit, OnDestroy {
       this.correctFriend = data.correctUser;
       if (!this.correctFriend) {
         this.users.splice(this.users.indexOf(friend), 1);
-        this.openErrorSnackBar(SnackbarEnums.AddExpenseIncorrectUser)
+        this.messageService.openErrorSnackBarAddExpense(SnackbarEnums.AddExpenseIncorrectUser)
       }
       if (data.correctUser) {
         event.chipInput?.clear();
@@ -253,7 +253,7 @@ export class AddExpenseComponent implements OnInit, OnDestroy {
     const addExpenseSub = this.authApiService.addExpense(this.finalExpenseForUser, this.whoPaid,
       this.description, this.groupName).subscribe(() => {
       this.updateBalance();
-      this.openSuccessSnackBar(SnackbarEnums.AddExpenseSuccess);
+      this.messageService.openSuccessSnackBarAddFriend(SnackbarEnums.AddExpenseSuccess);
     })
     this.subscriptions.add(addExpenseSub);
 
@@ -293,20 +293,5 @@ export class AddExpenseComponent implements OnInit, OnDestroy {
     this.subscriptions.add(expensesSubPlus);
   }
 
-  openErrorSnackBar(message: string): void {
-    this.snackBar.open(message, '', {
-      panelClass: ['add-expense-error-snackbar'],
-      verticalPosition: "bottom",
-      duration: 3000
-    })
-  }
 
-  openSuccessSnackBar(message: string): void {
-    this.snackBar.open(message, '', {
-      panelClass: ['add-expense-success-snackbar'],
-      verticalPosition: "top",
-      horizontalPosition: "left",
-      duration: 3000
-    })
-  }
 }

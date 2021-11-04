@@ -62,4 +62,12 @@ export class MessagesService {
     });
   }
 
+  public openErrorSnackBarAddExpense(message: string): void {
+    this.snackBar.open(message, '', {
+      panelClass: ['add-expense-error-snackbar'],
+      verticalPosition: "bottom",
+      duration: 3000
+    })
+  }
+
 }
