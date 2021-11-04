@@ -56,7 +56,7 @@ export class AddGroupPageComponent implements OnInit, OnDestroy {
 
   public addNewPeople(): void {
     if (this.formTemplate.value.users.length > 7) {
-      this.messageService.openErrorSnackBarAddGroup(`You can't add more users!`, 3000);
+      this.messageService.openErrorSnackBar(`You can't add more users!`, 3000);
     } else {
       (this.formTemplate.controls['users'] as FormArray).push(this.createUser())
     }
@@ -80,7 +80,7 @@ export class AddGroupPageComponent implements OnInit, OnDestroy {
       this.formTemplate.value.groupName, emailsArray)
       .subscribe(() => {
         this.router.navigate(['/main']);
-        this.messageService.openSuccessSnackBarAddGroup(SnackbarEnums.AddGroupSuccess);
+        this.messageService.openSuccessSnackBar(SnackbarEnums.AddGroupSuccess, 2000);
       })
     this.subscriptions.add(addGroupSub);
   }
@@ -94,7 +94,7 @@ export class AddGroupPageComponent implements OnInit, OnDestroy {
       this.isFriendCorrect = data.correctUser;
       if (!data.correctUser) {
         this.incorrectUsers.push(friend);
-        this.messageService.openErrorSnackBarAddGroup(SnackbarEnums.AddGroupFailure, 30000)
+        this.messageService.openErrorSnackBar(SnackbarEnums.AddGroupFailure, 30000)
       }
       let emailsArray: string[] = this.formTemplate.value.users.map((item: { email: any; }) => item.email);
       for (let index in this.incorrectUsers) {

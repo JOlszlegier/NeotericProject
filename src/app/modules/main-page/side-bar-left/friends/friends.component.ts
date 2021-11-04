@@ -34,9 +34,9 @@ export class FriendsComponent implements OnInit, OnDestroy {
     const addFriendSub = this.authApiService.addFriend(this.cookieService.get('userId'), friend).subscribe(data => {
       this.friendsList = data.friends;
       if (data.errorMessage) {
-        this.messageService.openErrorSnackBarAddFriend(data.errorMessage);
+        this.messageService.openErrorSnackBar(data.errorMessage, 3000);
       } else if (data.successMessage) {
-        this.messageService.openSuccessSnackBarAddFriend(data.successMessage);
+        this.messageService.openSuccessSnackBar(data.successMessage, 3000);
         this.friendsService.friendsList.next(this.friendsList);
       }
     })

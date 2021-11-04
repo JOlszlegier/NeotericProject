@@ -90,7 +90,7 @@ export class AddExpenseComponent implements OnInit, OnDestroy {
   public add(event: MatChipInputEvent): void {
     const value = (event.value || '').trim();
     if (value === this.users[0]) {
-      this.messageService.openErrorSnackBarAddExpense(SnackbarEnums.AddExpensesAddingYourself);
+      this.messageService.openErrorSnackBar(SnackbarEnums.AddExpensesAddingYourself, 3000);
     } else if (value) {
       this.users.push(value);
       this.eachUserAmount.push(0);
@@ -221,7 +221,7 @@ export class AddExpenseComponent implements OnInit, OnDestroy {
       this.correctFriend = data.correctUser;
       if (!this.correctFriend) {
         this.users.splice(this.users.indexOf(friend), 1);
-        this.messageService.openErrorSnackBarAddExpense(SnackbarEnums.AddExpenseIncorrectUser)
+        this.messageService.openErrorSnackBar(SnackbarEnums.AddExpenseIncorrectUser, 3000)
       }
       if (data.correctUser) {
         event.chipInput?.clear();
@@ -253,7 +253,7 @@ export class AddExpenseComponent implements OnInit, OnDestroy {
     const addExpenseSub = this.authApiService.addExpense(this.finalExpenseForUser, this.whoPaid,
       this.description, this.groupName).subscribe(() => {
       this.updateBalance();
-      this.messageService.openSuccessSnackBarAddFriend(SnackbarEnums.AddExpenseSuccess);
+      this.messageService.openSuccessSnackBar(SnackbarEnums.AddExpenseSuccess, 3000);
     })
     this.subscriptions.add(addExpenseSub);
 

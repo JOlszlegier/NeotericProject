@@ -94,11 +94,11 @@ export class AuthPageComponent implements OnInit, OnDestroy {
     const {email, password, name} = this.defaultForm.value;
     const registerSub = this.authApi.register(email, name, password).subscribe(data => {
       if (data.registerSuccess) {
-        this.messageService.openSuccessSnackBarAuthPage(SnackbarEnums.AuthPageRegisterSuccess, this.isMobile)
+        this.messageService.openSuccessSnackBar(SnackbarEnums.AuthPageRegisterSuccess, 3000, this.isMobile)
         this.cookieService.set('token', data.token);
         this.isInLogInMode = true;
       } else {
-        this.messageService.openErrorSnackBarAuthPage(SnackbarEnums.AuthPageRegisterError, this.isMobile)
+        this.messageService.openErrorSnackBar(SnackbarEnums.AuthPageRegisterError, 3000, this.isMobile)
       }
     })
     this.subscriptions.add(registerSub);
@@ -115,7 +115,7 @@ export class AuthPageComponent implements OnInit, OnDestroy {
         this.cookieService.set('userName', data.userName);
         this.router.navigate(['/main']);
       } else {
-        this.messageService.openErrorSnackBarAuthPage(SnackbarEnums.AuthPageLoginFailure, this.isMobile);
+        this.messageService.openErrorSnackBar(SnackbarEnums.AuthPageLoginFailure, 3000, this.isMobile);
       }
     }))
 

@@ -58,7 +58,7 @@ export interface AddExpenseResponse {
 
 
 export interface ExpensesInfo {
-  expensesArray: [Expenses];
+  expensesArray: Expenses[];
 }
 
 
