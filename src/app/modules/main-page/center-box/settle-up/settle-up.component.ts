@@ -10,6 +10,7 @@ import {CenterBoxService} from "../../../../core/services/center-box-service";
 import {GroupService} from "../../../../core/services/group-service";
 import {SnackbarEnums} from "../../../shared/snackbar-enums";
 import {Expenses} from "../../../../core/interfaces/interfaces";
+import {MessagesService} from "../../../../core/services/messages-service";
 
 @Component({
   selector: 'app-settle-up',
@@ -18,8 +19,8 @@ import {Expenses} from "../../../../core/interfaces/interfaces";
 })
 export class SettleUpComponent implements OnInit, OnDestroy {
   private subscriptions = new Subscription()
-  public whoYouOweTo: [string] = ['']
-  public amountYouOweTo: [number] = [0];
+  public whoYouOweTo: string[] = ['']
+  public amountYouOweTo: number[] = [0];
   public valueOwedToUser: [{ to: number, value: number }] = [{to: 0, value: 0}]
   public difference: number = 0;
   public outcome: number = 0;
@@ -33,7 +34,8 @@ export class SettleUpComponent implements OnInit, OnDestroy {
 
   constructor(private cookieService: CookieService, private authApiService: AuthApiService,
               private userBalanceService: UserBalanceService, private centerBoxService: CenterBoxService,
-              private groupService: GroupService, private snackBar: MatSnackBar, public dialogRef: MatDialogRef<SettleUpComponent>) {
+              private groupService: GroupService, private snackBar: MatSnackBar, public dialogRef: MatDialogRef<SettleUpComponent>,
+              private messageService: MessagesService) {
   }
 
   ngOnInit(): void {
@@ -55,7 +57,7 @@ export class SettleUpComponent implements OnInit, OnDestroy {
     const settleUpSub = this.authApiService.settleUp(this.cookieService.get('userId'), this.valueOwedToUser, this.groupName).subscribe(
       () => {
         this.updateBalance();
-        this.openSuccessSnackBar(SnackbarEnums.SettleUpSuccess)
+        this.messageService.openSuccessSnackBar(SnackbarEnums.SettleUpSuccess, 3000)
       })
     this.subscriptions.add(settleUpSub);
   }
@@ -98,13 +100,5 @@ export class SettleUpComponent implements OnInit, OnDestroy {
 
   }
 
-  public openSuccessSnackBar(message: string): void {
-    this.snackBar.open(message, '', {
-      duration: 3000,
-      panelClass: ['settle-up-success-snackbar'],
-      horizontalPosition: "left",
-      verticalPosition: 'top'
-    })
-  }
 
 }

@@ -60,7 +60,6 @@ export class GroupsComponent implements OnInit, OnDestroy {
 
   public onGroupClick(groupName: string): void {
     this.centerBoxService.onChangeSelected(groupName);
-
     const usersSearchSub = this.authApiService.getUsersInGroup(groupName).subscribe(users => {
       this.selectedGroupUsers = users;
       this.groupService.changeSearch(this.selectedGroupUsers);
@@ -73,6 +72,7 @@ export class GroupsComponent implements OnInit, OnDestroy {
       for (let expense in data.expensesArray) {
         this.expensesArrayPlus.push(data.expensesArray[expense]);
       }
+      this.groupService.expensesArrayPlusSource.next(this.expensesArrayPlus);
     })
 
     const expensesSubMinus = this.authApiService.expensesInfoMinus(this.cookieService.get('userId'), this.selectedGroupName).subscribe(data => {
@@ -80,6 +80,7 @@ export class GroupsComponent implements OnInit, OnDestroy {
       for (let expense in data.expensesArray) {
         this.expensesArrayMinus.push(data.expensesArray[expense]);
       }
+      this.groupService.expensesArrayMinusSource.next(this.expensesArrayMinus);
     })
 
     this.subscriptions.add(expensesSubMinus);

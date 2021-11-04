@@ -64,7 +64,7 @@
   </div>
   <div class="divide-box" *ngIf="isDivideBoxVisible">
     <button mat-button [ngClass]="{'split-button-selected': splitSelected}" class="split-button"
-            type="button"
+            type="button" *ngIf="(!isMobile || (isMobile && users.length<3))"
             (click)="splitExpenseSelected()">Split the expense
     </button>
     <button mat-button [ngClass]="{'split-button-selected': theyOweSelected}" class="split-button"
