@@ -33,7 +33,6 @@ export class MessagesService {
       panelClass: ['auth-page-success-snackbar'],
       duration: 3000,
       verticalPosition: isMobile ? "top" : "bottom",
-
     })
   }
 
@@ -44,4 +43,23 @@ export class MessagesService {
       verticalPosition: isMobile ? "top" : "bottom"
     })
   }
+
+  public openErrorSnackBarAddFriend(message: string): void {
+    this.snackBar.open(message, '', {
+      panelClass: ['friends-error-snackbar'],
+      duration: 3000,
+      horizontalPosition: 'left',
+      verticalPosition: 'top',
+    });
+  }
+
+  public openSuccessSnackBarAddFriend(message: string): void {
+    this.snackBar.open(message, '', {
+      panelClass: ['friends-success-snackbar'],
+      duration: 3000,
+      horizontalPosition: 'left',
+      verticalPosition: 'top',
+    });
+  }
+
 }

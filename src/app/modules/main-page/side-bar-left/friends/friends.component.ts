@@ -6,6 +6,7 @@ import {CookieService} from "ngx-cookie-service";
 import {SearchService} from "../../../../core/services/search-service";
 import {AuthApiService} from "../../../../core/services/auth-api-service";
 import {FriendsService} from "../../../../core/services/friends-service";
+import {MessagesService} from "../../../../core/services/messages-service";
 
 @Component({
   selector: 'app-friends',
@@ -24,7 +25,8 @@ export class FriendsComponent implements OnInit, OnDestroy {
   public friendsList$ = this.friendsService.friendsList.asObservable();
 
   constructor(private searchService: SearchService, private authApiService: AuthApiService,
-              private cookieService: CookieService, private friendsService: FriendsService, private snackBar: MatSnackBar) {
+              private cookieService: CookieService, private friendsService: FriendsService,
+              private snackBar: MatSnackBar, private messageService: MessagesService) {
   }
 
   addFriend(friend: string): void {
@@ -32,9 +34,9 @@ export class FriendsComponent implements OnInit, OnDestroy {
     const addFriendSub = this.authApiService.addFriend(this.cookieService.get('userId'), friend).subscribe(data => {
       this.friendsList = data.friends;
       if (data.errorMessage) {
-        this.openErrorSnackBar(data.errorMessage);
+        this.messageService.openErrorSnackBarAddFriend(data.errorMessage);
       } else if (data.successMessage) {
-        this.openSuccessSnackBar(data.successMessage);
+        this.messageService.openSuccessSnackBarAddFriend(data.successMessage);
         this.friendsService.friendsList.next(this.friendsList);
       }
     })
@@ -55,23 +57,6 @@ export class FriendsComponent implements OnInit, OnDestroy {
     this.subscriptions.add(updateFriendsListSub);
   }
 
-  openErrorSnackBar(message: string): void {
-    this.snackBar.open(message, '', {
-      panelClass: ['friends-error-snackbar'],
-      duration: 3000,
-      horizontalPosition: 'left',
-      verticalPosition: 'top',
-    });
-  }
-
-  openSuccessSnackBar(message: string): void {
-    this.snackBar.open(message, '', {
-      panelClass: ['friends-success-snackbar'],
-      duration: 3000,
-      horizontalPosition: 'left',
-      verticalPosition: 'top',
-    });
-  }
 
   ngOnDestroy(): void {
     this.subscriptions.unsubscribe()
