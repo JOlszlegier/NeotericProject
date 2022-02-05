@@ -1,9 +1,8 @@
 import {Injectable} from "@angular/core";
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpParams} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {
   AddExpenseResponse,
-  AddFriendResponse,
   AddGroupResponse,
   BalanceCheckResponse,
   CheckFriendResponse,
@@ -22,15 +21,15 @@ export class AuthApiService {
   }
 
   public register(email: string, name: string, password: string): Observable<RegisterResponse> {
-    return this.http.post<RegisterResponse>(`${environment.apiUrl}/create-user`, {
+    return this.http.post<RegisterResponse>(`${environment.nestBackend}/authentication/register`, {
       name, email, password
     });
   }
 
   public login(email: string, password: string): Observable<LoginResponse> {
-    return this.http.post<LoginResponse>(`${environment.apiUrl}/login`, {
+    return this.http.post<LoginResponse>(`${environment.nestBackend}/authentication/log-in`, {
       email, password
-    });
+    }, {withCredentials: true});
   }
 
   public createGroup(name: string, usersEmails: string[]): Observable<AddGroupResponse> {
@@ -59,15 +58,17 @@ export class AuthApiService {
     })
   }
 
-  public addFriend(user: string, friends: string): Observable<AddFriendResponse> {
-    return this.http.post<AddFriendResponse>(`${environment.apiUrl}/add-friend`, {
-      user, friends
+  public addFriend(userId: string, email: string): Observable<string[]> {
+    return this.http.post<string[]>(`${environment.nestBackend}/friends`, {
+      userId, email
     })
   }
 
-  public getFriendsList(user: string): Observable<AddFriendResponse> {
-    return this.http.post<AddFriendResponse>(`${environment.apiUrl}/friends-list`, {
-      user
+  public getFriendsList(userId: number): Observable<any> {
+    let params = new HttpParams().set('userId', userId)
+    return this.http.get<any>(`${environment.nestBackend}/friends`, {
+      params:
+      params
     })
   }
 

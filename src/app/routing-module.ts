@@ -12,7 +12,6 @@ const routes: Routes = [
   {path: 'new-group', canActivate: [AuthGuardService], component: AddGroupPageComponent}
 ]
 
-
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]

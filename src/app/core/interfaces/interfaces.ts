@@ -10,11 +10,12 @@ export interface AddGroupResponse {
 }
 
 export interface LoginResponse {
-  token: string;
-  passwordCorrect: boolean;
-  expirationDate: number;
-  userId: string;
-  userName: string;
+  // token: string;
+  // passwordCorrect: boolean;
+  // expirationDate: number;
+  id: string;
+  name: string;
+  email: string;
 }
 
 export interface RegisterResponse {
@@ -24,8 +25,6 @@ export interface RegisterResponse {
 
 export interface AddFriendResponse {
   friends: string[];
-  errorMessage: string;
-  successMessage: string;
 }
 
 export interface CheckFriendResponse {

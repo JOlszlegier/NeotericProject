@@ -12,7 +12,7 @@ export class TokenInterceptorService implements HttpInterceptor {
   }
 
   public getToken(): string {
-    return this.cookieService.get('token');
+    return this.cookieService.get('Authentication');
   }
 
   intercept(req: any, next: any) {

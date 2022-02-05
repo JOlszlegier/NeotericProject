@@ -14,9 +14,10 @@ export class AuthGuardService implements CanActivate {
   public canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
     let currentDate = new Date();
     let expirationDate = Number(this.cookieService.get('expiration-date'))
-    if (!!this.cookieService.get('token') && expirationDate > currentDate.getTime()) {
+    if (this.cookieService.get('Authentication')) {
       return true;
     } else {
+      this.cookieService.deleteAll();
       this.router.navigate(['/']);
       return false;
     }

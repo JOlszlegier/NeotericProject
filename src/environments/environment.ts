@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'https://neo-split-back.herokuapp.com'
+  apiUrl: 'https://neo-split-back.herokuapp.com',
+  nestBackend: 'http://localhost:3000'
 };
 
 

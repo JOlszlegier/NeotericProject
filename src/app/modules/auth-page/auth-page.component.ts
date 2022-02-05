@@ -74,7 +74,6 @@ export class AuthPageComponent implements OnInit, OnDestroy {
     this.subscriptions.unsubscribe();
   }
 
-
   public subscriptionsAdd(sub: Subscription) {
     this.subscriptions.add(sub);
   }
@@ -93,13 +92,10 @@ export class AuthPageComponent implements OnInit, OnDestroy {
   public signIn(): void {
     const {email, password, name} = this.defaultForm.value;
     const registerSub = this.authApi.register(email, name, password).subscribe(data => {
-      if (data.registerSuccess) {
-        this.messageService.openSuccessSnackBar(SnackbarEnums.AuthPageRegisterSuccess, 3000, this.isMobile)
-        this.cookieService.set('token', data.token);
-        this.isInLogInMode = true;
-      } else {
-        this.messageService.openErrorSnackBar(SnackbarEnums.AuthPageRegisterError, 3000, this.isMobile)
-      }
+      this.messageService.openSuccessSnackBar(SnackbarEnums.AuthPageRegisterSuccess, 3000, this.isMobile)
+      this.isInLogInMode = true;
+    }, err => {
+      this.messageService.openErrorSnackBar(err.error[Object.keys(err.error)[1]], 3000, this.isMobile)
     })
     this.subscriptions.add(registerSub);
   }
@@ -107,18 +103,15 @@ export class AuthPageComponent implements OnInit, OnDestroy {
   public logIn(): void {
     const {email, password} = this.defaultForm.value;
     this.subscriptions.add(this.authApi.login(email, password).subscribe(data => {
-      if (data.passwordCorrect) {
         this.checkBool = true;
-        this.cookieService.set('token', data.token);
-        this.cookieService.set('expiration-date', data.expirationDate.toString())
-        this.cookieService.set('userId', data.userId);
-        this.cookieService.set('userName', data.userName);
+        this.cookieService.set('userId', data.id);
+        this.cookieService.set('userName', data.name);
+        this.cookieService.set('userEmail', data.email)
         this.router.navigate(['/main']);
-      } else {
-        this.messageService.openErrorSnackBar(SnackbarEnums.AuthPageLoginFailure, 3000, this.isMobile);
+      }, err => {
+        this.messageService.openErrorSnackBar(err.error[Object.keys(err.error)[1]], 3000, this.isMobile);
       }
-    }))
-
+    ))
   }
 
   public formSubmit(): void {
@@ -128,6 +121,5 @@ export class AuthPageComponent implements OnInit, OnDestroy {
       this.signIn();
     }
   }
-
 
 }

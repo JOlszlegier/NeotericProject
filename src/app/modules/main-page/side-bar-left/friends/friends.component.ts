@@ -32,13 +32,13 @@ export class FriendsComponent implements OnInit, OnDestroy {
   addFriend(friend: string): void {
     this.newFriend = '';
     const addFriendSub = this.authApiService.addFriend(this.cookieService.get('userId'), friend).subscribe(data => {
-      this.friendsList = data.friends;
-      if (data.errorMessage) {
-        this.messageService.openErrorSnackBar(data.errorMessage, 3000);
-      } else if (data.successMessage) {
-        this.messageService.openSuccessSnackBar(data.successMessage, 3000);
-        this.friendsService.friendsList.next(this.friendsList);
-      }
+      this.friendsList = data;
+      // if (data.errorMessage) {
+      //   this.messageService.openErrorSnackBar(data.errorMessage, 3000);
+      // } else if (data.successMessage) {
+      //   this.messageService.openSuccessSnackBar(data.successMessage, 3000);
+      //   this.friendsService.friendsList.next(this.friendsList);
+      // }
     })
     this.subscriptions.add(addFriendSub);
   }
@@ -50,9 +50,9 @@ export class FriendsComponent implements OnInit, OnDestroy {
   }
 
   getFriends(): void {
-    const updateFriendsListSub = this.authApiService.getFriendsList(this.cookieService.get('userId')).subscribe(data => {
-      this.friendsList = data.friends;
-      this.friendsService.friendsList.next(this.friendsList);
+    let userId = this.cookieService.get('userId');
+    const updateFriendsListSub = this.authApiService.getFriendsList(Number(userId)).subscribe(data => {
+      this.friendsList = data;
     })
     this.subscriptions.add(updateFriendsListSub);
   }
