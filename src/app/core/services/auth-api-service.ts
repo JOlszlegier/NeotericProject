@@ -34,9 +34,9 @@ export class AuthApiService {
     }, {withCredentials: true});
   }
 
-  public createGroup(name: string, usersEmails: string[]): Observable<AddGroupResponse> {
-    return this.http.post<AddGroupResponse>(`${environment.apiUrl}/add-group`, {
-      name, usersEmails
+  public createGroup(groupName: string, usersEmails: string[]): Observable<AddGroupResponse> {
+    return this.http.post<AddGroupResponse>(`${environment.nestBackend}/groups`, {
+      groupName, usersEmails
     });
   }
 
@@ -71,8 +71,16 @@ export class AuthApiService {
   public getFriendsList(userId: number): Observable<any> {
     let params = new HttpParams().set('userId', userId)
     return this.http.get<any>(`${environment.nestBackend}/friends`, {
-      params:
-      params
+      params: params
+    })
+  }
+
+  public isUserInYourFriendsList(userId: number, friendEmail: string): Observable<any> {
+    let params = new HttpParams;
+    params = params.append('userId', userId);
+    params = params.append('friendEmail', friendEmail);
+    return this.http.get<any>(`${environment.nestBackend}/friends/check`, {
+      params: params
     })
   }
 
