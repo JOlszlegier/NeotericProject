@@ -41,7 +41,7 @@ export class AuthApiService {
     });
   }
 
-
+  //done
   public searchGroup(userId: string): Observable<any> {
     let params = new HttpParams().set('userId', userId)
     return this.http.get<string[]>(`${environment.nestBackend}/groups/my-groups`, {
@@ -49,9 +49,12 @@ export class AuthApiService {
     });
   }
 
-  public getUsersInGroup(name: string): Observable<string[]> {
-    return this.http.post<string[]>(`${environment.apiUrl}/group-users`, {
-      name
+  public getUsersInGroup(groupName: string, userId: number): Observable<string[]> {
+    let params = new HttpParams();
+    params = params.append('userId', userId)
+    params = params.append('groupName', groupName)
+    return this.http.get<string[]>(`${environment.nestBackend}/groups/getUsers`, {
+      params: params
     })
   }
 

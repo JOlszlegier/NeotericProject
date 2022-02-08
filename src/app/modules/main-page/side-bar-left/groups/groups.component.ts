@@ -60,7 +60,7 @@ export class GroupsComponent implements OnInit, OnDestroy {
 
   public onGroupClick(groupName: string): void {
     this.centerBoxService.onChangeSelected(groupName);
-    const usersSearchSub = this.authApiService.getUsersInGroup(groupName).subscribe(users => {
+    const usersSearchSub = this.authApiService.getUsersInGroup(groupName, Number(this.cookieService.get('userId'))).subscribe(users => {
       this.selectedGroupUsers = users;
       this.groupService.changeSearch(this.selectedGroupUsers);
     })
