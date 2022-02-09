@@ -5,7 +5,6 @@ import {
   AddExpenseResponse,
   AddGroupResponse,
   BalanceCheckResponse,
-  CheckFriendResponse,
   ExpensesInfo,
   LoginResponse,
   RegisterResponse,
@@ -49,6 +48,7 @@ export class AuthApiService {
     });
   }
 
+  //done
   public getUsersInGroup(groupName: string, userId: number): Observable<string[]> {
     let params = new HttpParams();
     params = params.append('userId', userId)
@@ -91,9 +91,13 @@ export class AuthApiService {
     })
   }
 
-  public isInFriendList(user: string, friends: string, groupName: string): Observable<CheckFriendResponse> {
-    return this.http.post<CheckFriendResponse>(`${environment.apiUrl}/friend-check`, {
-      user, friends, groupName
+  public isInFriendList(userId: number, friendEmail: string, groupName: string): Observable<any> {
+    let params = new HttpParams;
+    params = params.append('userId', userId);
+    params = params.append('friendEmail', friendEmail);
+    params = params.append('groupName', groupName);
+    return this.http.get<any>(`${environment.nestBackend}/groups/check-for-expense`, {
+      params: params
     })
   }
 

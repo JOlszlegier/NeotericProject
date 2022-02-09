@@ -217,15 +217,12 @@ export class AddExpenseComponent implements OnInit, OnDestroy {
   }
 
   public checkUser(friend: string, event: MatChipInputEvent): void {
-    const checkUserSub = this.authApiService.isInFriendList(this.cookieService.get('userId'), friend, this.groupName).subscribe(data => {
+    const checkUserSub = this.authApiService.isInFriendList(Number(this.cookieService.get('userId')), friend, this.groupName).subscribe(data => {
+      event.chipInput?.clear();
       this.correctFriend = data.correctUser;
-      if (!this.correctFriend) {
-        this.users.splice(this.users.indexOf(friend), 1);
-        this.messageService.openErrorSnackBar(SnackbarEnums.AddExpenseIncorrectUser, 3000)
-      }
-      if (data.correctUser) {
-        event.chipInput?.clear();
-      }
+    }, err => {
+      this.users.splice(this.users.indexOf(friend), 1);
+      this.messageService.openErrorSnackBar(SnackbarEnums.AddExpenseIncorrectUser, 3000)
     })
     this.subscriptions.add(checkUserSub);
   }
