@@ -91,6 +91,7 @@ export class AuthApiService {
     })
   }
 
+  //done
   public isInFriendList(userId: number, friendEmail: string, groupName: string): Observable<any> {
     let params = new HttpParams;
     params = params.append('userId', userId);
@@ -102,8 +103,9 @@ export class AuthApiService {
   }
 
   public balanceCheck(userId: string): Observable<BalanceCheckResponse> {
-    return this.http.post<BalanceCheckResponse>(`${environment.apiUrl}/balance-check`, {
-      userId
+    let params = new HttpParams().set('userId', userId)
+    return this.http.get<BalanceCheckResponse>(`${environment.nestBackend}/users/balance-check`, {
+      params: params
     })
   }
 
