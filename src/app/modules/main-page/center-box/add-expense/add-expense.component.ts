@@ -219,7 +219,6 @@ export class AddExpenseComponent implements OnInit, OnDestroy {
   public checkUser(friend: string, event: MatChipInputEvent): void {
     const checkUserSub = this.authApiService.isInFriendList(Number(this.cookieService.get('userId')), friend, this.groupName).subscribe(data => {
       event.chipInput?.clear();
-      this.correctFriend = data.correctUser;
     }, err => {
       this.users.splice(this.users.indexOf(friend), 1);
       this.messageService.openErrorSnackBar(SnackbarEnums.AddExpenseIncorrectUser, 3000)
@@ -241,11 +240,16 @@ export class AddExpenseComponent implements OnInit, OnDestroy {
     this.eachUserAmount.splice(payerIndex, 1);
 
     for (const value in this.eachUserAmount) {
-
+      if (this.users[value] === this.cookieService.get('userName')) {
+        this.users[value] = this.cookieService.get('userEmail')
+      }
       this.finalExpenseForUser[value] = {
         from: this.users[value],
         value: Number((this.eachUserAmount[value] * this.currencyMultiplier).toFixed(2))
       };
+    }
+    if (this.whoPaid === this.cookieService.get('userName')) {
+      this.whoPaid = this.cookieService.get('userEmail')
     }
     const addExpenseSub = this.authApiService.addExpense(this.finalExpenseForUser, this.whoPaid,
       this.description, this.groupName).subscribe(() => {
@@ -272,21 +276,22 @@ export class AddExpenseComponent implements OnInit, OnDestroy {
 
     const expensesSubPlus = this.authApiService.expensesInfoPlus(this.cookieService.get('userId'), this.groupName).subscribe(data => {
       this.expensesArrayPlus.splice(0, this.expensesArrayPlus.length);
-      for (let expense in data.expensesArray) {
-        this.expensesArrayPlus.push(data.expensesArray[expense]);
+
+      for (let expense of data.expensesArray) {
+        this.expensesArrayPlus.push(expense);
       }
       this.groupService.expensesArrayPlusSource.next(this.expensesArrayPlus);
     })
 
-    const expensesSubMinus = this.authApiService.expensesInfoMinus(this.cookieService.get('userId'), this.groupName).subscribe(data => {
-      this.expensesArrayMinus.splice(0, this.expensesArrayMinus.length);
-      for (let expense in data.expensesArray) {
-        this.expensesArrayMinus.push(data.expensesArray[expense]);
-      }
-      this.groupService.expensesArrayMinusSource.next(this.expensesArrayMinus);
-      this.dialogRef.close();
-    })
-    this.subscriptions.add(expensesSubMinus);
+    // const expensesSubMinus = this.authApiService.expensesInfoMinus(this.cookieService.get('userId'), this.groupName).subscribe(data => {
+    //   this.expensesArrayMinus.splice(0, this.expensesArrayMinus.length);
+    //   for (let expense in data.expensesArray) {
+    //     this.expensesArrayMinus.push(data.expensesArray[expense]);
+    //   }
+    //   this.groupService.expensesArrayMinusSource.next(this.expensesArrayMinus);
+    //   this.dialogRef.close();
+    // })
+    // this.subscriptions.add(expensesSubMinus);
     this.subscriptions.add(expensesSubPlus);
   }
 
