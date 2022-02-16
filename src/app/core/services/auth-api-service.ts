@@ -122,6 +122,7 @@ export class AuthApiService {
     })
   }
 
+
   public expensesInfoPlus(userId: string, groupName: string): Observable<ExpensesInfo> {
     let params = new HttpParams().set('userId', userId);
     return this.http.get<ExpensesInfo>(`${environment.nestBackend}/expenses/plus`, {
@@ -129,9 +130,11 @@ export class AuthApiService {
     })
   }
 
+
   public expensesInfoMinus(userId: string, groupName: string): Observable<ExpensesInfo> {
-    return this.http.post<ExpensesInfo>(`${environment.apiUrl}/expenses-info-from-user`, {
-      userId, groupName
+    let params = new HttpParams().set('userId', userId);
+    return this.http.get<ExpensesInfo>(`${environment.nestBackend}/expenses/minus`, {
+      params: params
     })
   }
 }

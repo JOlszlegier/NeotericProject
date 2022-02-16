@@ -283,15 +283,16 @@ export class AddExpenseComponent implements OnInit, OnDestroy {
       this.groupService.expensesArrayPlusSource.next(this.expensesArrayPlus);
     })
 
-    // const expensesSubMinus = this.authApiService.expensesInfoMinus(this.cookieService.get('userId'), this.groupName).subscribe(data => {
-    //   this.expensesArrayMinus.splice(0, this.expensesArrayMinus.length);
-    //   for (let expense in data.expensesArray) {
-    //     this.expensesArrayMinus.push(data.expensesArray[expense]);
-    //   }
-    //   this.groupService.expensesArrayMinusSource.next(this.expensesArrayMinus);
-    //   this.dialogRef.close();
-    // })
-    // this.subscriptions.add(expensesSubMinus);
+    const expensesSubMinus = this.authApiService.expensesInfoMinus(this.cookieService.get('userId'), this.groupName).subscribe(data => {
+      this.expensesArrayMinus.splice(0, this.expensesArrayMinus.length);
+      
+      for (let expense of data.expensesArray) {
+        this.expensesArrayMinus.push(expense);
+      }
+      this.groupService.expensesArrayMinusSource.next(this.expensesArrayMinus);
+      this.dialogRef.close();
+    })
+    this.subscriptions.add(expensesSubMinus);
     this.subscriptions.add(expensesSubPlus);
   }
 
