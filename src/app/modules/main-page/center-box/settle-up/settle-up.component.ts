@@ -31,6 +31,7 @@ export class SettleUpComponent implements OnInit, OnDestroy {
   public expensesArrayMinus$ = this.groupService.expensesArrayMinusSource.asObservable();
   public expensesArrayPlus: Expenses[] = [{description: '1', amount: 0}]
   public expensesArrayMinus: Expenses[] = [{description: '1', amount: 0}]
+  public expensesIds: number[] = [];
 
   constructor(private cookieService: CookieService, private authApiService: AuthApiService,
               private userBalanceService: UserBalanceService, private centerBoxService: CenterBoxService,
@@ -46,9 +47,8 @@ export class SettleUpComponent implements OnInit, OnDestroy {
       for (const debt in data.expensesInfoResponse) {
         this.amountYouOweTo.push(data.expensesInfoResponse[debt].amount);
         this.whoYouOweTo.push(data.expensesInfoResponse[debt].name)
-        console.log(data.expensesId);
+        this.expensesIds = data.expensesId;
       }
-
     })
     this.subscriptions.add(settleUpInfoSub);
   }
@@ -58,7 +58,7 @@ export class SettleUpComponent implements OnInit, OnDestroy {
   }
 
   onPayUp(): void {
-    const settleUpSub = this.authApiService.settleUp(this.cookieService.get('userId'), this.valueOwedToUser, this.groupName).subscribe(
+    const settleUpSub = this.authApiService.settleUp(this.cookieService.get('userId'), this.expensesIds).subscribe(
       () => {
         this.updateBalance();
         this.messageService.openSuccessSnackBar(SnackbarEnums.SettleUpSuccess, 3000)
@@ -85,15 +85,15 @@ export class SettleUpComponent implements OnInit, OnDestroy {
     this.expensesArrayPlus$.subscribe(array => this.expensesArrayPlus = array);
     const expensesSubPlus = this.authApiService.expensesInfoPlus(this.cookieService.get('userId'), this.groupName).subscribe(data => {
       this.expensesArrayPlus.splice(0, this.expensesArrayPlus.length);
-      for (let expense in data.expensesArray) {
-        this.expensesArrayPlus.push(data.expensesArray[expense]);
+      for (let expense of data.expensesArray) {
+        this.expensesArrayPlus.push(expense);
       }
       this.groupService.expensesArrayPlusSource.next(this.expensesArrayPlus);
     })
     const expensesSubMinus = this.authApiService.expensesInfoMinus(this.cookieService.get('userId'), this.groupName).subscribe(data => {
       this.expensesArrayMinus.splice(0, this.expensesArrayMinus.length);
-      for (let expense in data.expensesArray) {
-        this.expensesArrayMinus.push(data.expensesArray[expense]);
+      for (let expense of data.expensesArray) {
+        this.expensesArrayMinus.push(expense);
       }
       this.groupService.expensesArrayMinusSource.next(this.expensesArrayMinus);
       this.dialogRef.close();

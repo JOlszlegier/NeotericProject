@@ -8,8 +8,7 @@ import {
   ExpensesInfo,
   LoginResponse,
   RegisterResponse,
-  SettleUpInfo,
-  SettleUpResponse
+  SettleUpInfo
 } from "../interfaces/interfaces";
 import {environment} from "../../../environments/environment";
 
@@ -58,6 +57,7 @@ export class AuthApiService {
     })
   }
 
+  //done
   public addExpense(eachUserValue: [{ from: string, value: number }],
                     to: string,
                     description: string, groupName: string): Observable<AddExpenseResponse> {
@@ -110,6 +110,7 @@ export class AuthApiService {
     })
   }
 
+  //done
   public settleUpInfo(userId: string, groupName: string): Observable<SettleUpInfo> {
     let params = new HttpParams();
     params = params.append('userId', userId);
@@ -119,13 +120,14 @@ export class AuthApiService {
     })
   }
 
-  public settleUp(userId: string, valueOwedToUser: [{ to: number, value: number }], groupName: string): Observable<SettleUpResponse> {
-    return this.http.post<SettleUpResponse>(`${environment.apiUrl}/settle-up`, {
-      userId, valueOwedToUser, groupName
+  public settleUp(userId: string, expensesIds: number[]): Observable<any> {
+    return this.http.post<any>(`${environment.nestBackend}/expenses/settleUp`, {
+      userId, expensesIds
     })
   }
 
 
+  //done
   public expensesInfoPlus(userId: string, groupName: string): Observable<ExpensesInfo> {
     let params = new HttpParams().set('userId', userId);
     params = params.append('groupName', groupName)
@@ -134,7 +136,7 @@ export class AuthApiService {
     })
   }
 
-
+  //done
   public expensesInfoMinus(userId: string, groupName: string): Observable<ExpensesInfo> {
     let params = new HttpParams().set('userId', userId);
     params = params.append('groupName', groupName)
