@@ -40,11 +40,15 @@ export class SettleUpComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.groupName$.subscribe(groupName => this.groupName = groupName);
+    this.amountYouOweTo.splice(0, this.amountYouOweTo.length);
+    this.whoYouOweTo.splice(0, this.whoYouOweTo.length);
     const settleUpInfoSub = this.authApiService.settleUpInfo(this.cookieService.get('userId'), this.groupName).subscribe(data => {
-      this.whoYouOweTo = data.userNames;
-      for (const user in data.valueOwedToUser)
-        this.amountYouOweTo[user] = data.valueOwedToUser[user].value;
-      this.valueOwedToUser = data.valueOwedToUser;
+      for (const debt in data.expensesInfoResponse) {
+        this.amountYouOweTo.push(data.expensesInfoResponse[debt].amount);
+        this.whoYouOweTo.push(data.expensesInfoResponse[debt].name)
+        console.log(data.expensesId);
+      }
+
     })
     this.subscriptions.add(settleUpInfoSub);
   }

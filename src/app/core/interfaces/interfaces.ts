@@ -47,6 +47,14 @@ export interface SettleUpInfoResponse {
   userNames: string[]
 }
 
+export interface SettleUpInfo {
+  expensesId: number[],
+  expensesInfoResponse: [{
+    name: string,
+    amount: number
+  }]
+}
+
 export interface SettleUpResponse {
   settleUpFinished: boolean;
 }
