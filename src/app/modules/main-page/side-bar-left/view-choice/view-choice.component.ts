@@ -6,6 +6,7 @@ import {CenterBoxService} from "../../../../core/services/center-box-service";
 import {GroupService} from "../../../../core/services/group-service";
 import {AuthApiService} from "../../../../core/services/auth-api-service";
 import {Expenses} from "../../../../core/interfaces/interfaces";
+import {UserBalanceService} from "../../../../core/services/user-balance-service";
 
 
 @Component({
@@ -15,7 +16,7 @@ import {Expenses} from "../../../../core/interfaces/interfaces";
 })
 export class ViewChoiceComponent implements OnInit, OnDestroy {
   constructor(private centerBoxService: CenterBoxService, private groupService: GroupService,
-              private authApiService: AuthApiService, private cookieService: CookieService) {
+              private authApiService: AuthApiService, private cookieService: CookieService, private userBalanceService: UserBalanceService) {
   }
 
   public selectedCenterBoxView: string = '';
@@ -45,6 +46,11 @@ export class ViewChoiceComponent implements OnInit, OnDestroy {
 
     if (this.selectedCenterBoxView != 'Location') {
       this.centerBoxService.onChangeSelected(selected);
+
+      const balanceUpdateSub = this.authApiService.balanceCheck(Number(this.cookieService.get('userId')), selected).subscribe(data => {
+        this.userBalanceService.onValuesChange(data.income, data.outcome);
+      })
+
       const expensesSubPlus = this.authApiService.expensesInfoPlus(this.cookieService.get('userId'), this.selectedCenterBoxView).subscribe(data => {
         this.expensesArrayPlus.splice(0, this.expensesArrayPlus.length);
         for (let expense in data.expensesArray) {

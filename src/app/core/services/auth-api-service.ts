@@ -103,12 +103,14 @@ export class AuthApiService {
   }
 
   //done
-  public balanceCheck(userId: string): Observable<BalanceCheckResponse> {
+  public balanceCheck(userId: number, groupName: string): Observable<BalanceCheckResponse> {
     let params = new HttpParams().set('userId', userId)
-    return this.http.get<BalanceCheckResponse>(`${environment.nestBackend}/users/balance-check`, {
+    params = params.append('groupName', groupName)
+    return this.http.get<BalanceCheckResponse>(`${environment.nestBackend}/expenses/balanceInfo`, {
       params: params
     })
   }
+
 
   //done
   public settleUpInfo(userId: string, groupName: string): Observable<SettleUpInfo> {
@@ -120,6 +122,7 @@ export class AuthApiService {
     })
   }
 
+  //done
   public settleUp(userId: string, expensesIds: number[]): Observable<any> {
     return this.http.post<any>(`${environment.nestBackend}/expenses/settleUp`, {
       userId, expensesIds

@@ -261,7 +261,7 @@ export class AddExpenseComponent implements OnInit, OnDestroy {
   }
 
   updateBalance(): void {
-    const balanceUpdateSub = this.authApiService.balanceCheck(this.cookieService.get('userId')).subscribe(data => {
+    const balanceUpdateSub = this.authApiService.balanceCheck(Number(this.cookieService.get('userId')), this.groupName).subscribe(data => {
       this.userBalanceService.onValuesChange(data.income, data.outcome);
       this.updateList();
     })
@@ -285,7 +285,7 @@ export class AddExpenseComponent implements OnInit, OnDestroy {
 
     const expensesSubMinus = this.authApiService.expensesInfoMinus(this.cookieService.get('userId'), this.groupName).subscribe(data => {
       this.expensesArrayMinus.splice(0, this.expensesArrayMinus.length);
-      
+
       for (let expense of data.expensesArray) {
         this.expensesArrayMinus.push(expense);
       }

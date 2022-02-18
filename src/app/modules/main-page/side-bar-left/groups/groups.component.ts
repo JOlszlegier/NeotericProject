@@ -8,6 +8,7 @@ import {GroupService} from "../../../../core/services/group-service";
 import {CenterBoxService} from "../../../../core/services/center-box-service";
 import {AuthApiService} from "../../../../core/services/auth-api-service";
 import {Expenses} from "../../../../core/interfaces/interfaces";
+import {UserBalanceService} from "../../../../core/services/user-balance-service";
 
 @Component({
   selector: 'app-groups',
@@ -32,7 +33,7 @@ export class GroupsComponent implements OnInit, OnDestroy {
 
   constructor(private searchService: SearchService, private router: Router,
               private groupService: GroupService, private centerBoxService: CenterBoxService, private authApiService: AuthApiService,
-              private cookieService: CookieService) {
+              private cookieService: CookieService, private userBalanceService: UserBalanceService) {
   }
 
   public ngOnInit(): void {
@@ -60,6 +61,11 @@ export class GroupsComponent implements OnInit, OnDestroy {
 
   public onGroupClick(groupName: string): void {
     this.centerBoxService.onChangeSelected(groupName);
+
+    const balanceUpdateSub = this.authApiService.balanceCheck(Number(this.cookieService.get('userId')), groupName).subscribe(data => {
+      this.userBalanceService.onValuesChange(data.income, data.outcome);
+    })
+
     const usersSearchSub = this.authApiService.getUsersInGroup(groupName, Number(this.cookieService.get('userId'))).subscribe(users => {
       this.selectedGroupUsers = users;
       this.groupService.changeSearch(this.selectedGroupUsers);
