@@ -46,11 +46,12 @@ export class AuthApiService {
     });
   }
 
+  //DONE
   public getUsersInGroup(groupName: string, userId: number): Observable<string[]> {
     let params = new HttpParams();
     params = params.append('userId', userId)
     params = params.append('groupName', groupName)
-    return this.http.get<string[]>(`${environment.nestBackend}/groups/getUsers`, {
+    return this.http.get<string[]>(`${environment.nestBackend}/groupnew/users-in-group`, {
       params: params
     })
   }
