@@ -106,7 +106,7 @@ export class AuthPageComponent implements OnInit, OnDestroy {
         this.checkBool = true;
         this.cookieService.set('userId', data.id);
         this.cookieService.set('userName', data.name);
-        this.cookieService.set('userEmail', data.email)
+        this.cookieService.set('userEmail', data.user_email)
         this.router.navigate(['/main']);
       }, err => {
         this.messageService.openErrorSnackBar(err.error[Object.keys(err.error)[1]], 3000, this.isMobile);

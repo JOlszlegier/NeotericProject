@@ -18,16 +18,16 @@ export class AuthApiService {
   constructor(private http: HttpClient) {
   }
 
-  //done
-  public register(email: string, name: string, password: string): Observable<RegisterResponse> {
-    return this.http.post<RegisterResponse>(`${environment.nestBackend}/authentication/register`, {
-      name, email, password
+  //DONE
+  public register(user_email: string, name: string, password: string): Observable<RegisterResponse> {
+    return this.http.post<RegisterResponse>(`${environment.nestBackend}/usernew/register`, {
+      name, user_email, password
     });
   }
 
-  //done
+  //DONE
   public login(email: string, password: string): Observable<LoginResponse> {
-    return this.http.post<LoginResponse>(`${environment.nestBackend}/authentication/log-in`, {
+    return this.http.post<LoginResponse>(`${environment.nestBackend}/usernew/log-in`, {
       email, password
     }, {withCredentials: true});
   }
@@ -66,10 +66,10 @@ export class AuthApiService {
     })
   }
 
-  //done
-  public addFriend(userId: string, email: string): Observable<string[]> {
-    return this.http.post<string[]>(`${environment.nestBackend}/friends`, {
-      userId, email
+  //DONE
+  public addFriend(userId: string, friendEmail: string): Observable<string[]> {
+    return this.http.post<string[]>(`${environment.nestBackend}/usernew/friend`, {
+      userId, friendEmail
     })
   }
 

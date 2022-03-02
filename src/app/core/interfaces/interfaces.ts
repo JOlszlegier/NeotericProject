@@ -10,12 +10,9 @@ export interface AddGroupResponse {
 }
 
 export interface LoginResponse {
-  // token: string;
-  // passwordCorrect: boolean;
-  // expirationDate: number;
   id: string;
   name: string;
-  email: string;
+  user_email: string;
 }
 
 export interface RegisterResponse {
