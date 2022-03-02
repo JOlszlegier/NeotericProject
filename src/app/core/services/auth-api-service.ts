@@ -3,7 +3,6 @@ import {HttpClient, HttpParams} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {
   AddExpenseResponse,
-  AddGroupResponse,
   BalanceCheckResponse,
   ExpensesInfo,
   LoginResponse,
@@ -32,14 +31,14 @@ export class AuthApiService {
     }, {withCredentials: true});
   }
 
-  //done
-  public createGroup(groupName: string, usersEmails: string[]): Observable<AddGroupResponse> {
-    return this.http.post<AddGroupResponse>(`${environment.nestBackend}/groups`, {
+  //DONE
+  public createGroup(groupName: string, usersEmails: string[]): Observable<any> {
+    return this.http.post<any>(`${environment.nestBackend}/groupnew`, {
       groupName, usersEmails
     });
   }
 
-  //done
+
   public searchGroup(userId: string): Observable<any> {
     let params = new HttpParams().set('userId', userId)
     return this.http.get<string[]>(`${environment.nestBackend}/groups/my-groups`, {
@@ -47,7 +46,6 @@ export class AuthApiService {
     });
   }
 
-  //done
   public getUsersInGroup(groupName: string, userId: number): Observable<string[]> {
     let params = new HttpParams();
     params = params.append('userId', userId)
@@ -57,7 +55,6 @@ export class AuthApiService {
     })
   }
 
-  //done
   public addExpense(eachUserValue: [{ from: string, value: number }],
                     to: string,
                     description: string, groupName: string): Observable<AddExpenseResponse> {
@@ -73,7 +70,7 @@ export class AuthApiService {
     })
   }
 
-  //done
+  //DONE
   public getFriendsList(userId: number): Observable<string[]> {
     let params = new HttpParams().set('userId', userId)
     return this.http.get<string[]>(`${environment.nestBackend}/usernew/friend/list`, {
@@ -81,17 +78,16 @@ export class AuthApiService {
     })
   }
 
-  //done
+  //DONE
   public isUserInYourFriendsList(userId: number, friendEmail: string): Observable<any> {
     let params = new HttpParams;
     params = params.append('userId', userId);
     params = params.append('friendEmail', friendEmail);
-    return this.http.get<any>(`${environment.nestBackend}/friends/check`, {
+    return this.http.get<any>(`${environment.nestBackend}/groupnew`, {
       params: params
     })
   }
 
-  //done
   public isInFriendList(userId: number, friendEmail: string, groupName: string): Observable<any> {
     let params = new HttpParams;
     params = params.append('userId', userId);
@@ -102,7 +98,6 @@ export class AuthApiService {
     })
   }
 
-  //done
   public balanceCheck(userId: number, groupName: string): Observable<BalanceCheckResponse> {
     let params = new HttpParams().set('userId', userId)
     params = params.append('groupName', groupName)
@@ -112,7 +107,6 @@ export class AuthApiService {
   }
 
 
-  //done
   public settleUpInfo(userId: string, groupName: string): Observable<SettleUpInfo> {
     let params = new HttpParams();
     params = params.append('userId', userId);
@@ -122,7 +116,6 @@ export class AuthApiService {
     })
   }
 
-  //done
   public settleUp(userId: string, expensesIds: number[]): Observable<any> {
     return this.http.post<any>(`${environment.nestBackend}/expenses/settleUp`, {
       userId, expensesIds
@@ -130,7 +123,6 @@ export class AuthApiService {
   }
 
 
-  //done
   public expensesInfoPlus(userId: string, groupName: string): Observable<ExpensesInfo> {
     let params = new HttpParams().set('userId', userId);
     params = params.append('groupName', groupName)
@@ -139,7 +131,6 @@ export class AuthApiService {
     })
   }
 
-  //done
   public expensesInfoMinus(userId: string, groupName: string): Observable<ExpensesInfo> {
     let params = new HttpParams().set('userId', userId);
     params = params.append('groupName', groupName)
