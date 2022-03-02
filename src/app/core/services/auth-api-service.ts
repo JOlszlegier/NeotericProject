@@ -74,9 +74,9 @@ export class AuthApiService {
   }
 
   //done
-  public getFriendsList(userId: number): Observable<any> {
+  public getFriendsList(userId: number): Observable<string[]> {
     let params = new HttpParams().set('userId', userId)
-    return this.http.get<any>(`${environment.nestBackend}/friends`, {
+    return this.http.get<string[]>(`${environment.nestBackend}/usernew/friend/list`, {
       params: params
     })
   }
