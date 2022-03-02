@@ -38,10 +38,10 @@ export class AuthApiService {
     });
   }
 
-
+  //DONE
   public searchGroup(userId: string): Observable<any> {
     let params = new HttpParams().set('userId', userId)
-    return this.http.get<string[]>(`${environment.nestBackend}/groups/my-groups`, {
+    return this.http.get<string[]>(`${environment.nestBackend}/groupnew/group-list`, {
       params: params
     });
   }
