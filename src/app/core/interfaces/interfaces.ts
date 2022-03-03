@@ -45,8 +45,7 @@ export interface SettleUpInfoResponse {
 }
 
 export interface SettleUpInfo {
-  expensesId: number[],
-  expensesInfoResponse: [{
+  settleUpInfo: [{
     name: string,
     amount: number
   }]

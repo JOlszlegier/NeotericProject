@@ -101,6 +101,7 @@ export class AuthApiService {
     })
   }
 
+  //DONE
   public balanceCheck(userId: number, groupName: string): Observable<BalanceCheckResponse> {
     let params = new HttpParams().set('userId', userId)
     params = params.append('groupName', groupName)
@@ -114,7 +115,7 @@ export class AuthApiService {
     let params = new HttpParams();
     params = params.append('userId', userId);
     params = params.append('groupName', groupName);
-    return this.http.get<SettleUpInfo>(`${environment.nestBackend}/expenses/settleUpInfo`, {
+    return this.http.get<SettleUpInfo>(`${environment.nestBackend}/transaction/settleUpInfo`, {
       params: params
     })
   }
@@ -125,7 +126,7 @@ export class AuthApiService {
     })
   }
 
-
+  //DONE
   public expensesInfoPlus(userId: string, groupName: string): Observable<ExpensesInfo> {
     let params = new HttpParams().set('userId', userId);
     params = params.append('groupName', groupName)
@@ -134,6 +135,7 @@ export class AuthApiService {
     })
   }
 
+  //DONE
   public expensesInfoMinus(userId: string, groupName: string): Observable<ExpensesInfo> {
     let params = new HttpParams().set('userId', userId);
     params = params.append('groupName', groupName)
