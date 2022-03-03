@@ -56,11 +56,12 @@ export class AuthApiService {
     })
   }
 
+  //DONE
   public addExpense(eachUserValue: [{ from: string, value: number }],
-                    to: string,
-                    description: string, groupName: string): Observable<AddExpenseResponse> {
-    return this.http.post<AddExpenseResponse>(`${environment.nestBackend}/expenses`, {
-      eachUserValue, to, description, groupName
+                    payerEmail: string,
+                    description: string, groupName: string, amount: number): Observable<AddExpenseResponse> {
+    return this.http.post<AddExpenseResponse>(`${environment.nestBackend}/transaction`, {
+      eachUserValue, payerEmail, description, groupName, amount
     })
   }
 
@@ -89,12 +90,13 @@ export class AuthApiService {
     })
   }
 
-  public isInFriendList(userId: number, friendEmail: string, groupName: string): Observable<any> {
+  //DONE
+  public isInFriendList(userId: number, newUserEmail: string, groupName: string): Observable<boolean> {
     let params = new HttpParams;
     params = params.append('userId', userId);
-    params = params.append('friendEmail', friendEmail);
+    params = params.append('newUserEmail', newUserEmail);
     params = params.append('groupName', groupName);
-    return this.http.get<any>(`${environment.nestBackend}/groups/check-for-expense`, {
+    return this.http.get<boolean>(`${environment.nestBackend}/transaction`, {
       params: params
     })
   }

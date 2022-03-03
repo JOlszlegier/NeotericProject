@@ -218,10 +218,12 @@ export class AddExpenseComponent implements OnInit, OnDestroy {
 
   public checkUser(friend: string, event: MatChipInputEvent): void {
     const checkUserSub = this.authApiService.isInFriendList(Number(this.cookieService.get('userId')), friend, this.groupName).subscribe(data => {
-      event.chipInput?.clear();
-    }, err => {
-      this.users.splice(this.users.indexOf(friend), 1);
-      this.messageService.openErrorSnackBar(SnackbarEnums.AddExpenseIncorrectUser, 3000)
+      if (data) {
+        event.chipInput?.clear();
+      } else {
+        this.users.splice(this.users.indexOf(friend), 1);
+        this.messageService.openErrorSnackBar(SnackbarEnums.AddExpenseIncorrectUser, 3000)
+      }
     })
     this.subscriptions.add(checkUserSub);
   }
@@ -252,7 +254,7 @@ export class AddExpenseComponent implements OnInit, OnDestroy {
       this.whoPaid = this.cookieService.get('userEmail')
     }
     const addExpenseSub = this.authApiService.addExpense(this.finalExpenseForUser, this.whoPaid,
-      this.description, this.groupName).subscribe(() => {
+      this.description, this.groupName, this.expenseValue).subscribe(() => {
       this.updateBalance();
       this.messageService.openSuccessSnackBar(SnackbarEnums.AddExpenseSuccess, 3000);
     })
