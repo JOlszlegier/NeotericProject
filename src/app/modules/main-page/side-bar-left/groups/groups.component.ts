@@ -75,16 +75,16 @@ export class GroupsComponent implements OnInit, OnDestroy {
     this.expensesArrayPlus.splice(0, this.expensesArrayPlus.length);
 
     const expensesSubPlus = this.authApiService.expensesInfoPlus(this.cookieService.get('userId'), this.selectedGroupName).subscribe(data => {
-      for (let expense in data.expensesArray) {
-        this.expensesArrayPlus.push(data.expensesArray[expense]);
+      for (let expense in data.transactionInfo) {
+        this.expensesArrayPlus.push(data.transactionInfo[expense]);
       }
       this.groupService.expensesArrayPlusSource.next(this.expensesArrayPlus);
     })
 
     const expensesSubMinus = this.authApiService.expensesInfoMinus(this.cookieService.get('userId'), this.selectedGroupName).subscribe(data => {
 
-      for (let expense in data.expensesArray) {
-        this.expensesArrayMinus.push(data.expensesArray[expense]);
+      for (let expense in data.transactionInfo) {
+        this.expensesArrayMinus.push(data.transactionInfo[expense]);
       }
       this.groupService.expensesArrayMinusSource.next(this.expensesArrayMinus);
     })

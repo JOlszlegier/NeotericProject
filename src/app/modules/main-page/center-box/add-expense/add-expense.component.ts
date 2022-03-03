@@ -280,7 +280,7 @@ export class AddExpenseComponent implements OnInit, OnDestroy {
     const expensesSubPlus = this.authApiService.expensesInfoPlus(this.cookieService.get('userId'), this.groupName).subscribe(data => {
       this.expensesArrayPlus.splice(0, this.expensesArrayPlus.length);
 
-      for (let expense of data.expensesArray) {
+      for (let expense of data.transactionInfo) {
         this.expensesArrayPlus.push(expense);
       }
       this.groupService.expensesArrayPlusSource.next(this.expensesArrayPlus);
@@ -289,7 +289,7 @@ export class AddExpenseComponent implements OnInit, OnDestroy {
     const expensesSubMinus = this.authApiService.expensesInfoMinus(this.cookieService.get('userId'), this.groupName).subscribe(data => {
       this.expensesArrayMinus.splice(0, this.expensesArrayMinus.length);
 
-      for (let expense of data.expensesArray) {
+      for (let expense of data.transactionInfo) {
         this.expensesArrayMinus.push(expense);
       }
       this.groupService.expensesArrayMinusSource.next(this.expensesArrayMinus);

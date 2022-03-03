@@ -85,14 +85,14 @@ export class SettleUpComponent implements OnInit, OnDestroy {
     this.expensesArrayPlus$.subscribe(array => this.expensesArrayPlus = array);
     const expensesSubPlus = this.authApiService.expensesInfoPlus(this.cookieService.get('userId'), this.groupName).subscribe(data => {
       this.expensesArrayPlus.splice(0, this.expensesArrayPlus.length);
-      for (let expense of data.expensesArray) {
+      for (let expense of data.transactionInfo) {
         this.expensesArrayPlus.push(expense);
       }
       this.groupService.expensesArrayPlusSource.next(this.expensesArrayPlus);
     })
     const expensesSubMinus = this.authApiService.expensesInfoMinus(this.cookieService.get('userId'), this.groupName).subscribe(data => {
       this.expensesArrayMinus.splice(0, this.expensesArrayMinus.length);
-      for (let expense of data.expensesArray) {
+      for (let expense of data.transactionInfo) {
         this.expensesArrayMinus.push(expense);
       }
       this.groupService.expensesArrayMinusSource.next(this.expensesArrayMinus);

@@ -53,16 +53,16 @@ export class ViewChoiceComponent implements OnInit, OnDestroy {
 
       const expensesSubPlus = this.authApiService.expensesInfoPlus(this.cookieService.get('userId'), this.selectedCenterBoxView).subscribe(data => {
         this.expensesArrayPlus.splice(0, this.expensesArrayPlus.length);
-        for (let expense in data.expensesArray) {
-          this.expensesArrayPlus.push(data.expensesArray[expense]);
+        for (let expense in data.transactionInfo) {
+          this.expensesArrayPlus.push(data.transactionInfo[expense]);
         }
         this.groupService.expensesArrayPlusSource.next(this.expensesArrayPlus);
       })
 
       const expensesSubMinus = this.authApiService.expensesInfoMinus(this.cookieService.get('userId'), this.selectedCenterBoxView).subscribe(data => {
         this.expensesArrayMinus.splice(0, this.expensesArrayMinus.length);
-        for (let expense in data.expensesArray) {
-          this.expensesArrayMinus.push(data.expensesArray[expense]);
+        for (let expense in data.transactionInfo) {
+          this.expensesArrayMinus.push(data.transactionInfo[expense]);
         }
         this.groupService.expensesArrayMinusSource.next(this.expensesArrayMinus);
       })
