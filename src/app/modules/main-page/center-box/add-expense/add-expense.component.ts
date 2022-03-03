@@ -229,7 +229,7 @@ export class AddExpenseComponent implements OnInit, OnDestroy {
   }
 
   public sendInfo(): void {
-
+    let checkSum: number = 0;
     if (this.currencyChoice === 'EUR') {
       this.currencyMultiplier = Number(this.cookieService.get('PLNtoEur'))
     } else if (this.currencyChoice === 'USD') {
@@ -249,12 +249,13 @@ export class AddExpenseComponent implements OnInit, OnDestroy {
         from: this.users[value],
         value: Number((this.eachUserAmount[value] * this.currencyMultiplier).toFixed(2))
       };
+      checkSum += this.finalExpenseForUser[value].value;
     }
     if (this.whoPaid === this.cookieService.get('userName')) {
       this.whoPaid = this.cookieService.get('userEmail')
     }
     const addExpenseSub = this.authApiService.addExpense(this.finalExpenseForUser, this.whoPaid,
-      this.description, this.groupName, this.expenseValue).subscribe(() => {
+      this.description, this.groupName, checkSum).subscribe(() => {
       this.updateBalance();
       this.messageService.openSuccessSnackBar(SnackbarEnums.AddExpenseSuccess, 3000);
     })
