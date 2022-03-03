@@ -137,7 +137,7 @@ export class AuthApiService {
   public expensesInfoMinus(userId: string, groupName: string): Observable<ExpensesInfo> {
     let params = new HttpParams().set('userId', userId);
     params = params.append('groupName', groupName)
-    return this.http.get<ExpensesInfo>(`${environment.nestBackend}/expenses/minus`, {
+    return this.http.get<ExpensesInfo>(`${environment.nestBackend}/transaction/getTransactionRecipientsInfo`, {
       params: params
     })
   }
