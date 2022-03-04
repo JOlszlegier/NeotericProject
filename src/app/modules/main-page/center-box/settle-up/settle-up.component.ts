@@ -57,7 +57,7 @@ export class SettleUpComponent implements OnInit, OnDestroy {
   }
 
   onPayUp(): void {
-    const settleUpSub = this.authApiService.settleUp(this.cookieService.get('userId'), this.expensesIds).subscribe(
+    const settleUpSub = this.authApiService.settleUp(this.cookieService.get('userId'), this.groupName).subscribe(
       () => {
         this.updateBalance();
         this.messageService.openSuccessSnackBar(SnackbarEnums.SettleUpSuccess, 3000)

@@ -111,6 +111,7 @@ export class AuthApiService {
   }
 
 
+  //DONE
   public settleUpInfo(userId: string, groupName: string): Observable<SettleUpInfo> {
     let params = new HttpParams();
     params = params.append('userId', userId);
@@ -120,9 +121,10 @@ export class AuthApiService {
     })
   }
 
-  public settleUp(userId: string, expensesIds: number[]): Observable<any> {
-    return this.http.post<any>(`${environment.nestBackend}/expenses/settleUp`, {
-      userId, expensesIds
+  //DONE
+  public settleUp(userId: string, groupName: string): Observable<any> {
+    return this.http.post<any>(`${environment.nestBackend}/transaction/settleUp`, {
+      userId, groupName
     })
   }
 
