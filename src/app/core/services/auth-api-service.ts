@@ -19,21 +19,21 @@ export class AuthApiService {
 
   //DONE
   public register(user_email: string, name: string, password: string): Observable<RegisterResponse> {
-    return this.http.post<RegisterResponse>(`${environment.nestBackend}/usernew/register`, {
+    return this.http.post<RegisterResponse>(`${environment.nestBackend}/user/register`, {
       name, user_email, password
     });
   }
 
   //DONE
   public login(email: string, password: string): Observable<LoginResponse> {
-    return this.http.post<LoginResponse>(`${environment.nestBackend}/usernew/log-in`, {
+    return this.http.post<LoginResponse>(`${environment.nestBackend}/user/log-in`, {
       email, password
     }, {withCredentials: true});
   }
 
   //DONE
   public createGroup(groupName: string, usersEmails: string[]): Observable<any> {
-    return this.http.post<any>(`${environment.nestBackend}/groupnew`, {
+    return this.http.post<any>(`${environment.nestBackend}/group`, {
       groupName, usersEmails
     });
   }
@@ -41,7 +41,7 @@ export class AuthApiService {
   //DONE
   public searchGroup(userId: string): Observable<any> {
     let params = new HttpParams().set('userId', userId)
-    return this.http.get<string[]>(`${environment.nestBackend}/groupnew/group-list`, {
+    return this.http.get<string[]>(`${environment.nestBackend}/group/group-list`, {
       params: params
     });
   }
@@ -51,7 +51,7 @@ export class AuthApiService {
     let params = new HttpParams();
     params = params.append('userId', userId)
     params = params.append('groupName', groupName)
-    return this.http.get<string[]>(`${environment.nestBackend}/groupnew/users-in-group`, {
+    return this.http.get<string[]>(`${environment.nestBackend}/group/users-in-group`, {
       params: params
     })
   }
@@ -67,7 +67,7 @@ export class AuthApiService {
 
   //DONE
   public addFriend(userId: string, friendEmail: string): Observable<string[]> {
-    return this.http.post<string[]>(`${environment.nestBackend}/usernew/friend`, {
+    return this.http.post<string[]>(`${environment.nestBackend}/user/friend`, {
       userId, friendEmail
     })
   }
@@ -75,7 +75,7 @@ export class AuthApiService {
   //DONE
   public getFriendsList(userId: number): Observable<string[]> {
     let params = new HttpParams().set('userId', userId)
-    return this.http.get<string[]>(`${environment.nestBackend}/usernew/friend/list`, {
+    return this.http.get<string[]>(`${environment.nestBackend}/user/friend/list`, {
       params: params
     })
   }
@@ -85,7 +85,7 @@ export class AuthApiService {
     let params = new HttpParams;
     params = params.append('userId', userId);
     params = params.append('friendEmail', friendEmail);
-    return this.http.get<any>(`${environment.nestBackend}/groupnew`, {
+    return this.http.get<any>(`${environment.nestBackend}/group`, {
       params: params
     })
   }
