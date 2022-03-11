@@ -95,7 +95,7 @@ export class AddGroupPageComponent implements OnInit, OnDestroy {
       this.incorrectUsers.push(friend);
       this.messageService.openErrorSnackBar(SnackbarEnums.AddGroupFailure, 30000)
     } else {
-      const friendCheckSub = this.api.isUserInYourFriendsList(Number(this.cookieService.get('userId')), friend).subscribe(data => {
+      const friendCheckSub = this.api.isUserInYourFriendsList(this.cookieService.get('userId'), friend).subscribe(data => {
         let emailsArray: string[] = this.formTemplate.value.users.map((item: { email: any; }) => item.email);
         for (let index in this.incorrectUsers) {
           if (!emailsArray.includes(this.incorrectUsers[index])) {

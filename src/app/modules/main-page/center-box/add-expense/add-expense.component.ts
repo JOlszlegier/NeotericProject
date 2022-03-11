@@ -217,7 +217,7 @@ export class AddExpenseComponent implements OnInit, OnDestroy {
   }
 
   public checkUser(friend: string, event: MatChipInputEvent): void {
-    const checkUserSub = this.authApiService.isInFriendList(Number(this.cookieService.get('userId')), friend, this.groupName).subscribe(data => {
+    const checkUserSub = this.authApiService.isInFriendList(this.cookieService.get('userId'), friend, this.groupName).subscribe(data => {
       if (data) {
         event.chipInput?.clear();
       } else {
@@ -264,7 +264,7 @@ export class AddExpenseComponent implements OnInit, OnDestroy {
   }
 
   updateBalance(): void {
-    const balanceUpdateSub = this.authApiService.balanceCheck(Number(this.cookieService.get('userId')), this.groupName).subscribe(data => {
+    const balanceUpdateSub = this.authApiService.balanceCheck(this.cookieService.get('userId'), this.groupName).subscribe(data => {
       this.userBalanceService.onValuesChange(data.income, data.outcome);
       this.updateList();
     })

@@ -69,7 +69,7 @@ export class SettleUpComponent implements OnInit, OnDestroy {
     const incomeSub = this.userBalanceService.incomeSource.subscribe(income => this.income = income);
     const outcomeSub = this.userBalanceService.outcomeSource.subscribe(outcome => this.outcome = outcome);
     const differenceSub = this.userBalanceService.differenceSource.subscribe(difference => this.difference = difference)
-    const balanceUpdateSub = this.authApiService.balanceCheck(Number(this.cookieService.get('userId')), this.groupName).subscribe(data => {
+    const balanceUpdateSub = this.authApiService.balanceCheck(this.cookieService.get('userId'), this.groupName).subscribe(data => {
       this.userBalanceService.onValuesChange(data.income, data.outcome);
       this.updateList();
     })

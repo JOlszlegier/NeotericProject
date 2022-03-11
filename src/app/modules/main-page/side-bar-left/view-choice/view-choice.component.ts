@@ -47,7 +47,7 @@ export class ViewChoiceComponent implements OnInit, OnDestroy {
     if (this.selectedCenterBoxView != 'Location') {
       this.centerBoxService.onChangeSelected(selected);
 
-      const balanceUpdateSub = this.authApiService.balanceCheck(Number(this.cookieService.get('userId')), selected).subscribe(data => {
+      const balanceUpdateSub = this.authApiService.balanceCheck(this.cookieService.get('userId'), selected).subscribe(data => {
         this.userBalanceService.onValuesChange(data.income, data.outcome);
       })
 

@@ -54,7 +54,7 @@ export class FriendsComponent implements OnInit, OnDestroy {
 
   getFriends(): void {
     let userId = this.cookieService.get('userId');
-    const updateFriendsListSub = this.authApiService.getFriendsList(Number(userId)).subscribe(data => {
+    const updateFriendsListSub = this.authApiService.getFriendsList(userId).subscribe(data => {
       this.friendsList = data;
     })
     this.friendsService.changeFriendsList(this.friendsList);

@@ -31,7 +31,7 @@ export class CashStatusComponent implements OnInit, OnDestroy {
     this.outcome$.subscribe(outcome => this.outcome = outcome);
     this.difference$.subscribe(difference => this.difference = difference);
     this.groupName$.subscribe(groupName => this.groupName = groupName);
-    const balanceUpdateSub = this.authApiService.balanceCheck(Number(this.cookieService.get('userId')), this.groupName).subscribe(data => {
+    const balanceUpdateSub = this.authApiService.balanceCheck(this.cookieService.get('userId'), this.groupName).subscribe(data => {
       this.userBalanceService.onValuesChange(data.income, data.outcome);
     })
     this.subscriptions.add(balanceUpdateSub);

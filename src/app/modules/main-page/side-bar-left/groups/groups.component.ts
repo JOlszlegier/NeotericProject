@@ -62,11 +62,11 @@ export class GroupsComponent implements OnInit, OnDestroy {
   public onGroupClick(groupName: string): void {
     this.centerBoxService.onChangeSelected(groupName);
 
-    const balanceUpdateSub = this.authApiService.balanceCheck(Number(this.cookieService.get('userId')), groupName).subscribe(data => {
+    const balanceUpdateSub = this.authApiService.balanceCheck(this.cookieService.get('userId'), groupName).subscribe(data => {
       this.userBalanceService.onValuesChange(data.income, data.outcome);
     })
 
-    const usersSearchSub = this.authApiService.getUsersInGroup(groupName, Number(this.cookieService.get('userId'))).subscribe(users => {
+    const usersSearchSub = this.authApiService.getUsersInGroup(groupName, this.cookieService.get('userId')).subscribe(users => {
       this.selectedGroupUsers = users;
       this.groupService.changeSearch(this.selectedGroupUsers);
     })

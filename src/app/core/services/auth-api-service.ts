@@ -47,7 +47,7 @@ export class AuthApiService {
   }
 
   //DONE
-  public getUsersInGroup(groupName: string, userId: number): Observable<string[]> {
+  public getUsersInGroup(groupName: string, userId: string): Observable<string[]> {
     let params = new HttpParams();
     params = params.append('userId', userId)
     params = params.append('groupName', groupName)
@@ -73,7 +73,7 @@ export class AuthApiService {
   }
 
   //DONE
-  public getFriendsList(userId: number): Observable<string[]> {
+  public getFriendsList(userId: string): Observable<string[]> {
     let params = new HttpParams().set('userId', userId)
     return this.http.get<string[]>(`${environment.nestBackend}/user/friend/list`, {
       params: params
@@ -81,7 +81,7 @@ export class AuthApiService {
   }
 
   //DONE
-  public isUserInYourFriendsList(userId: number, friendEmail: string): Observable<any> {
+  public isUserInYourFriendsList(userId: string, friendEmail: string): Observable<any> {
     let params = new HttpParams;
     params = params.append('userId', userId);
     params = params.append('friendEmail', friendEmail);
@@ -91,7 +91,7 @@ export class AuthApiService {
   }
 
   //DONE
-  public isInFriendList(userId: number, newUserEmail: string, groupName: string): Observable<boolean> {
+  public isInFriendList(userId: string, newUserEmail: string, groupName: string): Observable<boolean> {
     let params = new HttpParams;
     params = params.append('userId', userId);
     params = params.append('newUserEmail', newUserEmail);
@@ -102,7 +102,7 @@ export class AuthApiService {
   }
 
   //DONE
-  public balanceCheck(userId: number, groupName: string): Observable<BalanceCheckResponse> {
+  public balanceCheck(userId: string, groupName: string): Observable<BalanceCheckResponse> {
     let params = new HttpParams().set('userId', userId)
     params = params.append('groupName', groupName)
     return this.http.get<BalanceCheckResponse>(`${environment.nestBackend}/transaction/balance`, {
